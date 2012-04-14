@@ -102,6 +102,16 @@ public class ViewSummaryActivity extends ListActivity {
         sample.add(new CategoryItemEntry("Food", 500, 500));
         sample.add(new CategoryItemEntry("Books", 500, 500));
         sample.add(new CategoryItemEntry("Clothing", 900,799));
+        sample.add(new CategoryItemEntry("Clothing", 900,799));
+        sample.add(new CategoryItemEntry("Clothing", 900,799));
+        sample.add(new CategoryItemEntry("Clothing", 900,799));
+        sample.add(new CategoryItemEntry("Clothing", 900,799));
+        sample.add(new CategoryItemEntry("Clothing", 900,799));
+        sample.add(new CategoryItemEntry("Clothing", 900,799));
+        sample.add(new CategoryItemEntry("Clothing", 900,799));
+        sample.add(new CategoryItemEntry("Clothing", 900,799));
+        sample.add(new CategoryItemEntry("Clothing", 900,799));
+
         CategoryListAdapter adapter = new CategoryListAdapter(this, (ArrayList<CategoryItemEntry>) sample);
         setListAdapter(adapter);
     }
