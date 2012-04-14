@@ -12,7 +12,7 @@ import edu.mit.moneyManager.R;
  * 
  * First time users create a budget.
  * 
- * Returning users can view their budget and view budgest shared with them.
+ * Returning users can view their budget and view budgets shared with them.
  */
 public class HomeActivity extends Activity{
     @Override
