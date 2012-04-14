@@ -14,7 +14,9 @@ import edu.mit.moneyManager.R;
  * 
  * Returning users can view their budget and view budgest shared with them.
  */
-public class HomeActivity extends Activity{
+public class HomeActivity extends Activity {
+    public static final boolean NEW = true;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
