@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.mit.moneyManager"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.0">
 
     <uses-sdk android:minSdkVersion="10" />
 
@@ -18,8 +18,10 @@
 <!--                 <category android:name="android.intent.category.LAUNCHER" /> -->
 <!--             </intent-filter> -->
         </activity>
-        <activity android:name=".view.ExpenseActivity"></activity>
-        <activity android:name=".view.HomeActivity"></activity>
+        <activity android:name=".view.ExpenseActivity"
+                android:theme="@android:style/Theme.NoTitleBar"></activity>
+        <activity android:name=".view.HomeActivity"
+                 android:theme="@android:style/Theme.NoTitleBar"></activity>
         <activity android:name=".view.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,11 +29,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.ViewCategoryActivity"></activity>
-        <activity android:name=".view.ViewChartActivity"></activity>
-        <activity android:name=".view.ViewEditBudgetActivity"></activity>
-        <activity android:name=".view.ViewShareActivity"></activity>
-        <activity android:name=".view.ViewSummaryActivity"></activity>
+        <activity android:name=".view.ViewCategoryActivity"
+                 android:theme="@android:style/Theme.NoTitleBar"></activity>
+        <activity android:name=".view.ViewChartActivity"
+                 android:theme="@android:style/Theme.NoTitleBar"></activity>
+        <activity android:name=".view.ViewEditBudgetActivity"
+                 android:theme="@android:style/Theme.NoTitleBar"></activity>
+        <activity android:name=".view.ViewShareActivity"
+                 android:theme="@android:style/Theme.NoTitleBar"></activity>
+        <activity android:name=".view.ViewSummaryActivity"
+                 android:theme="@android:style/Theme.NoTitleBar"></activity>
         
     </application>
 

@@ -2,7 +2,10 @@ package edu.mit.moneyManager.view;
 
 import edu.mit.moneyManager.R;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 public class ViewSummaryActivity extends Activity {
 
@@ -10,5 +13,37 @@ public class ViewSummaryActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_summary);
+        
+      //top actionbar
+        Button home = (Button) findViewById(R.id.home_action);
+        Button view = (Button) findViewById(R.id.view_action);
+        Button expenses = (Button) findViewById(R.id.expense_action);
+        
+        home.setOnClickListener(new View.OnClickListener() {
+            
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), HomeActivity.class);
+                startActivity(intent);
+            }
+        });
+        
+        view.setOnClickListener(new View.OnClickListener() {
+            
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), ViewSummaryActivity.class);
+                startActivity(intent);
+            }
+        });
+        
+        expenses.setOnClickListener(new View.OnClickListener() {
+       
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), ExpenseActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

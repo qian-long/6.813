@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <Button
+        android:id="@+id/home_action"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:text="MoneyManagerHome"/>
+    
+    <Button
+        android:id="@+id/view_action"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:text="View" />
+    
+    <Button
+        android:id="@+id/expense_action"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:text="Expenses"/>
+    
+</LinearLayout>
