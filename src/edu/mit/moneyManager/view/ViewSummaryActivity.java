@@ -1,13 +1,19 @@
 package edu.mit.moneyManager.view;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.mit.moneyManager.R;
+import edu.mit.moneyManager.listUtils.CategoryItemEntry;
+import edu.mit.moneyManager.listUtils.CategoryListAdapter;
 import android.app.Activity;
+import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class ViewSummaryActivity extends Activity {
+public class ViewSummaryActivity extends ListActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -28,14 +34,15 @@ public class ViewSummaryActivity extends Activity {
             }
         });
         
-        view.setOnClickListener(new View.OnClickListener() {
-            
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ViewSummaryActivity.class);
-                startActivity(intent);
-            }
-        });
+        view.setEnabled(false);
+//        view.setOnClickListener(new View.OnClickListener() {
+//            
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(v.getContext(), ViewSummaryActivity.class);
+//                startActivity(intent);
+//            }
+//        });
         
         expenses.setOnClickListener(new View.OnClickListener() {
        
@@ -51,15 +58,16 @@ public class ViewSummaryActivity extends Activity {
         Button chart = (Button) findViewById(R.id.chart_action);
         Button edit = (Button) findViewById(R.id.edit_action);
         Button share = (Button) findViewById(R.id.share_action);
-        
-        summary.setOnClickListener(new View.OnClickListener() {
-            
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ViewSummaryActivity.class);
-                startActivity(intent);
-            }
-        });
+    
+        summary.setEnabled(false);
+//        summary.setOnClickListener(new View.OnClickListener() {
+//            
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(v.getContext(), ViewSummaryActivity.class);
+//                startActivity(intent);
+//            }
+//        });
         
         chart.setOnClickListener(new View.OnClickListener() {
             
@@ -87,5 +95,16 @@ public class ViewSummaryActivity extends Activity {
                 startActivity(intent);
             }
         });
+        
+        //setting list adapter
+        //samples data
+        List<CategoryItemEntry> sample = new ArrayList<CategoryItemEntry>();
+        sample.add(new CategoryItemEntry("Food", 500, 500));
+        sample.add(new CategoryItemEntry("Books", 500, 500));
+        sample.add(new CategoryItemEntry("Clothing", 900,799));
+        CategoryListAdapter adapter = new CategoryListAdapter(this, (ArrayList<CategoryItemEntry>) sample);
+        setListAdapter(adapter);
     }
+    
+    
 }

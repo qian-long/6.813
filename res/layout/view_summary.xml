@@ -6,9 +6,51 @@
     <include android:id="@+id/actionbar" layout="@layout/actionbar" />
     <include android:id="@+id/view_actionbar" layout="@layout/view_actionbar" />
     
-    <TextView
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="This is the view summary activity" />
+        android:orientation="vertical">
+        
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Total Monthly Budget: " />
+            <TextView
+                android:id="@+id/total_monthly_budget_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$500" />
+            
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Total Remaining: " />
+            
+            <TextView
+                android:id="@+id/remaining_monthly_budget_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$500" />           
+        </LinearLayout>     
+    </LinearLayout>
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:drawSelectorOnTop="false" />
+
 
 </LinearLayout>
