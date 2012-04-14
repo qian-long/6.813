@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <Button
+        android:id="@+id/summary_action"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:text="Summary"/>
+    
+    <Button
+        android:id="@+id/chart_action"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:text="Chart" />
+    
+    <Button
+        android:id="@+id/edit_action"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:text="Edit"/>
+    
+        <Button
+        android:id="@+id/share_action"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:text="Share"/>
+    
+    
+</LinearLayout>
