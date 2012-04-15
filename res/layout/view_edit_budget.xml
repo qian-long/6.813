@@ -1,14 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical" >
     <include android:id="@+id/actionbar" layout="@layout/actionbar" />
     <include android:id="@+id/view_actionbar" layout="@layout/view_actionbar" />
     
-    <TextView
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="This is the view edit budget activity" />
+        android:orientation="vertical">
+        
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            
+            <TextView
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:text="Total: " />
+            
+            <TextView
+                android:id="@+id/budget_total" 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="100"/>
+            
+            <Button
+                android:layout_width="50dp"
+                android:layout_height="35dp"
+                android:text="edit" />
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="per month"/>
+            
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="Amount Unallocated: " />
+            
+            <TextView
+                android:id="@+id/amount_unallocated"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="100" />
+            
+        </LinearLayout>
+        
+    </LinearLayout>
 
 </LinearLayout>
