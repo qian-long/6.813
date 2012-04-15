@@ -22,7 +22,7 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:textSize="12sp"
-            android:hint="New Name" />
+            android:hint="Enter a Name" />
         
     </LinearLayout>
     
@@ -37,11 +37,12 @@
             android:textStyle="bold"
             android:text="Total Amount: " />
         <EditText
-            android:id="@+id/new_category_name"
+            android:id="@+id/new_category_amount"
             android:layout_width="100dp"
             android:textSize="12sp"
             android:layout_height="wrap_content"
-            android:hint="New Amount" />
+            android:hint="Enter an Amount" 
+            android:inputType="number"/>
         
     </LinearLayout>
     
@@ -51,10 +52,10 @@
         android:orientation="horizontal">
         
         <Button 
-            android:id="@+id/add_category_btn"
+            android:id="@+id/save_category_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add" />
+            android:text="Save" />
         
         <Button 
             android:id="@+id/cancel_btn"
