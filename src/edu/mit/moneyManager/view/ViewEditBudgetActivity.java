@@ -13,7 +13,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import edu.mit.moneyManager.R;
 import edu.mit.moneyManager.listUtils.CategoryItemEntry;
 import edu.mit.moneyManager.listUtils.EditCategoryListAdapter;
@@ -104,6 +106,46 @@ public class ViewEditBudgetActivity extends ListActivity {
 //            }
 //        });
         
+        //adding button listener for editing total budget amount
+        final TextView totalAmt = (TextView) findViewById(R.id.budget_total);
+        
+        Button editTotal = (Button) findViewById(R.id.edit_total);
+        editTotal.setOnClickListener(new View.OnClickListener() {
+            
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                final Dialog dialog = new Dialog(getParent());
+                dialog.setContentView(R.layout.dialog_edit_total);
+                dialog.setTitle("Edit Total Budget Amount");
+                dialog.setCancelable(false);
+                
+                Button saveBtn = (Button) dialog.findViewById(R.id.save_total_btn);
+                Button cancelBtn = (Button) dialog.findViewById(R.id.cancel_btn);
+                EditText total = (EditText) dialog.findViewById(R.id.new_total);
+                saveBtn.setOnClickListener(new View.OnClickListener() {
+                    
+                    @Override
+                    public void onClick(View v) {
+                        // TODO put in actual user input
+                        totalAmt.setText("1100");
+                        dialog.dismiss();
+                    }
+                });
+                
+                cancelBtn.setOnClickListener(new View.OnClickListener() {
+                    
+                    @Override
+                    public void onClick(View v) {
+                        // TODO Auto-generated method stub
+                        dialog.dismiss();
+                    }
+                });
+                
+                dialog.show();
+                
+            }
+        });
 
         //list adapter
         ListView lv = getListView();

@@ -32,6 +32,7 @@
                 android:text="100"/>
             
             <Button
+                android:id="@+id/edit_total"
                 android:layout_width="50dp"
                 android:layout_height="35dp"
                 android:text="edit" />

@@ -3,12 +3,15 @@ package edu.mit.moneyManager.listUtils;
 import java.util.ArrayList;
 
 import edu.mit.moneyManager.R;
+import edu.mit.moneyManager.view.ViewCategoryActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class SummaryCategoryListAdapter extends ArrayAdapter<CategoryItemEntry>{
@@ -44,6 +47,17 @@ public class SummaryCategoryListAdapter extends ArrayAdapter<CategoryItemEntry>{
             categoryName.setText(category.getName());
             total.setText(category.getTotalAmount());
             remaining.setText(category.getRemainingAmount());
+            
+            Button detailBtn = (Button) view.findViewById(R.id.category_detail_button);
+            detailBtn.setOnClickListener(new View.OnClickListener() {
+                
+                @Override
+                public void onClick(View v) {
+                    // TODO Auto-generated method stub
+                    Intent intent = new Intent(v.getContext(), ViewCategoryActivity.class);
+                    context.startActivity(intent);
+                }
+            });
 
             
         }
