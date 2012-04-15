@@ -3,12 +3,33 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-    <include android:id="@+id/actionbar" layout="@layout/actionbar" />
-    <include android:id="@+id/view_actionbar" layout="@layout/view_actionbar" />
-    
+
+    <include
+        android:id="@+id/actionbar"
+        layout="@layout/actionbar" />
+
+    <include
+        android:id="@+id/view_actionbar"
+        layout="@layout/view_actionbar" />
+
     <TextView
-        android:layout_width="fill_parent"
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="This is the view chart activity" />
+        android:text="" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total monthly budget: $300"
+        android:layout_gravity="center_vertical|center_horizontal" 
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src = "@drawable/chartgeneric" />
 
 </LinearLayout>

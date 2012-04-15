@@ -27,22 +27,25 @@ import edu.mit.moneyManager.R;
  */
 public class HomeActivity extends Activity{
     public static boolean NEW =true;
+    public static String VIEWINGOTHER = "";
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
         
+        TextView welcome = (TextView) findViewById(R.id.welcome);
         Button home = (Button) findViewById(R.id.home_action);
         Button view = (Button) findViewById(R.id.view_action);
         Button expenses = (Button) findViewById(R.id.expense_action);
         Button create = (Button) findViewById(R.id.create_budget);
         if (!NEW){
+            welcome.setText("You have $225 remaining this month");
             create.setText("Enter Expense");
         }
         
         ExpandableListView budgetsView = (ExpandableListView) findViewById(R.id.sharedBudgets);
-        ExpandableListAdapter adapter = new BudgetExpandableListAdapter();
+        final ExpandableListAdapter adapter = new BudgetExpandableListAdapter();
         budgetsView.setAdapter(adapter);
         
         budgetsView.setOnChildClickListener(new OnChildClickListener(){
@@ -50,6 +53,7 @@ public class HomeActivity extends Activity{
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 Intent intent = new Intent(v.getContext(), ViewSummaryActivity.class);
+                VIEWINGOTHER = (String) adapter.getChild(groupPosition, childPosition);
                 startActivity(intent);
                 return true;
             }
@@ -152,7 +156,7 @@ public class HomeActivity extends Activity{
             TextView textView = new TextView(HomeActivity.this);
             textView.setLayoutParams(lp);
             textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
-            textView.setPadding(36, 0, 0, 0);
+            textView.setPadding(75, 0, 0, 0);
             return textView;
         }
 
@@ -160,8 +164,7 @@ public class HomeActivity extends Activity{
         public View getGroupView(int groupPosition, boolean isExpanded,
                 View convertView, ViewGroup parent) {
             TextView textView = this.getGenericView();
-//            textView.setText(((String)getGroup(groupPosition)).toString());
-            textView.setText("");
+            textView.setText("Budgets Shared With You:");
 
             return textView;
         }
