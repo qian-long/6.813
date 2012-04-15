@@ -27,4 +27,13 @@ public class CategoryItemEntry {
     public String getRemainingAmount() {
         return new Integer(remaining).toString();
     }
+    
+    public void setName(String newName) {
+        this.name = new String(newName);
+    }
+    
+    public void setTotal(int amt) {
+        total = amt;
+    }
+    
 }
