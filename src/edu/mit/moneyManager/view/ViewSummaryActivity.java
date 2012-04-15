@@ -116,6 +116,5 @@ public class ViewSummaryActivity extends ListActivity {
         SummaryCategoryListAdapter adapter = new SummaryCategoryListAdapter(this, (ArrayList<CategoryItemEntry>) sample, ((TabActivity)getParent()).getTabHost());
         setListAdapter(adapter);
     }
-    
-    
+
 }

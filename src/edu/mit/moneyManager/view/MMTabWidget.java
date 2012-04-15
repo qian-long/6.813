@@ -32,7 +32,8 @@ public class MMTabWidget extends TabActivity {
         intent = new Intent().setClass(this, HomeActivity.class);
 
         // Initialize a TabSpec for each tab and add it to the TabHost
-        spec = tabHost.newTabSpec("home").setIndicator("Home")
+        spec = tabHost.newTabSpec("home").setIndicator("Home",
+        		res.getDrawable(R.drawable.ic_menu_home))
                       .setContent(intent);
         tabHost.addTab(spec);
 
@@ -44,7 +45,7 @@ public class MMTabWidget extends TabActivity {
 
         intent = new Intent().setClass(this, ExpenseActivity.class);
         spec = tabHost.newTabSpec("expenses").setIndicator("Expenses",
-                          res.getDrawable(R.drawable.ic_launcher))
+                          res.getDrawable(R.drawable.ic_tab_balance_unselected))
                       .setContent(intent);
         tabHost.addTab(spec);
 
