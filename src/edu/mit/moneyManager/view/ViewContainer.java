@@ -14,7 +14,7 @@ import edu.mit.moneyManager.R;
  * 
  * Returning users can view their budget and view budgets shared with them.
  */
-public class MMTabWidget extends TabActivity {
+public class ViewContainer extends TabActivity {
     public static final boolean NEW = true;
     
     @Override
@@ -28,22 +28,26 @@ public class MMTabWidget extends TabActivity {
         Intent intent;  // Reusable Intent for each tab
 
         // Create an Intent to launch an Activity for the tab (to be reused)
-        intent = new Intent().setClass(this, HomeActivity.class);
+        intent = new Intent().setClass(this, ViewSummaryActivity.class);
 
         // Initialize a TabSpec for each tab and add it to the TabHost
-        spec = tabHost.newTabSpec("home").setIndicator("Home")
+        spec = tabHost.newTabSpec("summary").setIndicator("Summary")
                       .setContent(intent);
         tabHost.addTab(spec);
 
         // Do the same for the other tabs
-        intent = new Intent().setClass(this, ViewContainer.class);
-        spec = tabHost.newTabSpec("view").setIndicator("View")
+        intent = new Intent().setClass(this, ViewChartActivity.class);
+        spec = tabHost.newTabSpec("chart").setIndicator("Chart")
                       .setContent(intent);
         tabHost.addTab(spec);
 
-        intent = new Intent().setClass(this, ExpenseActivity.class);
-        spec = tabHost.newTabSpec("expenses").setIndicator("Expenses",
-                          res.getDrawable(R.drawable.ic_launcher))
+        intent = new Intent().setClass(this, ViewEditBudgetActivity.class);
+        spec = tabHost.newTabSpec("edit").setIndicator("Edit")
+                      .setContent(intent);
+        tabHost.addTab(spec);
+        
+        intent = new Intent().setClass(this, ViewShareActivity.class);
+        spec = tabHost.newTabSpec("share").setIndicator("Share")
                       .setContent(intent);
         tabHost.addTab(spec);
 
