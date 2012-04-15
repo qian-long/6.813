@@ -9,6 +9,7 @@ import edu.mit.moneyManager.view.ViewEditBudgetActivity;
 import android.app.Dialog;
 import android.content.Context;
 import android.text.method.DigitsKeyListener;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class EditCategoryListAdapter extends ArrayAdapter<CategoryItemEntry>{
-
+    public static final String TAG="EditCategoryListAdapter.java";
     private Context context;
     private ArrayList<CategoryItemEntry> categories;
     private LayoutInflater inflator;
@@ -35,6 +36,7 @@ public class EditCategoryListAdapter extends ArrayAdapter<CategoryItemEntry>{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
+        Log.i(TAG, parent.toString());
         final CategoryItemEntry category = categories.get(position);
         if (category != null) {
             view = inflator.inflate(R.layout.list_entry_category_edit, null);
@@ -55,7 +57,7 @@ public class EditCategoryListAdapter extends ArrayAdapter<CategoryItemEntry>{
                 @Override
                 public void onClick(View v) {
                     // TODO Auto-generated method stub
-                    final Dialog dialog = new Dialog(context);
+                    final Dialog dialog = new Dialog(context.getApplicationContext());
                     dialog.setContentView(R.layout.dialog_edit_category);
                     dialog.setTitle("Editing " + category.getName() + " Category");
                     dialog.setCancelable(false);

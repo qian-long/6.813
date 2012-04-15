@@ -129,7 +129,7 @@ public class ViewEditBudgetActivity extends ListActivity {
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 //dialog
-                final Dialog dialog = new Dialog(ViewEditBudgetActivity.this);
+                final Dialog dialog = new Dialog(getParent());
                 dialog.setContentView(R.layout.dialog_add_category);
                 dialog.setTitle("Add a new category");
                 dialog.setCancelable(false);

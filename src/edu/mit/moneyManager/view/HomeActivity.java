@@ -44,7 +44,7 @@ public class HomeActivity extends Activity {
             create.setText("Enter Expense");
         }
         
-        /*ExpandableListView budgetsView = (ExpandableListView) findViewById(R.id.sharedBudgets);
+        ExpandableListView budgetsView = (ExpandableListView) findViewById(R.id.sharedBudgets);
         final ExpandableListAdapter adapter = new BudgetExpandableListAdapter();
         budgetsView.setAdapter(adapter);
         
@@ -58,7 +58,7 @@ public class HomeActivity extends Activity {
                 return true;
             }
             
-        });*/
+        });
         
         
         create.setOnClickListener(new View.OnClickListener(){
