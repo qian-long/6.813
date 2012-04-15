@@ -119,7 +119,7 @@ public class ViewEditBudgetActivity extends ListActivity {
         sample.add(new CategoryItemEntry("Clothing", 900,799));
  
         Log.i("ViewEditBudgetActivity", "before adapter");
-        EditCategoryListAdapter adapter = new EditCategoryListAdapter(this, (ArrayList<CategoryItemEntry>) sample);
+        EditCategoryListAdapter adapter = new EditCategoryListAdapter(this, (ArrayList<CategoryItemEntry>) sample, getParent());
         setListAdapter(adapter);
         
         Button addCategoryBtn = (Button) footer.findViewById(R.id.add_category_button);
@@ -143,7 +143,7 @@ public class ViewEditBudgetActivity extends ListActivity {
                     public void onClick(View v) {
                         // TODO Auto-generated method stub
                         sample.add(new CategoryItemEntry("New Category", 1000, 1000));
-                        EditCategoryListAdapter adapter = new EditCategoryListAdapter(mContext, (ArrayList<CategoryItemEntry>) sample);
+                        EditCategoryListAdapter adapter = new EditCategoryListAdapter(mContext, (ArrayList<CategoryItemEntry>) sample, getParent());
                         setListAdapter(adapter);
                         dialog.dismiss();
                     }

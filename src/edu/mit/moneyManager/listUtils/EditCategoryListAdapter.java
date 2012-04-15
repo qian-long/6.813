@@ -22,13 +22,15 @@ import android.widget.Toast;
 public class EditCategoryListAdapter extends ArrayAdapter<CategoryItemEntry>{
     public static final String TAG="EditCategoryListAdapter.java";
     private Context context;
+    private Context parentContext;
     private ArrayList<CategoryItemEntry> categories;
     private LayoutInflater inflator;
 
-    public EditCategoryListAdapter(Context context, ArrayList<CategoryItemEntry> categories) {
+    public EditCategoryListAdapter(Context context, ArrayList<CategoryItemEntry> categories, Context parent) {
         super(context, 0, categories);
         this.categories = categories;
         this.context = context;
+        this.parentContext = parent;
         inflator = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -57,7 +59,7 @@ public class EditCategoryListAdapter extends ArrayAdapter<CategoryItemEntry>{
                 @Override
                 public void onClick(View v) {
                     // TODO Auto-generated method stub
-                    final Dialog dialog = new Dialog(context.getApplicationContext());
+                    final Dialog dialog = new Dialog(parentContext);
                     dialog.setContentView(R.layout.dialog_edit_category);
                     dialog.setTitle("Editing " + category.getName() + " Category");
                     dialog.setCancelable(false);
