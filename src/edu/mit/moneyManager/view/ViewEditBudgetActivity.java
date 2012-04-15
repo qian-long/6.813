@@ -28,6 +28,7 @@ public class ViewEditBudgetActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_edit_budget);
         mContext = this;
+        HomeActivity.NEW=false;
         
       //top actionbar
 //        Button home = (Button) findViewById(R.id.home_action);
