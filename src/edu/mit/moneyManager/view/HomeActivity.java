@@ -3,19 +3,30 @@ package edu.mit.moneyManager.view;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnChildClickListener;
+import android.widget.ListView;
+import android.widget.TextView;
 import edu.mit.moneyManager.R;
 
 /**
  * This is the home activity.
  * 
- * First time users create a budget.
+ * First time users create a budget or view budgets shared with them.
  * 
  * Returning users can view their budget and view budgets shared with them.
  */
-public class HomeActivity extends Activity {
-    public static final boolean NEW = true;
+public class HomeActivity extends Activity{
+    public static boolean NEW =true;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -25,6 +36,25 @@ public class HomeActivity extends Activity {
         Button home = (Button) findViewById(R.id.home_action);
         Button view = (Button) findViewById(R.id.view_action);
         Button expenses = (Button) findViewById(R.id.expense_action);
+        Button create = (Button) findViewById(R.id.create_budget);
+        if (!NEW){
+            create.setText("Enter Expense");
+        }
+        
+        ExpandableListView budgetsView = (ExpandableListView) findViewById(R.id.sharedBudgets);
+        ExpandableListAdapter adapter = new BudgetExpandableListAdapter();
+        budgetsView.setAdapter(adapter);
+        
+        budgetsView.setOnChildClickListener(new OnChildClickListener(){
+            
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                Intent intent = new Intent(v.getContext(), ViewSummaryActivity.class);
+                startActivity(intent);
+                return true;
+            }
+            
+        });
         
         home.setOnClickListener(new View.OnClickListener() {
             
@@ -52,6 +82,100 @@ public class HomeActivity extends Activity {
                 startActivity(intent);
             }
         });
-                
+        
+        create.setOnClickListener(new View.OnClickListener(){
+            
+            @Override
+            public void onClick(View v){
+                if (NEW){
+                Intent intent = new Intent(v.getContext(), ViewEditBudgetActivity.class);
+                startActivity(intent);
+                }
+                else{
+                    Intent intent = new Intent(v.getContext(), ExpenseActivity.class);
+                    startActivity(intent);
+                }
+            }
+            
+        });  
+        
+    }
+    
+    class BudgetExpandableListAdapter extends BaseExpandableListAdapter{
+        private String[] groups = {"Shared Budgets"};
+        private String[][] children = {{ "LukeSkywalker's Budget",
+            "PrincessLeia's Budget", "R2D2's Budget"}};
+        
+        @Override
+        public Object getChild(int groupPosition, int childPosition) {
+            return children[groupPosition][childPosition];
+        }
+
+        @Override
+        public long getChildId(int groupPosition, int childPosition) {
+            return childPosition;
+        }
+
+        @Override
+        public View getChildView(int groupPosition, int childPosition,
+                boolean isLastChild, View convertView, ViewGroup parent) {
+            TextView textView = this.getGenericView();
+            textView.setText(getChild(groupPosition, childPosition).toString());
+            return textView;
+        }
+
+        @Override
+        public int getChildrenCount(int groupPosition) {
+            return children[groupPosition].length;
+        }
+
+        @Override
+        public Object getGroup(int groupPosition) {
+            return children[groupPosition];
+        }
+
+        @Override
+        public int getGroupCount() {
+            return groups.length;
+        }
+
+        @Override
+        public long getGroupId(int groupPosition) {
+            return groupPosition;
+        }
+        
+        public TextView getGenericView() {
+            // Layout parameters for the ExpandableListView
+            AbsListView.LayoutParams lp = new AbsListView.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, 64);
+
+            TextView textView = new TextView(HomeActivity.this);
+            textView.setLayoutParams(lp);
+            textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
+            textView.setPadding(36, 0, 0, 0);
+            return textView;
+        }
+
+        @Override
+        public View getGroupView(int groupPosition, boolean isExpanded,
+                View convertView, ViewGroup parent) {
+            TextView textView = this.getGenericView();
+//            textView.setText(((String)getGroup(groupPosition)).toString());
+            textView.setText("");
+
+            return textView;
+        }
+
+        @Override
+        public boolean hasStableIds() {
+            return true;
+        }
+
+        @Override
+        public boolean isChildSelectable(int groupPosition,
+                int childPosition) {
+            return true;
+        }
+        
     }
 }
