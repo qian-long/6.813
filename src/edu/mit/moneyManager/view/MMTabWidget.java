@@ -37,12 +37,12 @@ public class MMTabWidget extends TabActivity {
         tabHost.addTab(spec);
 
         // Do the same for the other tabs
-        intent = new Intent().setClass(this, ViewCategoryActivity.class);
+        intent = new Intent().setClass(this, ViewSummaryActivity.class);
         spec = tabHost.newTabSpec("view").setIndicator("View")
                       .setContent(intent);
         tabHost.addTab(spec);
 
-        intent = new Intent().setClass(this, ViewChartActivity.class);
+        intent = new Intent().setClass(this, ExpenseActivity.class);
         spec = tabHost.newTabSpec("expenses").setIndicator("Expenses",
                           res.getDrawable(R.drawable.ic_launcher))
                       .setContent(intent);

@@ -37,10 +37,7 @@ public class HomeActivity extends Activity {
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
         
-        Button home = (Button) findViewById(R.id.home_action);
         TextView welcome = (TextView) findViewById(R.id.welcome);
-        Button view = (Button) findViewById(R.id.view_action);
-        Button expenses = (Button) findViewById(R.id.expense_action);
         Button create = (Button) findViewById(R.id.create_budget);
         if (!NEW){
             welcome.setText("You have $225 remaining this month");
@@ -63,32 +60,6 @@ public class HomeActivity extends Activity {
             
         });*/
         
-        home.setOnClickListener(new View.OnClickListener() {
-            
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), HomeActivity.class);
-                startActivity(intent);
-            }
-        });
-        
-        view.setOnClickListener(new View.OnClickListener() {
-            
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ViewSummaryActivity.class);
-                startActivity(intent);
-            }
-        });
-        
-        expenses.setOnClickListener(new View.OnClickListener() {
-            
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ExpenseActivity.class);
-                startActivity(intent);
-            }
-        });
         
         create.setOnClickListener(new View.OnClickListener(){
             
