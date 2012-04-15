@@ -29,14 +29,14 @@ import edu.mit.moneyManager.R;
  * Returning users can view their budget and view budgets shared with them.
  */
 public class HomeActivity extends Activity {
-    public static final boolean NEW = true;
+    public static boolean NEW = true;
     public static String VIEWINGOTHER = "";
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
-        
+        VIEWINGOTHER="";
         TextView welcome = (TextView) findViewById(R.id.welcome);
         Button create = (Button) findViewById(R.id.create_budget);
         if (!NEW){
