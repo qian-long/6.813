@@ -11,13 +11,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class CategoryListAdapter extends ArrayAdapter<CategoryItemEntry>{
+public class SummaryCategoryListAdapter extends ArrayAdapter<CategoryItemEntry>{
 
     private Context context;
     private ArrayList<CategoryItemEntry> categories;
     private LayoutInflater inflator;
     
-    public CategoryListAdapter(Context context, ArrayList<CategoryItemEntry> categories) {
+    public SummaryCategoryListAdapter(Context context, ArrayList<CategoryItemEntry> categories) {
         super(context, 0, categories);
         this.categories = categories;
         this.context = context;

@@ -27,14 +27,15 @@ public class ViewEditBudgetActivity extends Activity {
             }
         });
         
-        view.setOnClickListener(new View.OnClickListener() {
-            
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ViewSummaryActivity.class);
-                startActivity(intent);
-            }
-        });
+        view.setEnabled(false);
+//        view.setOnClickListener(new View.OnClickListener() {
+//            
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(v.getContext(), ViewSummaryActivity.class);
+//                startActivity(intent);
+//            }
+//        });
         
         expenses.setOnClickListener(new View.OnClickListener() {
        
@@ -69,14 +70,15 @@ public class ViewEditBudgetActivity extends Activity {
             }
         });
         
-        edit.setOnClickListener(new View.OnClickListener() {
-       
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ViewEditBudgetActivity.class);
-                startActivity(intent);
-            }
-        });
+        edit.setEnabled(false);
+//        edit.setOnClickListener(new View.OnClickListener() {
+//       
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(v.getContext(), ViewEditBudgetActivity.class);
+//                startActivity(intent);
+//            }
+//        });
         
         share.setOnClickListener(new View.OnClickListener() {
             

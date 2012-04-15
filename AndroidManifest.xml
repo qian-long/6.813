@@ -12,6 +12,8 @@
         <activity
             android:name=".MoneyManagerActivity"
             android:label="@string/app_name" >
+            <activity android:name=".view.MMTabWidget"
+                 android:theme="@android:style/Theme.NoTitleBar"></activity>
 <!--             <intent-filter> -->
 <!--                 <action android:name="android.intent.action.MAIN" /> -->
 
@@ -33,12 +35,12 @@
                  android:theme="@android:style/Theme.NoTitleBar"></activity>
         <activity android:name=".view.ViewChartActivity"
                  android:theme="@android:style/Theme.NoTitleBar"></activity>
-        <activity android:name=".view.ViewEditBudgetActivity"
+        <activity android:name=".view.ViewSummaryActivity" android:theme="@android:style/Theme.NoTitleBar"></activity><activity android:name=".view.ViewEditBudgetActivity"
                  android:theme="@android:style/Theme.NoTitleBar"></activity>
         <activity android:name=".view.ViewShareActivity"
                  android:theme="@android:style/Theme.NoTitleBar"></activity>
-        <activity android:name=".view.ViewSummaryActivity"
-                 android:theme="@android:style/Theme.NoTitleBar"></activity>
+        
+        <activity android:name=".view.RegisterActivity"></activity>
         
     </application>
 
