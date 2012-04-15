@@ -1,95 +1,48 @@
 package edu.mit.moneyManager.view;
 
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+
 import android.app.Activity;
+import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import edu.mit.moneyManager.R;
+import edu.mit.moneyManager.listUtils.CategoryExpenseListAdapter;
+import edu.mit.moneyManager.listUtils.ExpenseItemEntry;
 
 /**
  * Screen that shows details of a Category
  *
  */
-public class ViewCategoryActivity extends Activity {
+public class ViewCategoryActivity extends ListActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_category);
         
-        //main action bar
-//        Button home = (Button) findViewById(R.id.home_action);
-//        Button view = (Button) findViewById(R.id.view_action);
-//        Button expenses = (Button) findViewById(R.id.expense_action);
-//        
-//        home.setOnClickListener(new View.OnClickListener() {
-//            
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(v.getContext(), HomeActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//        
-//        view.setOnClickListener(new View.OnClickListener() {
-//            
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(v.getContext(), ViewSummaryActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//        
-//        expenses.setOnClickListener(new View.OnClickListener() {
-//       
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(v.getContext(), ExpenseActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+        //list adapter
+        ListView lv = getListView();
+        LayoutInflater inflater = getLayoutInflater();
+        View header = inflater.inflate(R.layout.view_category_list_header, null, false);
+        lv.addHeaderView(header);
         
-        //view action bar
-//        Button summary = (Button) findViewById(R.id.summary_action);
-//        Button chart = (Button) findViewById(R.id.chart_action);
-//        Button edit = (Button) findViewById(R.id.edit_action);
-//        Button share = (Button) findViewById(R.id.share_action);
-//        
-//        summary.setOnClickListener(new View.OnClickListener() {
-//            
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(v.getContext(), ViewSummaryActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//        
-//        chart.setOnClickListener(new View.OnClickListener() {
-//            
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(v.getContext(), ViewChartActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//        
-//        edit.setOnClickListener(new View.OnClickListener() {
-//       
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(v.getContext(), ViewEditBudgetActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//        
-//        share.setOnClickListener(new View.OnClickListener() {
-//            
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(v.getContext(), ViewShareActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+        //setting list adapter with sample data
+        final ArrayList<ExpenseItemEntry> sampleExpenses = new ArrayList<ExpenseItemEntry>();
+        sampleExpenses.add(new ExpenseItemEntry(new GregorianCalendar(2012, 4, 15), 100, "food"));
+        sampleExpenses.add(new ExpenseItemEntry(new GregorianCalendar(2012, 4, 14), 900, "food"));
+        sampleExpenses.add(new ExpenseItemEntry(new GregorianCalendar(2012, 3, 15), 89.90, "food"));
+        sampleExpenses.add(new ExpenseItemEntry(new GregorianCalendar(2012, 2, 18), 89.67, "food"));
+        
+        CategoryExpenseListAdapter adapter = new CategoryExpenseListAdapter(this, sampleExpenses, this);
+        setListAdapter(adapter);
+
+
+
     }
 }
