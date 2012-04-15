@@ -4,6 +4,7 @@ import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TabHost;
 import edu.mit.moneyManager.R;
 
@@ -16,14 +17,14 @@ import edu.mit.moneyManager.R;
  */
 public class MMTabWidget extends TabActivity {
     public static final boolean NEW = true;
-    
+    private TabHost tabHost;
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
         Resources res = getResources(); // Resource object to get Drawables
-        TabHost tabHost = getTabHost();  // The activity TabHost
+        tabHost = getTabHost();  // The activity TabHost
         TabHost.TabSpec spec;  // Reusable TabSpec for each tab
         Intent intent;  // Reusable Intent for each tab
 
@@ -47,8 +48,9 @@ public class MMTabWidget extends TabActivity {
                       .setContent(intent);
         tabHost.addTab(spec);
 
-        tabHost.setCurrentTab(0);
+            tabHost.setCurrentTab(0);
         
     }
+    
 
 }

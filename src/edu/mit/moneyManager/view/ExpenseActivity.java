@@ -6,12 +6,14 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.ListActivity;
+import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TabHost;
 import android.widget.Toast;
 import edu.mit.moneyManager.R;
 import edu.mit.moneyManager.listUtils.CategoryExpenseListAdapter;
@@ -25,11 +27,13 @@ import edu.mit.moneyManager.listUtils.MainExpenseListAdapter;
  * Users enter in their expenses here.
  */
 public class ExpenseActivity extends ListActivity {
-
+    private TabHost tabhost;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.expenses);
+        tabhost =  ((TabActivity)getParent()).getTabHost();
         //list adapter, defining footer button behaviors
         ListView lv = getListView();
         LayoutInflater inflater = getLayoutInflater();
@@ -60,9 +64,12 @@ public class ExpenseActivity extends ListActivity {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Intent intent = new Intent(v.getContext(), ViewSummaryActivity.class);
-                Toast.makeText(v.getContext(), "expenses saved", Toast.LENGTH_SHORT);
-                startActivity(intent);
+//                Intent intent = new Intent(v.getContext(), ViewSummaryActivity.class);
+//                startActivity(intent);
+                Toast.makeText(v.getContext(), "expenses saved", Toast.LENGTH_SHORT).show();
+
+                tabhost.setCurrentTab(1);
+
             }
         });
         
@@ -71,8 +78,10 @@ public class ExpenseActivity extends ListActivity {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Intent intent = new Intent(v.getContext(), HomeActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(v.getContext(), HomeActivity.class);
+//                startActivity(intent);
+                tabhost.setCurrentTab(0);
+
             }
         });
     }

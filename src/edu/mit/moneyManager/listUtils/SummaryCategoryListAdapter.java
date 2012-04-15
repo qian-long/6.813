@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.TabHost;
 import android.widget.TextView;
 
 public class SummaryCategoryListAdapter extends ArrayAdapter<CategoryItemEntry>{
@@ -19,11 +20,13 @@ public class SummaryCategoryListAdapter extends ArrayAdapter<CategoryItemEntry>{
     private Context context;
     private ArrayList<CategoryItemEntry> categories;
     private LayoutInflater inflator;
+    private TabHost tabhost;
     
-    public SummaryCategoryListAdapter(Context context, ArrayList<CategoryItemEntry> categories) {
+    public SummaryCategoryListAdapter(Context context, ArrayList<CategoryItemEntry> categories, TabHost tabhost) {
         super(context, 0, categories);
         this.categories = categories;
         this.context = context;
+        this.tabhost = tabhost;
         inflator = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 
@@ -54,8 +57,9 @@ public class SummaryCategoryListAdapter extends ArrayAdapter<CategoryItemEntry>{
                 @Override
                 public void onClick(View v) {
                     // TODO Auto-generated method stub
-                    Intent intent = new Intent(v.getContext(), ViewCategoryActivity.class);
-                    context.startActivity(intent);
+//                    tabhost.setCurrentTab(index)
+//                    Intent intent = new Intent(v.getContext(), ViewCategoryActivity.class);
+//                    context.startActivity(intent);
                 }
             });
 

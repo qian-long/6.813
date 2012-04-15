@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TabHost;
 
 public class MainExpenseListAdapter extends ArrayAdapter<ExpenseItemEntry>{
 
