@@ -31,20 +31,17 @@ public class EditCategoryListAdapter extends ArrayAdapter<CategoryItemEntry>{
         View view = convertView;
         final CategoryItemEntry category = categories.get(position);
         if (category != null) {
-            if (position == categories.size())
-            view = inflator.inflate(R.layout.list_entry_category_summary, null);
+            view = inflator.inflate(R.layout.list_entry_category_edit, null);
             
             view.setOnClickListener(null);
             view.setOnLongClickListener(null);
             view.setLongClickable(false);
             
-            TextView categoryName = (TextView) view.findViewById(R.id.view_summary_category);            
-            TextView total = (TextView) view.findViewById(R.id.category_total);
-            TextView remaining = (TextView) view.findViewById(R.id.category_remaining);
+            TextView categoryName = (TextView) view.findViewById(R.id.category_name);            
+            TextView total = (TextView) view.findViewById(R.id.category_amount);
             
             categoryName.setText(category.getName());
             total.setText(category.getTotalAmount());
-            remaining.setText(category.getRemainingAmount());
 
             
         }
