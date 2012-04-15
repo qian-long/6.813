@@ -28,20 +28,20 @@ public class ViewEditBudgetActivity extends ListActivity {
         mContext = this;
         
       //top actionbar
-        Button home = (Button) findViewById(R.id.home_action);
-        Button view = (Button) findViewById(R.id.view_action);
-        Button expenses = (Button) findViewById(R.id.expense_action);
-        
-        home.setOnClickListener(new View.OnClickListener() {
-            
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), HomeActivity.class);
-                startActivity(intent);
-            }
-        });
-        
-        view.setEnabled(false);
+//        Button home = (Button) findViewById(R.id.home_action);
+//        Button view = (Button) findViewById(R.id.view_action);
+//        Button expenses = (Button) findViewById(R.id.expense_action);
+//        
+//        home.setOnClickListener(new View.OnClickListener() {
+//            
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(v.getContext(), HomeActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//        
+//        view.setEnabled(false);
 //        view.setOnClickListener(new View.OnClickListener() {
 //            
 //            @Override
@@ -51,40 +51,40 @@ public class ViewEditBudgetActivity extends ListActivity {
 //            }
 //        });
         
-        expenses.setOnClickListener(new View.OnClickListener() {
-       
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ExpenseActivity.class);
-                startActivity(intent);
-            }
-        });
+//        expenses.setOnClickListener(new View.OnClickListener() {
+//       
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(v.getContext(), ExpenseActivity.class);
+//                startActivity(intent);
+//            }
+//        });
         
       //view action bar
-        Button summary = (Button) findViewById(R.id.summary_action);
-        Button chart = (Button) findViewById(R.id.chart_action);
-        Button edit = (Button) findViewById(R.id.edit_action);
-        Button share = (Button) findViewById(R.id.share_action);
-        
-        summary.setOnClickListener(new View.OnClickListener() {
-            
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ViewSummaryActivity.class);
-                startActivity(intent);
-            }
-        });
-        
-        chart.setOnClickListener(new View.OnClickListener() {
-            
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ViewChartActivity.class);
-                startActivity(intent);
-            }
-        });
-        
-        edit.setEnabled(false);
+//        Button summary = (Button) findViewById(R.id.summary_action);
+//        Button chart = (Button) findViewById(R.id.chart_action);
+//        Button edit = (Button) findViewById(R.id.edit_action);
+//        Button share = (Button) findViewById(R.id.share_action);
+//        
+//        summary.setOnClickListener(new View.OnClickListener() {
+//            
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(v.getContext(), ViewSummaryActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//        
+//        chart.setOnClickListener(new View.OnClickListener() {
+//            
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(v.getContext(), ViewChartActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//        
+//        edit.setEnabled(false);
 //        edit.setOnClickListener(new View.OnClickListener() {
 //       
 //            @Override
@@ -94,14 +94,14 @@ public class ViewEditBudgetActivity extends ListActivity {
 //            }
 //        });
         
-        share.setOnClickListener(new View.OnClickListener() {
-            
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ViewShareActivity.class);
-                startActivity(intent);
-            }
-        });
+//        share.setOnClickListener(new View.OnClickListener() {
+//            
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(v.getContext(), ViewShareActivity.class);
+//                startActivity(intent);
+//            }
+//        });
         
 
         //list adapter

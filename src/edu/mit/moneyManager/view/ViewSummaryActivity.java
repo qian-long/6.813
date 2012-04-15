@@ -54,12 +54,12 @@ public class ViewSummaryActivity extends ListActivity {
 //        });
         
       //view action bar
-        Button summary = (Button) findViewById(R.id.summary_action);
-        Button chart = (Button) findViewById(R.id.chart_action);
-        Button edit = (Button) findViewById(R.id.edit_action);
-        Button share = (Button) findViewById(R.id.share_action);
-    
-        summary.setEnabled(false);
+//        Button summary = (Button) findViewById(R.id.summary_action);
+//        Button chart = (Button) findViewById(R.id.chart_action);
+//        Button edit = (Button) findViewById(R.id.edit_action);
+//        Button share = (Button) findViewById(R.id.share_action);
+//    
+//        summary.setEnabled(false);
 //        summary.setOnClickListener(new View.OnClickListener() {
 //            
 //            @Override
@@ -69,32 +69,32 @@ public class ViewSummaryActivity extends ListActivity {
 //            }
 //        });
         
-        chart.setOnClickListener(new View.OnClickListener() {
-            
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ViewChartActivity.class);
-                startActivity(intent);
-            }
-        });
-        
-        edit.setOnClickListener(new View.OnClickListener() {
-       
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ViewEditBudgetActivity.class);
-                startActivity(intent);
-            }
-        });
-        
-        share.setOnClickListener(new View.OnClickListener() {
-            
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ViewShareActivity.class);
-                startActivity(intent);
-            }
-        });
+//        chart.setOnClickListener(new View.OnClickListener() {
+//            
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(v.getContext(), ViewChartActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//        
+//        edit.setOnClickListener(new View.OnClickListener() {
+//       
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(v.getContext(), ViewEditBudgetActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//        
+//        share.setOnClickListener(new View.OnClickListener() {
+//            
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(v.getContext(), ViewShareActivity.class);
+//                startActivity(intent);
+//            }
+//        });
         
         //setting list adapter
         //samples data
