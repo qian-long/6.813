@@ -31,15 +31,15 @@ public class ViewChartActivity extends Activity {
                 startActivity(intent);
             }
         });
-        
-        view.setOnClickListener(new View.OnClickListener() {
-            
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ViewSummaryActivity.class);
-                startActivity(intent);
-            }
-        });
+        view.setEnabled(false);
+//        view.setOnClickListener(new View.OnClickListener() {
+//            
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(v.getContext(), ViewSummaryActivity.class);
+//                startActivity(intent);
+//            }
+//        });
         
         expenses.setOnClickListener(new View.OnClickListener() {
        
