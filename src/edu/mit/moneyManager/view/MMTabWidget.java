@@ -54,7 +54,7 @@ public class MMTabWidget extends TabActivity {
         
         int iCnt = tabHost.getTabWidget().getChildCount();
         for(int i=0; i<iCnt; i++)
-          tabHost.getTabWidget().getChildAt(i).getLayoutParams().height = 80;
+          tabHost.getTabWidget().getChildAt(i).getLayoutParams().height *= .8;
         
     }
     
