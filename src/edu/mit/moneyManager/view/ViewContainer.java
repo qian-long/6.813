@@ -55,7 +55,7 @@ public class ViewContainer extends TabActivity {
         
         int iCnt = tabHost.getTabWidget().getChildCount();
         for(int i=0; i<iCnt; i++)
-          tabHost.getTabWidget().getChildAt(i).getLayoutParams().height /= 2;  // Or the size desired
+          tabHost.getTabWidget().getChildAt(i).getLayoutParams().height /= 2;
         
     }
 
