@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
      android:layout_width="match_parent"
      android:layout_height="wrap_content"
-     android:orientation="horizontal">
+     android:orientation="horizontal"
+     android:paddingTop="4dip"
+     android:paddingBottom="14dip">
 
      <TextView
          android:id="@+id/view_summary_category"
@@ -47,12 +49,13 @@
          </LinearLayout>
          
      </LinearLayout>
-     <Button 
+     <ImageView 
          android:id="@+id/category_detail_button"
          android:layout_height="wrap_content"
          android:layout_width="10dp"
          android:layout_weight="1"
-         android:text="Go" />
+         android:gravity="center_vertical"
+         android:src="@drawable/ic_arrow" />
 
      
 </LinearLayout>

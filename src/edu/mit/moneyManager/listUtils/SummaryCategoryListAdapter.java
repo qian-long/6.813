@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
@@ -51,7 +52,7 @@ public class SummaryCategoryListAdapter extends ArrayAdapter<CategoryItemEntry>{
             total.setText(category.getTotalAmount());
             remaining.setText(category.getRemainingAmount());
             
-            Button detailBtn = (Button) view.findViewById(R.id.category_detail_button);
+            ImageView detailBtn = (ImageView) view.findViewById(R.id.category_detail_button);
             detailBtn.setOnClickListener(new View.OnClickListener() {
                 
                 @Override
