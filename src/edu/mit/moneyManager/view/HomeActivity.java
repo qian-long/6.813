@@ -14,6 +14,12 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
+import android.widget.FrameLayout;
+
+import android.widget.TabWidget;
+
 import android.widget.TabHost;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
@@ -64,6 +70,9 @@ public class HomeActivity extends Activity {
             @Override
             public void onClick(View v) {
                 tabhost.setCurrentTab(1);
+                tabhost.getTabWidget().getChildTabViewAt(2).setEnabled(true);
+                TextView username = (TextView) getParent().findViewById(R.id.username);
+                username.setText("Your budget");
                //TODO: get the summary view in view tab
 //                tabhost.getTabWidget().getChildAt(1).getTab
             }
@@ -86,8 +95,12 @@ public class HomeActivity extends Activity {
                 TextView username = (TextView) getParent().findViewById(R.id.username);
 
                 username.setText(VIEWINGOTHER);
-                TabHost tabhost = ((TabActivity)getParent()).getTabHost();
                 tabhost.getTabWidget().getChildTabViewAt(2).setEnabled(false);
+//                Log.i("ARGHHH", ((RelativeLayout)tabhost.getTabWidget().getChildTabViewAt(1)).getChildAt(0).getClass().toString());
+//                Log.i("ARGHHH", ((ViewGroup)((FrameLayout)((LinearLayout)tabhost.getChildAt(0)).getChildAt(2)).getChildAt(0)).getChildAt(1).getClass().toString());
+
+//                Log.i("HomeActivity", tabhost.getTabWidget().getChildTabViewAt(1).getTag().toString());
+//                viewhost.getTabWidget().getChildTabViewAt(2).setEnabled(false);
                 tabhost.setCurrentTab(1);
                 return true;
             }
