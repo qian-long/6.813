@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import edu.mit.moneyManager.R;
@@ -33,7 +34,7 @@ public class ViewEditBudgetActivity extends ListActivity {
         //adding button listener for editing total budget amount
         final TextView totalAmt = (TextView) findViewById(R.id.budget_total);
         
-        Button editTotal = (Button) findViewById(R.id.edit_total);
+        ImageView editTotal = (ImageView) findViewById(R.id.edit_total);
         editTotal.setOnClickListener(new View.OnClickListener() {
             
             @Override

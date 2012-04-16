@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,7 +54,7 @@ public class EditCategoryListAdapter extends ArrayAdapter<CategoryItemEntry>{
             categoryName.setText(category.getName());
             total.setText(category.getTotalAmount());
 
-            Button edit = (Button) view.findViewById(R.id.edit_category_button);
+            ImageView edit = (ImageView) view.findViewById(R.id.edit_category_button);
             edit.setOnClickListener(new View.OnClickListener() {
                 
                 @Override
