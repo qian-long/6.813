@@ -32,6 +32,7 @@ import edu.mit.moneyManager.R;
 public class HomeActivity extends Activity {
     public static boolean NEW = true;
     public static String VIEWINGOTHER = "";
+    private TabHost tabhost;
     private TextView welcome;
     private Button create;
     private Button viewBtn;
@@ -43,6 +44,8 @@ public class HomeActivity extends Activity {
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
         VIEWINGOTHER="";
+        tabhost = ((TabActivity)getParent()).getTabHost();
+
         welcome = (TextView) findViewById(R.id.welcome);
         create = (Button) findViewById(R.id.create_budget);
         viewBtn = (Button) findViewById(R.id.view_budget);
@@ -57,7 +60,20 @@ public class HomeActivity extends Activity {
 
             
         }
-        
+        viewBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tabhost.setCurrentTab(1);
+               //TODO: get the summary view in view tab
+//                tabhost.getTabWidget().getChildAt(1).getTab
+            }
+        });
+        expenseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tabhost.setCurrentTab(2);
+            }
+        });
         ExpandableListView budgetsView = (ExpandableListView) findViewById(R.id.sharedBudgets);
         final ExpandableListAdapter adapter = new BudgetExpandableListAdapter();
         budgetsView.setAdapter(adapter);
@@ -66,11 +82,7 @@ public class HomeActivity extends Activity {
             
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-//                Intent intent = new Intent(v.getContext(), ViewSummaryActivity.class);
                 VIEWINGOTHER = (String) adapter.getChild(groupPosition, childPosition);
-//                startActivity(intent);
-                
-//                TextView username = (TextView) parent.findViewById(R.id.username);
                 TextView username = (TextView) getParent().findViewById(R.id.username);
 
                 username.setText(VIEWINGOTHER);
