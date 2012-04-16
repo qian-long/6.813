@@ -5,6 +5,7 @@ import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,14 +32,16 @@ import edu.mit.moneyManager.R;
 public class HomeActivity extends Activity {
     public static boolean NEW = true;
     public static String VIEWINGOTHER = "";
+    private TextView welcome;
+    private Button create;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
         VIEWINGOTHER="";
-        TextView welcome = (TextView) findViewById(R.id.welcome);
-        Button create = (Button) findViewById(R.id.create_budget);
+        welcome = (TextView) findViewById(R.id.welcome);
+        create = (Button) findViewById(R.id.create_budget);
         if (!NEW){
             welcome.setText("You have $225 remaining this month");
             create.setText("Enter Expense");
@@ -89,7 +92,7 @@ public class HomeActivity extends Activity {
 //                    startActivity(intent);
                     TabHost tabhost = ((TabActivity)getParent()).getTabHost();
                     tabhost.getTabWidget().getChildTabViewAt(2).setEnabled(true);
-                    tabhost.setCurrentTab(1);
+                    tabhost.setCurrentTab(2);
                 }
             }
             
@@ -97,6 +100,17 @@ public class HomeActivity extends Activity {
         
     }
     
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i("HomeActivity", "Calling onResume()");
+
+        if (!NEW){
+            welcome.setText("You have $225 remaining this month");
+            create.setText("Enter Expense");
+        }
+
+    }
     class BudgetExpandableListAdapter extends BaseExpandableListAdapter{
         private String[] groups = {"Shared Budgets"};
         private String[][] children = {{ "LukeSkywalker's Budget",

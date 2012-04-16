@@ -4,10 +4,6 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-<!--     <include -->
-<!--         android:id="@+id/actionbar" -->
-<!--         layout="@layout/actionbar" -->
-<!--         android:layout_alignParentTop="true"/> -->
 
     <TextView
         android:id="@+id/textView2"
@@ -18,7 +14,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/welcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Welcome!"
