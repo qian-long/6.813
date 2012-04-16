@@ -48,7 +48,7 @@ public class ViewShareActivity extends ListActivity {
         sharedUsers.add("darthvader@gmail.com");
         final SharedListAdapter adapter = new SharedListAdapter(this, sharedUsers);
         setListAdapter(adapter);
-        
+        Log.i("ViewShareActivity", "after setListAdapter(adapter");
         lv.setOnItemClickListener(new OnItemClickListener(){
 
             @Override
@@ -86,6 +86,7 @@ public class ViewShareActivity extends ListActivity {
             
         });
         
+        Log.i("ViewShareActivity", "before addSharedUserBtn");
         Button addSharedUserBtn = (Button) footer.findViewById(R.id.add_shareduser_button);
         addSharedUserBtn.setOnClickListener(new View.OnClickListener() {
             
@@ -136,6 +137,7 @@ public class ViewShareActivity extends ListActivity {
         textView.setLayoutParams(lp);
         textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
         textView.setPadding(35, 0, 0, 0);
+        textView.setId(1);
         return textView;
     }
 }
