@@ -34,6 +34,9 @@ public class HomeActivity extends Activity {
     public static String VIEWINGOTHER = "";
     private TextView welcome;
     private Button create;
+    private Button viewBtn;
+    private Button expenseBtn;
+    private Button shareBtn;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,9 +45,17 @@ public class HomeActivity extends Activity {
         VIEWINGOTHER="";
         welcome = (TextView) findViewById(R.id.welcome);
         create = (Button) findViewById(R.id.create_budget);
+        viewBtn = (Button) findViewById(R.id.view_budget);
+        expenseBtn = (Button) findViewById(R.id.enter_expense);
+        shareBtn = (Button) findViewById(R.id.share_budget);
         if (!NEW){
             welcome.setText("You have $225 remaining this month");
-            create.setText("Enter Expense");
+            create.setVisibility(View.GONE);
+            expenseBtn.setVisibility(View.VISIBLE);
+            viewBtn.setVisibility(View.VISIBLE);
+            shareBtn.setVisibility(View.VISIBLE);
+
+            
         }
         
         ExpandableListView budgetsView = (ExpandableListView) findViewById(R.id.sharedBudgets);
@@ -107,7 +118,10 @@ public class HomeActivity extends Activity {
 
         if (!NEW){
             welcome.setText("You have $225 remaining this month");
-            create.setText("Enter Expense");
+            create.setVisibility(View.GONE);
+            expenseBtn.setVisibility(View.VISIBLE);
+            viewBtn.setVisibility(View.VISIBLE);
+            shareBtn.setVisibility(View.VISIBLE);
         }
 
     }

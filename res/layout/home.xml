@@ -35,6 +35,30 @@
         android:layout_height="wrap_content"
         android:text="Create A Budget" />
 
+    <Button
+        android:id="@+id/view_budget"
+        android:layout_width="266dp"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="View Your Budget" />
+    
+    <Button
+        android:id="@+id/enter_expense"
+        android:layout_width="266dp"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="Enter an Expense" />
+    
+    <Button
+        android:id="@+id/share_budget"
+        android:layout_width="266dp"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="Share_Budget" />
+    
     <ExpandableListView
         android:id="@+id/sharedBudgets"
         android:layout_width="match_parent"
