@@ -5,19 +5,11 @@
      android:gravity="center_horizontal"
      android:orientation="horizontal">
      
-    <TextView 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:paddingRight="20dp"
-        android:text="Share With Another User"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Button
         android:id="@+id/add_shareduser_button"
         android:layout_width="wrap_content"
         android:layout_height="34dp"
-        android:text="+" />
+        android:text="Share With Another User" />
     
 </LinearLayout>
