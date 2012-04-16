@@ -33,23 +33,28 @@ public class MMTabWidget extends TabActivity {
 
         // Initialize a TabSpec for each tab and add it to the TabHost
         spec = tabHost.newTabSpec("home").setIndicator("Home",
-        		res.getDrawable(R.drawable.ic_menu_home))
+        		res.getDrawable(R.drawable.ic_tab_home))
                       .setContent(intent);
         tabHost.addTab(spec);
 
         // Do the same for the other tabs
         intent = new Intent().setClass(this, ViewContainer.class);
-        spec = tabHost.newTabSpec("view").setIndicator("View")
+        spec = tabHost.newTabSpec("view").setIndicator("View",
+        		res.getDrawable(R.drawable.ic_tab_stats))
                       .setContent(intent);
         tabHost.addTab(spec);
 
         intent = new Intent().setClass(this, ExpenseActivity.class);
         spec = tabHost.newTabSpec("expenses").setIndicator("Expenses",
-                          res.getDrawable(R.drawable.ic_tab_balance_unselected))
+                          res.getDrawable(R.drawable.ic_tab_expenses))
                       .setContent(intent);
         tabHost.addTab(spec);
 
             tabHost.setCurrentTab(0);
+        
+        int iCnt = tabHost.getTabWidget().getChildCount();
+        for(int i=0; i<iCnt; i++)
+          tabHost.getTabWidget().getChildAt(i).getLayoutParams().height = 80;
         
     }
     
