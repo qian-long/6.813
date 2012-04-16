@@ -122,11 +122,11 @@ public class HomeActivity extends ActivityGroup {
 //                startActivity(intent);
                 	TabHost tabhost = ((TabActivity)getParent()).getTabHost();
                     tabhost.setCurrentTab(1);
-                    Intent intent = new Intent().setClass(tabhost.getContext(), ViewContainer.class);
-                    Intent activity3Intent = new Intent(v.getContext(), ViewContainer.class);
-                    StringBuffer urlString = new StringBuffer();
+//                    Intent intent = new Intent().setClass(tabhost.getContext(), ViewContainer.class);
+//                    Intent activity3Intent = new Intent(v.getContext(), ViewContainer.class);
+//                    StringBuffer urlString = new StringBuffer();
                     //Activity1 parentActivity = (Activity1)getParent();
-                    replaceContentView("activity3", activity3Intent);
+//                    replaceContentView("activity3", activity3Intent);
                     
                 }
                 else{
@@ -159,6 +159,13 @@ public class HomeActivity extends ActivityGroup {
             expenseBtn.setVisibility(View.VISIBLE);
             viewBtn.setVisibility(View.VISIBLE);
             shareBtn.setVisibility(View.VISIBLE);
+        }
+        else {
+            welcome.setText("Welcome");
+            create.setVisibility(View.VISIBLE);
+            expenseBtn.setVisibility(View.GONE);
+            viewBtn.setVisibility(View.GONE);
+            shareBtn.setVisibility(View.GONE);
         }
 
     }
