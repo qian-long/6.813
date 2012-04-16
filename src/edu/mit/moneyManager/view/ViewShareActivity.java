@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import edu.mit.moneyManager.R;
 import edu.mit.moneyManager.listUtils.CategoryItemEntry;
+import edu.mit.moneyManager.listUtils.SharedListAdapter;
 
 public class ViewShareActivity extends ListActivity {
     
@@ -37,22 +38,21 @@ public class ViewShareActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_share);
-
-        //list adapter
-        final ListView lv = getListView();
+        
+        ListView lv = getListView();
         LayoutInflater inflater = getLayoutInflater();
         View footer = inflater.inflate(R.layout.view_share_footer, null, false);
         lv.addFooterView(footer);
-        final TextView tv = getGenericView();
-        final List<String> sharedUsers = new ArrayList<String>();
+        
+        final ArrayList<String> sharedUsers = new ArrayList<String>();
         sharedUsers.add("darthvader@gmail.com");
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, tv.getId(), sharedUsers);
+        final SharedListAdapter adapter = new SharedListAdapter(this, sharedUsers);
         setListAdapter(adapter);
         
         lv.setOnItemClickListener(new OnItemClickListener(){
 
             @Override
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+            public void onItemClick(AdapterView parent, View v, int position, long id) {
                 final Dialog dialog = new Dialog(getParent());
                 dialog.setContentView(R.layout.dialog_delete_user);
                 dialog.setTitle("Review User Sharing");
@@ -75,8 +75,8 @@ public class ViewShareActivity extends ListActivity {
                     @Override
                     public void onClick(View v) {
                         sharedUsers.remove("darthvader@gmail.com");
-                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(ViewShareActivity.this, tv.getId(), sharedUsers);
-                        lv.setAdapter(adapter);
+                        ArrayAdapter<String> adapter = new SharedListAdapter(ViewShareActivity.this, sharedUsers);
+                        setListAdapter(adapter);
                         dialog.dismiss();
                     }
                 });
@@ -107,8 +107,8 @@ public class ViewShareActivity extends ListActivity {
                     public void onClick(View v) {
                         // TODO Auto-generated method stub
                         sharedUsers.add("darthvader@gmail.com");
-                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(ViewShareActivity.this, R.layout.view_share, sharedUsers);
-                        lv.setAdapter(adapter);
+                        ArrayAdapter<String> adapter = new SharedListAdapter(ViewShareActivity.this, sharedUsers);
+                        setListAdapter(adapter);
                         dialog.dismiss();
                     }
                 });
