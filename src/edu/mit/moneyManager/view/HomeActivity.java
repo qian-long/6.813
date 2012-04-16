@@ -52,9 +52,17 @@ public class HomeActivity extends Activity {
             
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                Intent intent = new Intent(v.getContext(), ViewSummaryActivity.class);
+//                Intent intent = new Intent(v.getContext(), ViewSummaryActivity.class);
                 VIEWINGOTHER = (String) adapter.getChild(groupPosition, childPosition);
-                startActivity(intent);
+//                startActivity(intent);
+                
+//                TextView username = (TextView) parent.findViewById(R.id.username);
+                TextView username = (TextView) getParent().findViewById(R.id.username);
+
+                username.setText(VIEWINGOTHER);
+                TabHost tabhost = ((TabActivity)getParent()).getTabHost();
+                tabhost.getTabWidget().getChildTabViewAt(2).setEnabled(false);
+                tabhost.setCurrentTab(1);
                 return true;
             }
             
@@ -80,6 +88,7 @@ public class HomeActivity extends Activity {
 //                    intent.putExtra("tabIndex", 2);
 //                    startActivity(intent);
                     TabHost tabhost = ((TabActivity)getParent()).getTabHost();
+                    tabhost.getTabWidget().getChildTabViewAt(2).setEnabled(true);
                     tabhost.setCurrentTab(1);
                 }
             }

@@ -20,7 +20,7 @@ public class ViewContainer extends TabActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.view_tabhost);
 
         Resources res = getResources(); // Resource object to get Drawables
         TabHost tabHost = getTabHost();  // The activity TabHost
