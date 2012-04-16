@@ -1,6 +1,7 @@
 package edu.mit.moneyManager.view;
 
 import android.app.Activity;
+import android.app.ActivityGroup;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -29,7 +30,7 @@ import edu.mit.moneyManager.R;
  * 
  * Returning users can view their budget and view budgets shared with them.
  */
-public class HomeActivity extends Activity {
+public class HomeActivity extends ActivityGroup {
     public static boolean NEW = true;
     public static String VIEWINGOTHER = "";
     private TabHost tabhost;
@@ -109,8 +110,13 @@ public class HomeActivity extends Activity {
 //                intent.putExtra("tabIndex", 1);
 //                startActivity(intent);
                 	TabHost tabhost = ((TabActivity)getParent()).getTabHost();
-                    tabhost.getTabWidget().getChildTabViewAt(2).setEnabled(true);
-                    tabhost.setCurrentTab(2);
+                    tabhost.setCurrentTab(1);
+                    Intent intent = new Intent().setClass(tabhost.getContext(), ViewContainer.class);
+                    Intent activity3Intent = new Intent(v.getContext(), ViewContainer.class);
+                    StringBuffer urlString = new StringBuffer();
+                    //Activity1 parentActivity = (Activity1)getParent();
+                    replaceContentView("activity3", activity3Intent);
+                    
                 }
                 else{
 //                    Intent intent = new Intent(v.getContext(), ExpenseActivity.class);
@@ -126,6 +132,10 @@ public class HomeActivity extends Activity {
         });  
         
     }
+    
+    public void replaceContentView(String id, Intent newIntent) {
+    	View view = getLocalActivityManager().startActivity(id,newIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)).getDecorView(); this.setContentView(view);
+    	}
     
     @Override
     protected void onResume() {
