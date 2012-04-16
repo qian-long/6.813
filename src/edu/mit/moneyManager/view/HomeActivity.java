@@ -63,9 +63,12 @@ public class HomeActivity extends Activity {
         viewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tabhost.setCurrentTab(1);
+                //tabhost.setCurrentTab(1);
                //TODO: get the summary view in view tab
 //                tabhost.getTabWidget().getChildAt(1).getTab
+                tabhost = ((TabActivity)getParent()).getTabHost();
+                tabhost.getTabWidget().getChildTabViewAt(2).setEnabled(false);
+                tabhost.setCurrentTab(1);
             }
         });
         expenseBtn.setOnClickListener(new View.OnClickListener() {
@@ -105,8 +108,9 @@ public class HomeActivity extends Activity {
 //                Intent intent = new Intent(v.getContext(), MMTabWidget.class);
 //                intent.putExtra("tabIndex", 1);
 //                startActivity(intent);
-                    TabHost tabhost = ((TabActivity)getParent()).getTabHost();
-                    tabhost.setCurrentTab(1);
+                	TabHost tabhost = ((TabActivity)getParent()).getTabHost();
+                    tabhost.getTabWidget().getChildTabViewAt(2).setEnabled(true);
+                    tabhost.setCurrentTab(2);
                 }
                 else{
 //                    Intent intent = new Intent(v.getContext(), ExpenseActivity.class);
