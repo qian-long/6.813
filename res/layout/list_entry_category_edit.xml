@@ -22,12 +22,12 @@
          android:textSize="24sp"
          android:text="$48391" />
      
-     <Button
+     <ImageView
          android:id="@+id/edit_category_button"
          android:layout_width="0dp"
          android:layout_height="30dp"
          android:textSize="10sp"
-         android:text="edit" 
+         android:src="@drawable/ic_menu_edit" 
          android:layout_weight="1"/>
      
 </LinearLayout>

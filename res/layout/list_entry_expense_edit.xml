@@ -27,12 +27,12 @@
             android:layout_weight="2"
             android:text="300" />
     
-        <Button
+        <ImageView
             android:id="@+id/edit_expense_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content" 
             android:layout_weight="1"
-            android:text="edit" />
+            android:src="@drawable/ic_menu_edit" />
     
     </LinearLayout>
 </LinearLayout>

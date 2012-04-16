@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class CategoryExpenseListAdapter extends ArrayAdapter<ExpenseItemEntry>{
@@ -49,8 +50,8 @@ public class CategoryExpenseListAdapter extends ArrayAdapter<ExpenseItemEntry>{
             date.setText(expense.getDateString());
             amount.setText(expense.getAmount());
 
-            Button edit = (Button) view.findViewById(R.id.edit_expense_btn);
-            Log.i("CategoryExpenseList adapter", (String)edit.getText());
+            ImageView edit = (ImageView) view.findViewById(R.id.edit_expense_btn);
+            //Log.i("CategoryExpenseList adapter", (String)edit.getText());
             edit.setOnClickListener(new View.OnClickListener() {
                 
                 @Override
