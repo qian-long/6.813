@@ -8,6 +8,7 @@ import edu.mit.moneyManager.listUtils.CategoryItemEntry;
 import edu.mit.moneyManager.listUtils.SummaryCategoryListAdapter;
 import android.app.Activity;
 import android.app.ListActivity;
+import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -112,7 +113,7 @@ public class ViewSummaryActivity extends ListActivity {
         sample.add(new CategoryItemEntry("Clothing", 900,799));
         sample.add(new CategoryItemEntry("Clothing", 900,799));
 
-        SummaryCategoryListAdapter adapter = new SummaryCategoryListAdapter(this, (ArrayList<CategoryItemEntry>) sample);
+        SummaryCategoryListAdapter adapter = new SummaryCategoryListAdapter(this, (ArrayList<CategoryItemEntry>) sample, ((TabActivity)getParent()).getTabHost());
         setListAdapter(adapter);
     }
 
