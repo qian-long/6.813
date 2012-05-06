@@ -46,8 +46,14 @@ public class ViewEditBudgetActivity extends ListActivity {
 
         // adding button listener for editing total budget amount
         final TextView totalAmt = (TextView) findViewById(R.id.budget_total);
-        totalAmt.setText(new Float(settings.getFloat(
-                ViewSummaryActivity.BUDGET_TOTAL, (float) 0.0)).toString());
+        float total = settings.getFloat(ViewSummaryActivity.BUDGET_TOTAL,
+                (float) 0.0);
+        totalAmt.setText(new Float(total).toString());
+        final TextView unallocated = (TextView) findViewById(R.id.amount_unallocated);
+        mDBAdapter.open();
+        unallocated.setText(new Float(total - mDBAdapter.getCategoriesTotal())
+                .toString());
+        mDBAdapter.close();
         ImageView editTotal = (ImageView) findViewById(R.id.edit_total);
         editTotal.setOnClickListener(new View.OnClickListener() {
 
@@ -73,26 +79,40 @@ public class ViewEditBudgetActivity extends ListActivity {
                     @Override
                     public void onClick(View v) {
                         // TODO put in actual user input
-                        float input = Float.parseFloat(total.getText()
-                                .toString());
+                        
 
                         mDBAdapter.open();
                         float allocated = (float) mDBAdapter
                                 .getCategoriesTotal();
                         mDBAdapter.close();
-                        if (input > allocated) {
-                            Editor editor = settings.edit();
-                            editor.putFloat(ViewSummaryActivity.BUDGET_TOTAL,
-                                    input);
-                            totalAmt.setText(total.getText().toString());
-                            editor.commit();
-                            dialog.dismiss();
-
-                        } else {
+                        if (total.getText().toString().length() == 0
+                                | total.getText().toString().equals("")) {
                             Toast.makeText(
                                     mContext,
-                                    "Total is less than sum of category totals, please enter a larger amount",
+                                    "Please enter a valid amount",
                                     Toast.LENGTH_SHORT).show();
+                        } else {
+                            float input = Float.parseFloat(total.getText()
+                                    .toString());
+                            if (input > allocated) {
+                                Editor editor = settings.edit();
+                                editor.putFloat(
+                                        ViewSummaryActivity.BUDGET_TOTAL, input);
+                                totalAmt.setText(total.getText().toString());
+                                editor.commit();
+                                mDBAdapter.open();
+                                unallocated.setText(new Float(input
+                                        - mDBAdapter.getCategoriesTotal())
+                                        .toString());
+                                mDBAdapter.close();
+                                dialog.dismiss();
+
+                            } else {
+                                Toast.makeText(
+                                        mContext,
+                                        "Total is less than sum of category totals, please enter a larger amount",
+                                        Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }
                 });
@@ -101,7 +121,6 @@ public class ViewEditBudgetActivity extends ListActivity {
 
                     @Override
                     public void onClick(View v) {
-                        // TODO Auto-generated method stub
                         dialog.dismiss();
                     }
                 });
@@ -119,21 +138,15 @@ public class ViewEditBudgetActivity extends ListActivity {
         lv.addFooterView(footer);
 
         // setting list adapter
-        // samples data
-        final List<CategoryItemEntry> sample = new ArrayList<CategoryItemEntry>();
-        sample.add(new CategoryItemEntry("Food", 500, 500));
-        sample.add(new CategoryItemEntry("Books", 500, 500));
-        sample.add(new CategoryItemEntry("Clothing", 900, 799));
-
         mDBAdapter.open();
-        final List<Category> categories = mDBAdapter.getCategories();
+        List<Category> categories = mDBAdapter.getCategories();
         mDBAdapter.close();
         Log.i("ViewEditBudgetActivity", "before adapter");
         EditCategoryListAdapter adapter = new EditCategoryListAdapter(this,
                 (ArrayList<Category>) categories, getParent());
         setListAdapter(adapter);
 
-        Button addCategoryBtn = (Button) footer
+        final Button addCategoryBtn = (Button) footer
                 .findViewById(R.id.add_category_button);
         addCategoryBtn.setOnClickListener(new View.OnClickListener() {
 
@@ -162,17 +175,42 @@ public class ViewEditBudgetActivity extends ListActivity {
                     public void onClick(View v) {
                         // TODO Auto-generated method stub
                         mDBAdapter.open();
-                        float amount = Float.parseFloat(newAmount.getText()
+                        float inpAmount = Float.parseFloat(newAmount.getText()
                                 .toString());
-                        mDBAdapter.addCategory(new Category(name.getText()
-                                .toString(), amount, amount));
-                        
-                        EditCategoryListAdapter adapter = new EditCategoryListAdapter(
-                                mContext, (ArrayList<Category>) mDBAdapter.getCategories(),
-                                getParent());
-                        mDBAdapter.close();
-                        setListAdapter(adapter);
-                        dialog.dismiss();
+                        float unallocatedAmt = settings.getFloat(
+                                ViewSummaryActivity.BUDGET_TOTAL,
+                                Float.MIN_VALUE)
+                                - (float) mDBAdapter.getCategoriesTotal();
+                        unallocated.setText(new Float(unallocatedAmt)
+                                .toString());
+                        if (inpAmount <= unallocatedAmt) {
+                            mDBAdapter.addCategory(new Category(name.getText()
+                                    .toString(), inpAmount, inpAmount));
+
+                            EditCategoryListAdapter adapter = new EditCategoryListAdapter(
+                                    mContext, (ArrayList<Category>) mDBAdapter
+                                            .getCategories(), getParent());
+                            setListAdapter(adapter);
+                            float newUnallocatedAmt = settings.getFloat(
+                                    ViewSummaryActivity.BUDGET_TOTAL,
+                                    Float.MIN_VALUE)
+                                    - (float) mDBAdapter.getCategoriesTotal();
+                            unallocated.setText(new Float(newUnallocatedAmt)
+                                    .toString());
+                            mDBAdapter.close();
+                            if (newUnallocatedAmt - 0.0 < 0.000001) {
+                                addCategoryBtn.setEnabled(false);
+                            }
+                            else {
+                                addCategoryBtn.setEnabled(true);
+                            }
+                            dialog.dismiss();
+                        } else {
+                            Toast.makeText(
+                                    mContext,
+                                    "Not enough unallocated. Please enter a lower amount",
+                                    Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
 

@@ -63,5 +63,12 @@ public class ViewSummaryActivity extends ListActivity {
                 .getFloat(BUDGET_TOTAL, (float) 1000.00)).toString());
         remaining.setText(new Float(settings.getFloat(BUDGET_REMAINING,
                 (float) 1000.00)).toString());
+        mDBAdapter.open();
+        SummaryCategoryListAdapter adapter = new SummaryCategoryListAdapter(
+                this, (ArrayList<Category>) mDBAdapter.getCategories(),
+                ((TabActivity) getParent()).getTabHost());
+        mDBAdapter.close();
+
+        setListAdapter(adapter);
     }
 }
