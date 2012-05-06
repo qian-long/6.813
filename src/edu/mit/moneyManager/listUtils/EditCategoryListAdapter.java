@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.mit.moneyManager.R;
+import edu.mit.moneyManager.model.Category;
 import edu.mit.moneyManager.view.ViewEditBudgetActivity;
 
 import android.app.Dialog;
@@ -20,14 +21,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class EditCategoryListAdapter extends ArrayAdapter<CategoryItemEntry>{
+public class EditCategoryListAdapter extends ArrayAdapter<Category>{
     public static final String TAG="EditCategoryListAdapter.java";
     private Context context;
     private Context parentContext;
-    private ArrayList<CategoryItemEntry> categories;
+    private ArrayList<Category> categories;
     private LayoutInflater inflator;
 
-    public EditCategoryListAdapter(Context context, ArrayList<CategoryItemEntry> categories, Context parent) {
+    public EditCategoryListAdapter(Context context, ArrayList<Category> categories, Context parent) {
         super(context, 0, categories);
         this.categories = categories;
         this.context = context;
@@ -40,7 +41,7 @@ public class EditCategoryListAdapter extends ArrayAdapter<CategoryItemEntry>{
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
         Log.i(TAG, parent.toString());
-        final CategoryItemEntry category = categories.get(position);
+        final Category category = categories.get(position);
         if (category != null) {
             view = inflator.inflate(R.layout.list_entry_category_edit, null);
             
@@ -52,7 +53,7 @@ public class EditCategoryListAdapter extends ArrayAdapter<CategoryItemEntry>{
             final TextView total = (TextView) view.findViewById(R.id.category_amount);
             
             categoryName.setText(category.getName());
-            total.setText(category.getTotalAmount());
+            total.setText(new Double(category.getTotal()).toString());
 
             ImageView edit = (ImageView) view.findViewById(R.id.edit_category_button);
             edit.setOnClickListener(new View.OnClickListener() {
@@ -84,8 +85,8 @@ public class EditCategoryListAdapter extends ArrayAdapter<CategoryItemEntry>{
 
                             newNameView.setText("new name");
                             amountInput.setText("100");
-                            category.setName("new name");
-                            category.setTotal(100);
+//                            category.setName("new name");
+//                            category.setTotal(100);
                             categoryName.setText("new name");
                             total.setText("100");
                             dialog.dismiss();

@@ -3,6 +3,7 @@ package edu.mit.moneyManager.listUtils;
 import java.util.ArrayList;
 
 import edu.mit.moneyManager.R;
+import edu.mit.moneyManager.model.Category;
 import edu.mit.moneyManager.view.ViewCategoryActivity;
 
 import android.content.Context;
@@ -16,14 +17,14 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
-public class SummaryCategoryListAdapter extends ArrayAdapter<CategoryItemEntry>{
+public class SummaryCategoryListAdapter extends ArrayAdapter<Category>{
 
     private Context context;
-    private ArrayList<CategoryItemEntry> categories;
+    private ArrayList<Category> categories;
     private LayoutInflater inflator;
     private TabHost tabhost;
     
-    public SummaryCategoryListAdapter(Context context, ArrayList<CategoryItemEntry> categories, TabHost tabhost) {
+    public SummaryCategoryListAdapter(Context context, ArrayList<Category> categories, TabHost tabhost) {
         super(context, 0, categories);
         this.categories = categories;
         this.context = context;
@@ -36,7 +37,7 @@ public class SummaryCategoryListAdapter extends ArrayAdapter<CategoryItemEntry>{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
-        final CategoryItemEntry category = categories.get(position);
+        final Category category = categories.get(position);
         if (category != null) {
             view = inflator.inflate(R.layout.list_entry_category_summary, null);
             
@@ -49,8 +50,8 @@ public class SummaryCategoryListAdapter extends ArrayAdapter<CategoryItemEntry>{
             TextView remaining = (TextView) view.findViewById(R.id.category_remaining);
             
             categoryName.setText(category.getName());
-            total.setText(category.getTotalAmount());
-            remaining.setText(category.getRemainingAmount());
+            total.setText(new Double(category.getTotal()).toString());
+            remaining.setText(new Double(category.getRemaining()).toString());
             
             ImageView detailBtn = (ImageView) view.findViewById(R.id.category_detail_button);
             detailBtn.setOnClickListener(new View.OnClickListener() {
