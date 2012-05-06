@@ -20,6 +20,8 @@ import edu.mit.moneyManager.listUtils.CategoryExpenseListAdapter;
 import edu.mit.moneyManager.listUtils.CategoryItemEntry;
 import edu.mit.moneyManager.listUtils.ExpenseItemEntry;
 import edu.mit.moneyManager.listUtils.MainExpenseListAdapter;
+import edu.mit.moneyManager.model.DatabaseAdapter;
+import edu.mit.moneyManager.model.Expense;
 
 /**
  * This is the expenses activity.
@@ -28,11 +30,13 @@ import edu.mit.moneyManager.listUtils.MainExpenseListAdapter;
  */
 public class ExpenseActivity extends ListActivity {
     private TabHost tabhost;
+    private DatabaseAdapter mDBAdapter;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.expenses);
+        mDBAdapter = new DatabaseAdapter(this);
         tabhost =  ((TabActivity)getParent()).getTabHost();
         //list adapter, defining footer button behaviors
         ListView lv = getListView();
@@ -41,9 +45,9 @@ public class ExpenseActivity extends ListActivity {
         lv.addFooterView(footer);
         
         //list adapter
-        final ArrayList<ExpenseItemEntry> samples = new ArrayList<ExpenseItemEntry>();
-        samples.add(new ExpenseItemEntry(new GregorianCalendar(2012, 4, 15), 100, "food"));
-        final MainExpenseListAdapter adapter = new MainExpenseListAdapter(this, samples);
+        final ArrayList<Expense> samples = new ArrayList<Expense>();
+        samples.add(new Expense(100, "5/6/2012", "food"));
+        final MainExpenseListAdapter adapter = new MainExpenseListAdapter(this, samples, mDBAdapter);
         setListAdapter(adapter);
         
         Button add = (Button)footer.findViewById(R.id.add_expense);
@@ -53,7 +57,7 @@ public class ExpenseActivity extends ListActivity {
             
             @Override
             public void onClick(View v) {
-                samples.add(new ExpenseItemEntry(new GregorianCalendar(2012, 4, 15), 100, "food"));
+//                samples.add(new ExpenseItemEntry(new GregorianCalendar(2012, 4, 15), 100, "food"));
                 setListAdapter(adapter);
 
             }

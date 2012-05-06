@@ -44,13 +44,13 @@ public class ViewEditBudgetActivity extends ListActivity {
         settings = getSharedPreferences(ViewSummaryActivity.PREFS_NAME,
                 MODE_PRIVATE);
 
-        // adding button listener for editing total budget amount
         final TextView totalAmt = (TextView) findViewById(R.id.budget_total);
         float total = settings.getFloat(ViewSummaryActivity.BUDGET_TOTAL,
                 (float) 0.0);
         totalAmt.setText(new Float(total).toString());
         final TextView unallocated = (TextView) findViewById(R.id.amount_unallocated);
         mDBAdapter.open();
+        //amount unallocated = total - sum of category totals
         unallocated.setText(new Float(total - mDBAdapter.getCategoriesTotal())
                 .toString());
         mDBAdapter.close();
