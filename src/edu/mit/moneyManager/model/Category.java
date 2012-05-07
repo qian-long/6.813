@@ -37,4 +37,16 @@ public class Category {
     public Double getRemaining() {
         return new Double(remaining);
     }
+    
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    public void setTotal(double total) {
+        this.total = total;
+    }
+    
+    public void setRemaining(double remaining) {
+        this.remaining = remaining;
+    }
 }

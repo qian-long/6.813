@@ -143,7 +143,7 @@ public class ViewEditBudgetActivity extends ListActivity {
         mDBAdapter.close();
         Log.i("ViewEditBudgetActivity", "before adapter");
         EditCategoryListAdapter adapter = new EditCategoryListAdapter(this,
-                (ArrayList<Category>) categories, getParent());
+                (ArrayList<Category>) categories, getParent(), mDBAdapter);
         setListAdapter(adapter);
 
         final Button addCategoryBtn = (Button) footer
@@ -189,7 +189,7 @@ public class ViewEditBudgetActivity extends ListActivity {
 
                             EditCategoryListAdapter adapter = new EditCategoryListAdapter(
                                     mContext, (ArrayList<Category>) mDBAdapter
-                                            .getCategories(), getParent());
+                                            .getCategories(), getParent(), mDBAdapter);
                             setListAdapter(adapter);
                             float newUnallocatedAmt = settings.getFloat(
                                     ViewSummaryActivity.BUDGET_TOTAL,

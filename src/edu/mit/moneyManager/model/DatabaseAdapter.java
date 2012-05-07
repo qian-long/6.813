@@ -127,6 +127,44 @@ public class DatabaseAdapter {
         return mDb.insert(CATEGORIES_TABLE, null, initialValues);
     }
 
+    public boolean updateCategory(String name, String newname, double newamt) {
+        ContentValues updatedValues = new ContentValues();
+        // updatedValues.put(NAME_COLUMN, newname);
+        updatedValues.put(TOTAL_COLUMN, newamt);
+        Cursor cursor = mDb.query(CATEGORIES_TABLE, new String[] { ROW_ID },
+                NAME_COLUMN + "=\'" + name + "\'", null, null, null, null);
+        cursor.moveToFirst();
+        if (cursor.getCount() > 0) {
+            int row = cursor.getInt(0);
+            return mDb.update(CATEGORIES_TABLE, updatedValues, ROW_ID + "="
+                    + row, null) == 1;
+        }
+        else {
+            return false;
+        }
+        // Cursor cursor = mDb.query(EXPENSES_TABLE, new String[] { ROW_ID },
+        // CATEGORY_COLUMN + "=\'" + name + "\'", null, null, null, null);
+
+        // update column name of all expenses in that category
+        // if (cursor.getCount() > 0) {
+        // cursor.moveToFirst();
+        // ContentValues expenseUpdate = new ContentValues();
+        // updatedValues.put(CATEGORY_COLUMN, newname);
+        // while (!cursor.isAfterLast()) {
+        // mDb.update(EXPENSES_TABLE, expenseUpdate, whereClause, whereArgs)
+        // cursor.moveToNext();
+        // }
+        // }
+        // ContentValues expenseUpdate = new ContentValues();
+        // expenseUpdate.put(CATEGORY_COLUMN, newname);
+        // mDb.update(EXPENSES_TABLE, expenseUpdate, CATEGORY_COLUMN + "=\'"
+        // + name + "\'", null);
+
+        // String[] args = {name};
+        // return mDb.update(CATEGORIES_TABLE, updatedValues, NAME_COLUMN +
+        // "=?", args) == 1;
+    }
+
     /**
      * 
      * @param name
@@ -182,17 +220,17 @@ public class DatabaseAdapter {
 
     /**
      * 
-     * @return
-     *      Total allocated for the categories
+     * @return Total allocated for the categories
      */
     public double getCategoriesTotal() {
         List<Category> categories = this.getCategories();
         double total = 0.0;
-        for (Category category: categories) {
+        for (Category category : categories) {
             total += category.getTotal();
         }
         return total;
     }
+
     /**
      * 
      * @return List of all category names in database

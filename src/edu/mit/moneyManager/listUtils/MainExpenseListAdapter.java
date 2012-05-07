@@ -10,11 +10,13 @@ import edu.mit.moneyManager.view.ExpenseActivity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TabHost;
 
@@ -41,6 +43,10 @@ public class MainExpenseListAdapter extends ArrayAdapter<Expense> {
         final Expense expense = expenses.get(position);
         if (expense != null) {
             view = inflator.inflate(R.layout.list_entry_expense_add, null);
+            
+            EditText newAmount = (EditText) view.findViewById(R.id.new_amount);
+            newAmount.setInputType(InputType.TYPE_CLASS_NUMBER
+                    | InputType.TYPE_NUMBER_FLAG_DECIMAL);
             
             Spinner spinner = (Spinner) view
                     .findViewById(R.id.category_spinner);
