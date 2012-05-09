@@ -3,6 +3,7 @@ package edu.mit.moneyManager.listUtils;
 import java.util.ArrayList;
 
 import edu.mit.moneyManager.R;
+import edu.mit.moneyManager.model.Expense;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -17,14 +18,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class CategoryExpenseListAdapter extends ArrayAdapter<ExpenseItemEntry>{
+public class CategoryExpenseListAdapter extends ArrayAdapter<Expense>{
 
     private Context context;
     private final Context parentContext;
-    private ArrayList<ExpenseItemEntry> expenses;
+    private ArrayList<Expense> expenses;
     private LayoutInflater inflator;
     
-    public CategoryExpenseListAdapter(Context context, ArrayList<ExpenseItemEntry> expenses, Context parent) {
+    public CategoryExpenseListAdapter(Context context, ArrayList<Expense> expenses, Context parent) {
         super(context, 0, expenses);
         this.expenses = expenses;
         this.context = context;
@@ -36,7 +37,7 @@ public class CategoryExpenseListAdapter extends ArrayAdapter<ExpenseItemEntry>{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
-        final ExpenseItemEntry expense = expenses.get(position);
+        final Expense expense = expenses.get(position);
         if (expense != null) {
             view = inflator.inflate(R.layout.list_entry_expense_edit, null);
             
@@ -47,8 +48,8 @@ public class CategoryExpenseListAdapter extends ArrayAdapter<ExpenseItemEntry>{
             final TextView date = (TextView) view.findViewById(R.id.expense_date);            
             final TextView amount = (TextView) view.findViewById(R.id.expense_amount);
             
-            date.setText(expense.getDateString());
-            amount.setText(expense.getAmount());
+            date.setText(expense.getDate());
+            amount.setText(expense.getAmount().toString());
 
             ImageView edit = (ImageView) view.findViewById(R.id.edit_expense_btn);
             //Log.i("CategoryExpenseList adapter", (String)edit.getText());

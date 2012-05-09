@@ -1,6 +1,7 @@
 package edu.mit.moneyManager.listUtils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import edu.mit.moneyManager.model.Expense;
 import edu.mit.moneyManager.view.ExpenseActivity;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.text.Editable;
 import android.text.InputType;
@@ -22,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TabHost;
@@ -35,6 +38,7 @@ public class MainExpenseListAdapter extends ArrayAdapter<Expense> {
     // pointer to dba
     private DatabaseAdapter mDBAdapter;
     private Map<String, Integer> mCategoryMap;
+    //pointer to list of categories
     private List<String> categories;
 
     public MainExpenseListAdapter(Context context, ArrayList<Expense> expenses,
@@ -53,14 +57,18 @@ public class MainExpenseListAdapter extends ArrayAdapter<Expense> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        mDBAdapter.open();
+        categories = mDBAdapter.getCategoryNames();
+        mCategoryMap = getCategoryMap(categories);
+        mDBAdapter.close();
         View view = convertView;
         Log.i(TAG, "getView() position: " + position);
         final Expense expense = expenses.get(position);
 
         if (expense != null) {
-//            if (categories != null && categories.size() > 0) {
-//                expense.setCategory(categories.get(0));
-//            }
+            // if (categories != null && categories.size() > 0) {
+            // expense.setCategory(categories.get(0));
+            // }
             view = inflator.inflate(R.layout.list_entry_expense_add, null);
 
             EditText newAmount = (EditText) view.findViewById(R.id.new_amount);
@@ -94,10 +102,6 @@ public class MainExpenseListAdapter extends ArrayAdapter<Expense> {
             newAmount.setText(expense.getAmount().toString());
             final Spinner spinner = (Spinner) view
                     .findViewById(R.id.category_spinner);
-            // mDBAdapter.open();
-            // final List<String> categories = mDBAdapter.getCategoryNames();
-            // mDBAdapter.close();
-            // TODO: style dropdown
 
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
                     android.R.layout.simple_spinner_item, categories);
@@ -113,21 +117,15 @@ public class MainExpenseListAdapter extends ArrayAdapter<Expense> {
                     spinner.setSelection(0);
                 }
             }
-            
+
             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view,
                         int position, long id) {
-                    Toast.makeText(view.getContext(),
-                            "FUCK THIS ON ITEM SELECTED", Toast.LENGTH_SHORT)
-                            .show();
-                    Log.i(TAG, "ON ITEM SELECTED POSITION: " + position);
-                    Log.i(TAG, "ON ITEM SELECTED: " + categories.get(position));
+               
                     expense.setCategory(categories.get(position));
-                    Log.i(TAG,
-                            "after setting expense category: "
-                                    + expense.getCategory());
+                   
                     spinner.setSelection(position);
 
                 }
@@ -139,20 +137,37 @@ public class MainExpenseListAdapter extends ArrayAdapter<Expense> {
                 }
             });
 
-            // spinner.setSelection(1);
-
-            // if (categories.size() > 1) {
-            // spinner.setSelection(0);
-            // }
-
-            Button datePicker = (Button) view.findViewById(R.id.edit_date_btn);
+            final Button datePicker = (Button) view
+                    .findViewById(R.id.edit_date_btn);
+            datePicker.setText(expense.getDate());
             datePicker.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
                     // TODO Auto-generated method stub
-                    ((Activity) context)
-                            .showDialog(ExpenseActivity.DATE_DIALOG_ID);
+                    // ((Activity)
+                    // context).showDialog(ExpenseActivity.DATE_DIALOG_ID);
+                    Calendar c = Calendar.getInstance();
+                    DatePickerDialog dialog = new DatePickerDialog(context,
+                            new DatePickerDialog.OnDateSetListener() {
+
+                                @Override
+                                public void onDateSet(DatePicker view,
+                                        int year, int monthOfYear,
+                                        int dayOfMonth) {
+                                    // TODO Auto-generated method stub
+                                    
+                                    expense.setDate((new StringBuilder()
+                                            .append(monthOfYear + 1)
+                                            .append("/").append(dayOfMonth)
+                                            .append("/").append(year)
+                                            .append(" ").toString()));
+                                    notifyDataSetChanged();
+
+                                }
+                            }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c
+                                    .get(Calendar.DAY_OF_MONTH));
+                    dialog.show();
                 }
             });
 

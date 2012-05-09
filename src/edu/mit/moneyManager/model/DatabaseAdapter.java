@@ -51,21 +51,28 @@ public class DatabaseAdapter {
                     + " TEXT NOT NULL, " + TOTAL_COLUMN + " REAL NOT NULL, "
                     + REMAINING_COLUMN + " REAL NOT NULL);");
 
+//            db.execSQL("CREATE TABLE " + EXPENSES_TABLE
+//                    + " (_id INTEGER PRIMARY KEY AUTOINCREMENT, " + DATE_COLUMN
+//                    + " TEXT NOT NULL, " + AMOUNT_COLUMN + " REAL NOT NULL, "
+//                    + CATEGORY_COLUMN + " TEXT NOT NULL, " + "FOREIGN KEY("
+//                    + CATEGORY_COLUMN + ") REFERENCES " + CATEGORIES_TABLE
+//                    + "(" + NAME_COLUMN + "));");
+            
             db.execSQL("CREATE TABLE " + EXPENSES_TABLE
                     + " (_id INTEGER PRIMARY KEY AUTOINCREMENT, " + DATE_COLUMN
                     + " TEXT NOT NULL, " + AMOUNT_COLUMN + " REAL NOT NULL, "
-                    + CATEGORY_COLUMN + " TEXT NOT NULL, " + "FOREIGN KEY("
-                    + CATEGORY_COLUMN + ") REFERENCES " + CATEGORIES_TABLE
-                    + "(" + NAME_COLUMN + "));");
+                    + CATEGORY_COLUMN + " TEXT NOT NULL);");
 
         }
 
         public void onOpen(SQLiteDatabase db) {
             super.onOpen(db);
+            /*
             if (!db.isReadOnly()) {
                 // Enable foreign key constraints
                 db.execSQL("PRAGMA foreign_keys=ON;");
             }
+            */
         }
 
         @Override
@@ -186,6 +193,24 @@ public class DatabaseAdapter {
         return (cursor.getCount() > 0);
     }
 
+    /**
+     * 
+     * @param name
+     * @return
+     *      Category, null if doesn't exist
+     */
+    public Category getCategory(String name) {
+        Cursor cursor = mDb.query(CATEGORIES_TABLE, new String[] { CATEGORY_ROW_ID,
+                NAME_COLUMN, TOTAL_COLUMN, REMAINING_COLUMN }, NAME_COLUMN + "=\'" + name + "\'", null, null,
+                null, null);
+        cursor.moveToFirst();
+        if (cursor.getCount() > 0) {
+            double total = Double.parseDouble(cursor.getString(2));
+            double remaining = Double.parseDouble(cursor.getString(3));
+            return new Category(name, total, remaining);
+        }
+        return null;
+    }
     // TODO
     /**
      * Query for all expenses in <name> category. Update all expenses from the
@@ -262,7 +287,7 @@ public class DatabaseAdapter {
      * Create a new row with Expense. If row is successfully created return the
      * new rowId for that note, otherwise return a -1 to indicate failure.
      * 
-     * Precondition: expense.amount <= category.remaining
+     * Precondition: category name exists
      * 
      * @param parseId
      *            parseId of the printer

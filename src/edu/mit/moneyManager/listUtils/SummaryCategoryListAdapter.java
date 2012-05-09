@@ -61,6 +61,7 @@ public class SummaryCategoryListAdapter extends ArrayAdapter<Category>{
                     // TODO Auto-generated method stub
 //                    tabhost.setCurrentTab(index)
                     Intent intent = new Intent(v.getContext(), ViewCategoryActivity.class);
+                    intent.putExtra(ViewCategoryActivity.INTENT_KEY_CATEGORY, category.getName());
                     context.startActivity(intent);
                 }
             });
