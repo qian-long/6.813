@@ -264,6 +264,14 @@ public class DatabaseAdapter {
         return total;
     }
 
+    public double getTotalRemaining() {
+        List<Category> categories = this.getCategories();
+        double remaining = 0.0;
+        for (Category category : categories) {
+            remaining += category.getRemaining();
+        }
+        return remaining;
+    }
     /**
      * 
      * @return List of all category names in database
