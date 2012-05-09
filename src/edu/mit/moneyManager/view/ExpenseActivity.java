@@ -68,7 +68,8 @@ public class ExpenseActivity extends ListActivity {
                 // samples.add(new ExpenseItemEntry(new GregorianCalendar(2012,
                 // 4, 15), 100, "food"));
                 samples.add(new Expense(100, "", ""));
-                setListAdapter(adapter);
+                adapter.notifyDataSetChanged();
+//                setListAdapter(adapter);
 
             }
         });

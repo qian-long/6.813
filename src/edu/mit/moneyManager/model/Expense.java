@@ -1,7 +1,9 @@
 package edu.mit.moneyManager.model;
 
-public class Expense {
+import android.util.Log;
 
+public class Expense {
+    public static final String TAG = "EXPENSE MODEL";
     private double amount;
     private String date;
     private String category;
@@ -34,7 +36,8 @@ public class Expense {
     }
     
     public void setCategory(String category) {
-        this.category = category;
+        Log.i(TAG, "setting Category: " + category);
+        this.category = new String(category);
     }
     
     /** GETTERS **/
@@ -47,6 +50,7 @@ public class Expense {
     }
     
     public String getCategory() {
+        Log.i(TAG, "getting category: " + category);
         return new String(category);
     }
     
