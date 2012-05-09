@@ -56,7 +56,8 @@ public class ViewSummaryActivity extends ListActivity {
                 .toString());
         mDBAdapter.open();
 
-        Double remainingAmt = mDBAdapter.getTotalRemaining();
+        //total remaining = total - categorytotals + total category remainings
+        Double remainingAmt = mDBAdapter.getTotalRemaining()+ (double) settings.getFloat(BUDGET_TOTAL, (float) 0.0) - mDBAdapter.getCategoriesTotal();
         if (mDBAdapter.getCategoryNames().size() == 0) {
             remainingAmt = (double) settings
                     .getFloat(BUDGET_TOTAL, (float) 0.0);

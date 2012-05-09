@@ -62,13 +62,14 @@ public class HomeActivity extends ActivityGroup {
                 MODE_PRIVATE);
         mDBAdapter = new DatabaseAdapter(this);
         mDBAdapter.open();
-        remainingAmt = mDBAdapter.getTotalRemaining();
+        remainingAmt = mDBAdapter.getTotalRemaining()
+                + (double) settings.getFloat(ViewSummaryActivity.BUDGET_TOTAL,
+                        (float) 0.0) - mDBAdapter.getCategoriesTotal();
         if (mDBAdapter.getCategoryNames().size() == 0) {
-            remainingAmt = (double) settings
-                    .getFloat(ViewSummaryActivity.BUDGET_TOTAL, (float) 0.0);
+            remainingAmt = (double) settings.getFloat(
+                    ViewSummaryActivity.BUDGET_TOTAL, (float) 0.0);
         }
         mDBAdapter.close();
-        
 
         welcome = (TextView) findViewById(R.id.welcome);
         create = (Button) findViewById(R.id.create_budget);
@@ -139,7 +140,7 @@ public class HomeActivity extends ActivityGroup {
             @Override
             public void onClick(View v) {
 
-                //TODO: make view edit budget open
+                // TODO: make view edit budget open
                 TabHost tabhost = ((TabActivity) getParent()).getTabHost();
                 tabhost.setCurrentTab(1);
 
