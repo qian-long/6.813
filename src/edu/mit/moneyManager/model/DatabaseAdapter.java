@@ -24,7 +24,7 @@ public class DatabaseAdapter {
     private static final String DATABASE_NAME = "data";
     private static final String EXPENSES_TABLE = "expenses";
     private static final String CATEGORIES_TABLE = "categories";
-    
+
     private static final String ROW_ID = "_id";
 
     // categories columns
@@ -46,18 +46,19 @@ public class DatabaseAdapter {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            db.execSQL("CREATE TABLE " + CATEGORIES_TABLE
-                    + " (" + CATEGORY_ROW_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + NAME_COLUMN
-                    + " TEXT NOT NULL, " + TOTAL_COLUMN + " REAL NOT NULL, "
-                    + REMAINING_COLUMN + " REAL NOT NULL);");
+            db.execSQL("CREATE TABLE " + CATEGORIES_TABLE + " ("
+                    + CATEGORY_ROW_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + NAME_COLUMN + " TEXT NOT NULL, " + TOTAL_COLUMN
+                    + " REAL NOT NULL, " + REMAINING_COLUMN
+                    + " REAL NOT NULL);");
 
-//            db.execSQL("CREATE TABLE " + EXPENSES_TABLE
-//                    + " (_id INTEGER PRIMARY KEY AUTOINCREMENT, " + DATE_COLUMN
-//                    + " TEXT NOT NULL, " + AMOUNT_COLUMN + " REAL NOT NULL, "
-//                    + CATEGORY_COLUMN + " TEXT NOT NULL, " + "FOREIGN KEY("
-//                    + CATEGORY_COLUMN + ") REFERENCES " + CATEGORIES_TABLE
-//                    + "(" + NAME_COLUMN + "));");
-            
+            // db.execSQL("CREATE TABLE " + EXPENSES_TABLE
+            // + " (_id INTEGER PRIMARY KEY AUTOINCREMENT, " + DATE_COLUMN
+            // + " TEXT NOT NULL, " + AMOUNT_COLUMN + " REAL NOT NULL, "
+            // + CATEGORY_COLUMN + " TEXT NOT NULL, " + "FOREIGN KEY("
+            // + CATEGORY_COLUMN + ") REFERENCES " + CATEGORIES_TABLE
+            // + "(" + NAME_COLUMN + "));");
+
             db.execSQL("CREATE TABLE " + EXPENSES_TABLE
                     + " (_id INTEGER PRIMARY KEY AUTOINCREMENT, " + DATE_COLUMN
                     + " TEXT NOT NULL, " + AMOUNT_COLUMN + " REAL NOT NULL, "
@@ -68,11 +69,9 @@ public class DatabaseAdapter {
         public void onOpen(SQLiteDatabase db) {
             super.onOpen(db);
             /*
-            if (!db.isReadOnly()) {
-                // Enable foreign key constraints
-                db.execSQL("PRAGMA foreign_keys=ON;");
-            }
-            */
+             * if (!db.isReadOnly()) { // Enable foreign key constraints
+             * db.execSQL("PRAGMA foreign_keys=ON;"); }
+             */
         }
 
         @Override
@@ -139,23 +138,23 @@ public class DatabaseAdapter {
         ContentValues updatedValues = new ContentValues();
         updatedValues.put(NAME_COLUMN, newname);
         updatedValues.put(TOTAL_COLUMN, newamt);
-        Cursor cursor = mDb.query(CATEGORIES_TABLE, new String[] { CATEGORY_ROW_ID },
-                NAME_COLUMN + "=\'" + name + "\'", null, null, null, null);
+        Cursor cursor = mDb.query(CATEGORIES_TABLE,
+                new String[] { CATEGORY_ROW_ID }, NAME_COLUMN + "=\'" + name
+                        + "\'", null, null, null, null);
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
 
             int row = cursor.getInt(0);
-            boolean success = mDb.update(CATEGORIES_TABLE, updatedValues, CATEGORY_ROW_ID + "="
-                    + row, null) == 1;
-            
+            boolean success = mDb.update(CATEGORIES_TABLE, updatedValues,
+                    CATEGORY_ROW_ID + "=" + row, null) == 1;
+
             StringBuilder test = new StringBuilder();
-            for (String existingCat: getCategoryNames()) {
+            for (String existingCat : getCategoryNames()) {
                 test.append(existingCat + "\n");
             }
             Log.i(TAG, "updating database " + test.toString());
             return success;
-        }
-        else {
+        } else {
             return false;
         }
         // Cursor cursor = mDb.query(EXPENSES_TABLE, new String[] { ROW_ID },
@@ -187,22 +186,21 @@ public class DatabaseAdapter {
      * @return true if category exists, false if not
      */
     public boolean categoryExist(String name) {
-        Cursor cursor = mDb.query(CATEGORIES_TABLE, new String[] { CATEGORY_ROW_ID,
-                NAME_COLUMN }, NAME_COLUMN + "=\'" + name + "\'", null, null,
-                null, null);
+        Cursor cursor = mDb.query(CATEGORIES_TABLE, new String[] {
+                CATEGORY_ROW_ID, NAME_COLUMN }, NAME_COLUMN + "=\'" + name
+                + "\'", null, null, null, null);
         return (cursor.getCount() > 0);
     }
 
     /**
      * 
      * @param name
-     * @return
-     *      Category, null if doesn't exist
+     * @return Category, null if doesn't exist
      */
     public Category getCategory(String name) {
-        Cursor cursor = mDb.query(CATEGORIES_TABLE, new String[] { CATEGORY_ROW_ID,
-                NAME_COLUMN, TOTAL_COLUMN, REMAINING_COLUMN }, NAME_COLUMN + "=\'" + name + "\'", null, null,
-                null, null);
+        Cursor cursor = mDb.query(CATEGORIES_TABLE, new String[] {
+                CATEGORY_ROW_ID, NAME_COLUMN, TOTAL_COLUMN, REMAINING_COLUMN },
+                NAME_COLUMN + "=\'" + name + "\'", null, null, null, null);
         cursor.moveToFirst();
         if (cursor.getCount() > 0) {
             double total = Double.parseDouble(cursor.getString(2));
@@ -211,6 +209,7 @@ public class DatabaseAdapter {
         }
         return null;
     }
+
     // TODO
     /**
      * Query for all expenses in <name> category. Update all expenses from the
@@ -236,9 +235,9 @@ public class DatabaseAdapter {
 
     public List<Category> getCategories() {
         List<Category> categories = new ArrayList<Category>();
-        Cursor cursor = mDb.query(CATEGORIES_TABLE, new String[] { CATEGORY_ROW_ID,
-                NAME_COLUMN, TOTAL_COLUMN, REMAINING_COLUMN }, null, null,
-                null, null, NAME_COLUMN);
+        Cursor cursor = mDb.query(CATEGORIES_TABLE, new String[] {
+                CATEGORY_ROW_ID, NAME_COLUMN, TOTAL_COLUMN, REMAINING_COLUMN },
+                null, null, null, null, NAME_COLUMN);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             String name = cursor.getString(1);
@@ -287,14 +286,31 @@ public class DatabaseAdapter {
      * Create a new row with Expense. If row is successfully created return the
      * new rowId for that note, otherwise return a -1 to indicate failure.
      * 
+     * Subtract expense amount from category remaining amt
+     * 
      * Precondition: category name exists
      * 
-     * @param parseId
-     *            parseId of the printer
+     * @param expense
      * @return rowId or -1 if failed
      */
     public long addExpense(Expense expense) {
         Log.i(TAG, "adding expense");
+        String category = expense.getCategory();
+
+        // subtract expense amount from category remaining amt and update
+        // category
+        Cursor cursor = mDb.query(CATEGORIES_TABLE,
+                new String[] { REMAINING_COLUMN }, NAME_COLUMN + "=\'"
+                        + category + "\'", null, null, null, null);
+        cursor.moveToFirst();
+        double curRemaining = Double.parseDouble(cursor.getString(0));
+        cursor.close();
+        ContentValues newRemainingAmt = new ContentValues();
+        newRemainingAmt.put(REMAINING_COLUMN,
+                curRemaining - expense.getAmount());
+        mDb.update(CATEGORIES_TABLE, newRemainingAmt, NAME_COLUMN + "=\'"
+                + category + "\'", null);
+
         ContentValues initialValues = new ContentValues();
         initialValues.put(DATE_COLUMN, expense.getDate());
         initialValues.put(AMOUNT_COLUMN, expense.getAmount());
