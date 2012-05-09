@@ -352,6 +352,7 @@ public class DatabaseAdapter {
 
     // TODO
     public boolean updateExpense(Expense oldExpense, Expense newExpense) {
+        double netAmtChange;
         return false;
     }
 }

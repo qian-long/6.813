@@ -39,7 +39,7 @@ public class ViewEditBudgetActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_edit_budget);
         mContext = this;
-        HomeActivity.NEW = false;
+//        HomeActivity.NEW = false;
         mDBAdapter = new DatabaseAdapter(this);
         settings = getSharedPreferences(ViewSummaryActivity.PREFS_NAME,
                 MODE_PRIVATE);
