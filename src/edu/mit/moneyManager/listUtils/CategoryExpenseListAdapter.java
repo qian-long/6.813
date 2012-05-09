@@ -37,17 +37,20 @@ public class CategoryExpenseListAdapter extends ArrayAdapter<Expense> {
     private DatabaseAdapter mDBAdapter;
     private List<String> categories;
     private Map<String, Integer> mCategoryMap;
+    //pointer to remainingView;
+    private TextView remainingView;
 
     private String categoryName;
 
     public CategoryExpenseListAdapter(Context context,
             ArrayList<Expense> expenses, Context parent, DatabaseAdapter dba,
-            String categoryName) {
+            String categoryName, TextView view) {
         super(context, 0, expenses);
         this.expenses = expenses;
         this.context = context;
         this.parentContext = parent;
         this.categoryName = categoryName;
+        this.remainingView = view;
         mDBAdapter = dba;
         mDBAdapter.open();
         categories = mDBAdapter.getCategoryNames();
@@ -161,18 +164,23 @@ public class CategoryExpenseListAdapter extends ArrayAdapter<Expense> {
                             expense.setDate(editDateBtn.getText().toString());
                             mDBAdapter.open();
                             mDBAdapter.updateExpense(expense);
-                            // expenses = (ArrayList<Expense>) mDBAdapter
-                            // .getExpenses(categoryName);
+                            
+                            
+                            //remove item from list view if category changed
+                            //bad hack gah
                             if (!expense.getCategory().equals(categoryName)) {
                                 expenses.remove(position);
                             }
+                            //update remaining view
+                            remainingView.setText(mDBAdapter.getCategory(categoryName).getRemaining().toString());
                             mDBAdapter.close();
-                            Toast.makeText(context, "changes saved",
-                                    Toast.LENGTH_SHORT).show();
+                           
 
                             Log.i(TAG, "notifyDataSetChanged()");
+                            
                             notifyDataSetChanged();
-
+                            Toast.makeText(context, "changes saved",
+                                    Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
 
                         }

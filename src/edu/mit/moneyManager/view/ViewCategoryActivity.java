@@ -76,7 +76,7 @@ public class ViewCategoryActivity extends ListActivity {
         mDBAdapter.close();
 
         CategoryExpenseListAdapter adapter = new CategoryExpenseListAdapter(
-                this, (ArrayList<Expense>) expenses, this, mDBAdapter, categoryName);
+                this, (ArrayList<Expense>) expenses, this, mDBAdapter, categoryName, categoryRemainingView);
         setListAdapter(adapter);
 
     }
