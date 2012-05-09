@@ -24,10 +24,11 @@ public class DatabaseAdapter {
     private static final String DATABASE_NAME = "data";
     private static final String EXPENSES_TABLE = "expenses";
     private static final String CATEGORIES_TABLE = "categories";
-
+    
     private static final String ROW_ID = "_id";
 
     // categories columns
+    private static final String CATEGORY_ROW_ID = "_id";
     private static final String NAME_COLUMN = "name";
     private static final String TOTAL_COLUMN = "total";
     private static final String REMAINING_COLUMN = "remaining";
@@ -46,7 +47,7 @@ public class DatabaseAdapter {
         @Override
         public void onCreate(SQLiteDatabase db) {
             db.execSQL("CREATE TABLE " + CATEGORIES_TABLE
-                    + " (_id INTEGER PRIMARY KEY AUTOINCREMENT, " + NAME_COLUMN
+                    + " (" + CATEGORY_ROW_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + NAME_COLUMN
                     + " TEXT NOT NULL, " + TOTAL_COLUMN + " REAL NOT NULL, "
                     + REMAINING_COLUMN + " REAL NOT NULL);");
 
@@ -129,15 +130,23 @@ public class DatabaseAdapter {
 
     public boolean updateCategory(String name, String newname, double newamt) {
         ContentValues updatedValues = new ContentValues();
-        // updatedValues.put(NAME_COLUMN, newname);
+        updatedValues.put(NAME_COLUMN, newname);
         updatedValues.put(TOTAL_COLUMN, newamt);
-        Cursor cursor = mDb.query(CATEGORIES_TABLE, new String[] { ROW_ID },
+        Cursor cursor = mDb.query(CATEGORIES_TABLE, new String[] { CATEGORY_ROW_ID },
                 NAME_COLUMN + "=\'" + name + "\'", null, null, null, null);
-        cursor.moveToFirst();
         if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+
             int row = cursor.getInt(0);
-            return mDb.update(CATEGORIES_TABLE, updatedValues, ROW_ID + "="
+            boolean success = mDb.update(CATEGORIES_TABLE, updatedValues, CATEGORY_ROW_ID + "="
                     + row, null) == 1;
+            
+            StringBuilder test = new StringBuilder();
+            for (String existingCat: getCategoryNames()) {
+                test.append(existingCat + "\n");
+            }
+            Log.i(TAG, "updating database " + test.toString());
+            return success;
         }
         else {
             return false;
@@ -171,7 +180,7 @@ public class DatabaseAdapter {
      * @return true if category exists, false if not
      */
     public boolean categoryExist(String name) {
-        Cursor cursor = mDb.query(CATEGORIES_TABLE, new String[] { ROW_ID,
+        Cursor cursor = mDb.query(CATEGORIES_TABLE, new String[] { CATEGORY_ROW_ID,
                 NAME_COLUMN }, NAME_COLUMN + "=\'" + name + "\'", null, null,
                 null, null);
         return (cursor.getCount() > 0);
@@ -202,7 +211,7 @@ public class DatabaseAdapter {
 
     public List<Category> getCategories() {
         List<Category> categories = new ArrayList<Category>();
-        Cursor cursor = mDb.query(CATEGORIES_TABLE, new String[] { ROW_ID,
+        Cursor cursor = mDb.query(CATEGORIES_TABLE, new String[] { CATEGORY_ROW_ID,
                 NAME_COLUMN, TOTAL_COLUMN, REMAINING_COLUMN }, null, null,
                 null, null, NAME_COLUMN);
         cursor.moveToFirst();

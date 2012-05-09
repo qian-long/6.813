@@ -20,10 +20,24 @@ public class Expense {
         this.id = id;
     }
     
+    /** SETTERS **/
     public void setId(int id) {
         this.id = id;
     }
     
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+    
+    public void setDate(String date) {
+        this.date = date;
+    }
+    
+    public void setCategory(String category) {
+        this.category = category;
+    }
+    
+    /** GETTERS **/
     public Double getAmount() {
         return new Double(amount);
     }

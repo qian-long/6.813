@@ -54,7 +54,6 @@ public class ExpenseActivity extends ListActivity {
 
         // list adapter
         final ArrayList<Expense> samples = new ArrayList<Expense>();
-        samples.add(new Expense(100, "5/6/2012", "food"));
         final MainExpenseListAdapter adapter = new MainExpenseListAdapter(this,
                 samples, mDBAdapter);
         setListAdapter(adapter);
