@@ -78,6 +78,8 @@
         android:id="@+id/login_help"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#87cefa"
+        
         android:text="Already have an account? Login!"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 

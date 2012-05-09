@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +32,17 @@ public class LoginActivity extends Activity {
         Button buttonLogin = (Button) findViewById(R.id.login_button);
         EditText username = (EditText) findViewById(R.id.login_username);
         username.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+        
         TextView switchToRegister = (TextView) findViewById(R.id.register_help);
+        SpannableString contentUnderline1 = new SpannableString("Already have an account? Login!");  
+        contentUnderline1.setSpan(new UnderlineSpan(), 0, contentUnderline1.length(), 0);
+        switchToRegister.setText(contentUnderline1);
+        
+        TextView forgotten = (TextView) findViewById(R.id.login_forgotten);
+        SpannableString contentUnderline2 = new SpannableString("Forgot your username or password?");  
+        contentUnderline2.setSpan(new UnderlineSpan(), 0, contentUnderline2.length(), 0);
+        forgotten.setText(contentUnderline2);
+        
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             
             @Override
@@ -47,6 +59,15 @@ public class LoginActivity extends Activity {
             public void onClick(View v){
                 Intent intent = new Intent(v.getContext(), RegisterActivity.class);
                 startActivity(intent);
+                
+            }
+            
+        });
+        forgotten.setOnClickListener(new View.OnClickListener() {
+            
+            @Override
+            public void onClick(View v){
+                
                 
             }
             
