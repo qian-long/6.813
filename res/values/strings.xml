@@ -3,5 +3,6 @@
 
     <string name="hello">Hello World, MoneyManagerActivity!</string>
     <string name="app_name">MoneyManager</string>
+    <string name="category_prompt">Choose a Category</string>
 
 </resources>

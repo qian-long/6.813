@@ -37,7 +37,7 @@
             android:textStyle="bold"
             android:text="Total Amount: " />
         <EditText
-            android:id="@+id/new_category_name"
+            android:id="@+id/new_amount"
             android:layout_width="100dp"
             android:textSize="12sp"
             android:layout_height="wrap_content"

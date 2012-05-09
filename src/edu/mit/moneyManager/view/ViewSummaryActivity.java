@@ -6,115 +6,69 @@ import java.util.List;
 import edu.mit.moneyManager.R;
 import edu.mit.moneyManager.listUtils.CategoryItemEntry;
 import edu.mit.moneyManager.listUtils.SummaryCategoryListAdapter;
+import edu.mit.moneyManager.model.Category;
+import edu.mit.moneyManager.model.DatabaseAdapter;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.app.TabActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class ViewSummaryActivity extends ListActivity {
+    public static final String TAG = "VIEW SUMMARY ACTIVITY";
+    public static final String PREFS_NAME = "preferences";
+    public static final String BUDGET_TOTAL = "total";
+    public static final String BUDGET_REMAINING = "remaining";
+    private DatabaseAdapter mDBAdapter;
+    private TextView total;
+    private TextView remaining;
+    private static SharedPreferences settings;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_summary);
-        
-      //top actionbar
-//        Button home = (Button) findViewById(R.id.home_action);
-//        Button view = (Button) findViewById(R.id.view_action);
-//        Button expenses = (Button) findViewById(R.id.expense_action);
-//        
-//        home.setOnClickListener(new View.OnClickListener() {
-//            
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(v.getContext(), HomeActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//        
-//        view.setEnabled(false);
-//        view.setOnClickListener(new View.OnClickListener() {
-//            
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(v.getContext(), ViewSummaryActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-        
-//        expenses.setOnClickListener(new View.OnClickListener() {
-//       
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(v.getContext(), ExpenseActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-        
-      //view action bar
-//        Button summary = (Button) findViewById(R.id.summary_action);
-//        Button chart = (Button) findViewById(R.id.chart_action);
-//        Button edit = (Button) findViewById(R.id.edit_action);
-//        Button share = (Button) findViewById(R.id.share_action);
-//    
-//        summary.setEnabled(false);
-//        summary.setOnClickListener(new View.OnClickListener() {
-//            
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(v.getContext(), ViewSummaryActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-        
-//        chart.setOnClickListener(new View.OnClickListener() {
-//            
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(v.getContext(), ViewChartActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//        
-//        edit.setOnClickListener(new View.OnClickListener() {
-//       
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(v.getContext(), ViewEditBudgetActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//        
-//        share.setOnClickListener(new View.OnClickListener() {
-//            
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(v.getContext(), ViewShareActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-        
-        //setting list adapter
-        //samples data
-        List<CategoryItemEntry> sample = new ArrayList<CategoryItemEntry>();
-        sample.add(new CategoryItemEntry("Food", 500, 500));
-        sample.add(new CategoryItemEntry("Books", 500, 500));
-        sample.add(new CategoryItemEntry("Clothing", 900,799));
-        sample.add(new CategoryItemEntry("Clothing", 900,799));
-        sample.add(new CategoryItemEntry("Clothing", 900,799));
-        sample.add(new CategoryItemEntry("Clothing", 900,799));
-        sample.add(new CategoryItemEntry("Clothing", 900,799));
-        sample.add(new CategoryItemEntry("Clothing", 900,799));
-        sample.add(new CategoryItemEntry("Clothing", 900,799));
-        sample.add(new CategoryItemEntry("Clothing", 900,799));
-        sample.add(new CategoryItemEntry("Clothing", 900,799));
-        sample.add(new CategoryItemEntry("Clothing", 900,799));
-
-        SummaryCategoryListAdapter adapter = new SummaryCategoryListAdapter(this, (ArrayList<CategoryItemEntry>) sample, ((TabActivity)getParent()).getTabHost());
+        mDBAdapter = new DatabaseAdapter(this);
+        settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        total = (TextView) findViewById(R.id.total_monthly_budget_textview);
+        remaining = (TextView) findViewById(R.id.remaining_monthly_budget_textview);
+        total.setText(new Float(settings
+                .getFloat(BUDGET_TOTAL, (float) 1000.00)).toString());
+        remaining.setText(new Float(settings.getFloat(BUDGET_REMAINING,
+                (float) 1000.00)).toString());
+        // setting list adapter
+        mDBAdapter.open();
+        List<Category> categories = mDBAdapter.getCategories();
+        mDBAdapter.close();
+        SummaryCategoryListAdapter adapter = new SummaryCategoryListAdapter(
+                this, (ArrayList<Category>) categories,
+                ((TabActivity) getParent()).getTabHost());
         setListAdapter(adapter);
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        total.setText(new Float(settings
+                .getFloat(BUDGET_TOTAL, (float) 1000.00)).toString());
+        remaining.setText(new Float(settings.getFloat(BUDGET_REMAINING,
+                (float) 1000.00)).toString());
+        mDBAdapter.open();
+        SummaryCategoryListAdapter adapter = new SummaryCategoryListAdapter(
+                this, (ArrayList<Category>) mDBAdapter.getCategories(),
+                ((TabActivity) getParent()).getTabHost());
+        mDBAdapter.close();
+
+        setListAdapter(adapter);
+    }
 }
