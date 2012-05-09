@@ -22,7 +22,7 @@ import edu.mit.moneyManager.model.Expense;
 
 /**
  * Screen that shows details of a Category
- *
+ * 
  */
 public class ViewCategoryActivity extends ListActivity {
     public static final String TAG = "VIEW CATEGORY ACTIVITY";
@@ -32,6 +32,7 @@ public class ViewCategoryActivity extends ListActivity {
     private TextView categoryNameView;
     private TextView categoryTotalView;
     private TextView categoryRemainingView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,27 +40,28 @@ public class ViewCategoryActivity extends ListActivity {
         Bundle extras = getIntent().getExtras();
         categoryName = extras.getString(INTENT_KEY_CATEGORY);
         mDBAdapter = new DatabaseAdapter(this);
-        
+
         categoryNameView = (TextView) findViewById(R.id.view_summary_category);
         categoryTotalView = (TextView) findViewById(R.id.category_total);
         categoryRemainingView = (TextView) findViewById(R.id.category_remaining);
-        
-        //list adapter header
+
+        // list adapter header
         ListView lv = getListView();
         LayoutInflater inflater = getLayoutInflater();
-        View header = inflater.inflate(R.layout.view_category_list_header, null, false);
+        View header = inflater.inflate(R.layout.view_category_list_header,
+                null, false);
         lv.addHeaderView(header);
-        
+
         resetData();
     }
-    
+
     @Override
     public void onResume() {
         super.onResume();
         resetData();
-        
+
     }
-    
+
     private void resetData() {
         categoryNameView.setText(categoryName);
 
@@ -70,12 +72,12 @@ public class ViewCategoryActivity extends ListActivity {
             categoryRemainingView.setText(category.getRemaining().toString());
         }
 
-        
         List<Expense> expenses = mDBAdapter.getExpenses(categoryName);
-        CategoryExpenseListAdapter adapter = new CategoryExpenseListAdapter(this, (ArrayList<Expense>) expenses, this);
+        mDBAdapter.close();
+
+        CategoryExpenseListAdapter adapter = new CategoryExpenseListAdapter(
+                this, (ArrayList<Expense>) expenses, this, mDBAdapter, categoryName);
         setListAdapter(adapter);
 
-
-        mDBAdapter.close();
     }
 }

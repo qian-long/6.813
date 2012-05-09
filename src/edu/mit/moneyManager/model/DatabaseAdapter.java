@@ -272,6 +272,7 @@ public class DatabaseAdapter {
         }
         return remaining;
     }
+
     /**
      * 
      * @return List of all category names in database
@@ -350,9 +351,42 @@ public class DatabaseAdapter {
         return expenses;
     }
 
-    // TODO
-    public boolean updateExpense(Expense oldExpense, Expense newExpense) {
-        double netAmtChange;
-        return false;
+    
+    /**
+     * Updates an expense
+     * @param expense
+     * @return
+     */
+    public boolean updateExpense(Expense expense) {
+
+        Cursor cursor = mDb.query(EXPENSES_TABLE, new String[] { ROW_ID,
+                DATE_COLUMN, AMOUNT_COLUMN, CATEGORY_COLUMN }, ROW_ID + "="
+                + expense.getId(), null, null, null, null);
+        cursor.moveToFirst();
+        double oldAmt = Double.parseDouble(cursor.getString(2));
+        String oldCategory = cursor.getString(3);
+        cursor.close();
+        
+        //add oldamt from old category remaining
+        Category old = this.getCategory(oldCategory);
+        ContentValues oldCategoryUpdate = new ContentValues();
+        oldCategoryUpdate.put(REMAINING_COLUMN, old.getRemaining() + oldAmt);
+        mDb.update(CATEGORIES_TABLE, oldCategoryUpdate, NAME_COLUMN + "=\'"
+                + oldCategory + "\'", null);
+        
+        //subtract newamt from new category remaining
+        Category newCat = this.getCategory(expense.getCategory());
+        ContentValues newCategoryUpdate = new ContentValues();
+        newCategoryUpdate.put(REMAINING_COLUMN, newCat.getRemaining() - expense.getAmount());
+        mDb.update(CATEGORIES_TABLE, newCategoryUpdate, NAME_COLUMN + "=\'"
+                + expense.getCategory() + "\'", null);
+        
+        //update expense row
+        ContentValues values = new ContentValues();
+        values.put(DATE_COLUMN, expense.getDate());
+        values.put(AMOUNT_COLUMN, expense.getAmount());
+        values.put(CATEGORY_COLUMN, expense.getCategory());
+        return mDb.update(EXPENSES_TABLE, values, ROW_ID + "="
+                + expense.getId(), null) == 1;
     }
 }

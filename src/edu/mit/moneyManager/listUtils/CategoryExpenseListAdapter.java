@@ -1,12 +1,19 @@
 package edu.mit.moneyManager.listUtils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import edu.mit.moneyManager.R;
+import edu.mit.moneyManager.model.DatabaseAdapter;
 import edu.mit.moneyManager.model.Expense;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.text.InputType;
 import android.text.method.DigitsKeyListener;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,47 +21,73 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class CategoryExpenseListAdapter extends ArrayAdapter<Expense>{
-
+public class CategoryExpenseListAdapter extends ArrayAdapter<Expense> {
+    public static final String TAG = "CATEGORY EXPENSE LIST";
     private Context context;
     private final Context parentContext;
     private ArrayList<Expense> expenses;
     private LayoutInflater inflator;
-    
-    public CategoryExpenseListAdapter(Context context, ArrayList<Expense> expenses, Context parent) {
+    private DatabaseAdapter mDBAdapter;
+    private List<String> categories;
+    private Map<String, Integer> mCategoryMap;
+
+    private String categoryName;
+
+    public CategoryExpenseListAdapter(Context context,
+            ArrayList<Expense> expenses, Context parent, DatabaseAdapter dba,
+            String categoryName) {
         super(context, 0, expenses);
         this.expenses = expenses;
         this.context = context;
         this.parentContext = parent;
+        this.categoryName = categoryName;
+        mDBAdapter = dba;
+        mDBAdapter.open();
+        categories = mDBAdapter.getCategoryNames();
+        mDBAdapter.close();
+        mCategoryMap = getCategoryMap(categories);
+
         inflator = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
-    
+
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        Log.i(TAG, "getView()");
+
         View view = convertView;
+        // if (position < expenses.size() - 1) {
         final Expense expense = expenses.get(position);
-        if (expense != null) {
+        Log.i(TAG, new Boolean(expense.getCategory().equals(categoryName))
+                .toString());
+        if (expense != null && expense.getCategory().equals(categoryName)) {
+            Log.i(TAG, "inflating convertView");
             view = inflator.inflate(R.layout.list_entry_expense_edit, null);
-            
+
             view.setOnClickListener(null);
             view.setOnLongClickListener(null);
             view.setLongClickable(false);
-            
-            final TextView date = (TextView) view.findViewById(R.id.expense_date);            
-            final TextView amount = (TextView) view.findViewById(R.id.expense_amount);
-            
+
+            final TextView date = (TextView) view
+                    .findViewById(R.id.expense_date);
+            final TextView amount = (TextView) view
+                    .findViewById(R.id.expense_amount);
+
             date.setText(expense.getDate());
             amount.setText(expense.getAmount().toString());
 
-            ImageView edit = (ImageView) view.findViewById(R.id.edit_expense_btn);
-            //Log.i("CategoryExpenseList adapter", (String)edit.getText());
+            ImageView edit = (ImageView) view
+                    .findViewById(R.id.edit_expense_btn);
+            // Log.i("CategoryExpenseList adapter", (String)edit.getText());
             edit.setOnClickListener(new View.OnClickListener() {
-                
+
                 @Override
                 public void onClick(View v) {
                     final Dialog dialog = new Dialog(parentContext);
@@ -62,61 +95,119 @@ public class CategoryExpenseListAdapter extends ArrayAdapter<Expense>{
                     dialog.setContentView(R.layout.dialog_edit_expense);
                     dialog.setTitle("Editing Expense");
                     dialog.setCancelable(false);
-                    
-                    Button deleteBtn = (Button) dialog.findViewById(R.id.delete_expense_btn);
-                    Button saveBtn = (Button) dialog.findViewById(R.id.save_expense_btn);
-                    Button cancelBtn = (Button) dialog.findViewById(R.id.cancel_btn);
-                    Button editDateBtn = (Button) dialog.findViewById(R.id.edit_date_btn);
-                    
-                    //TODO: prepopulate and make user input save
-                    saveBtn.setOnClickListener(new View.OnClickListener() {
-                        
+
+                    final EditText newAmount = (EditText) dialog
+                            .findViewById(R.id.new_amount);
+                    newAmount.setInputType(InputType.TYPE_CLASS_NUMBER
+                            | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                    newAmount.setFocusable(true);
+                    newAmount.setText(expense.getAmount().toString());
+
+                    final Spinner spinner = (Spinner) dialog
+                            .findViewById(R.id.category_spinner);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                            context, android.R.layout.simple_spinner_item,
+                            categories);
+                    spinner.setAdapter(adapter);
+                    spinner.setSelection(mCategoryMap.get(expense.getCategory()));
+                    final Button editDateBtn = (Button) dialog
+                            .findViewById(R.id.edit_date_btn);
+                    editDateBtn.setText(expense.getDate());
+                    editDateBtn.setOnClickListener(new View.OnClickListener() {
+
                         @Override
                         public void onClick(View v) {
-                            // TODO Auto-generated method stub
-                            EditText newAmount = (EditText)dialog.findViewById(R.id.new_amount);
-                            EditText newCategory = (EditText)dialog.findViewById(R.id.new_category_name);
-                            amount.setKeyListener(DigitsKeyListener.getInstance());
+                            Calendar c = Calendar.getInstance();
+                            DatePickerDialog dialog = new DatePickerDialog(
+                                    context,
+                                    new DatePickerDialog.OnDateSetListener() {
 
-                            expense.setCategory("new category");
-                            expense.setAmount(999);
-                            date.setText("new name");
-                            amount.setText("100");
+                                        @Override
+                                        public void onDateSet(DatePicker view,
+                                                int year, int monthOfYear,
+                                                int dayOfMonth) {
+
+                                            expense.setDate((new StringBuilder()
+                                                    .append(monthOfYear + 1)
+                                                    .append("/")
+                                                    .append(dayOfMonth)
+                                                    .append("/").append(year)
+                                                    .append(" ").toString()));
+                                            editDateBtn.setText(expense
+                                                    .getDate());
+                                        }
+                                    }, c.get(Calendar.YEAR), c
+                                            .get(Calendar.MONTH), c
+                                            .get(Calendar.DAY_OF_MONTH));
+                            dialog.show();
+                        }
+                    });
+
+                    Button deleteBtn = (Button) dialog
+                            .findViewById(R.id.delete_expense_btn);
+                    Button saveBtn = (Button) dialog
+                            .findViewById(R.id.save_expense_btn);
+                    Button cancelBtn = (Button) dialog
+                            .findViewById(R.id.cancel_btn);
+
+                    saveBtn.setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+                            expense.setCategory((String) spinner
+                                    .getSelectedItem());
+                            expense.setAmount(Double.parseDouble(newAmount
+                                    .getText().toString()));
+                            expense.setDate(editDateBtn.getText().toString());
+                            mDBAdapter.open();
+                            mDBAdapter.updateExpense(expense);
+                            // expenses = (ArrayList<Expense>) mDBAdapter
+                            // .getExpenses(categoryName);
+                            if (!expense.getCategory().equals(categoryName)) {
+                                expenses.remove(position);
+                            }
+                            mDBAdapter.close();
+                            Toast.makeText(context, "changes saved",
+                                    Toast.LENGTH_SHORT).show();
+
+                            Log.i(TAG, "notifyDataSetChanged()");
+                            notifyDataSetChanged();
+
                             dialog.dismiss();
-//                            try {
-////                                category.setTotal(new Integer(amountInput.getText().toString()));
-//                                category.setName(newNameView.getText().toString());
-//                                category.setTotal(Integer.parseInt(amountInput.getText().toString()));
-//                                dialog.dismiss();
-//
-//                            }
-//                            catch (NumberFormatException e) {
-//                                Toast.makeText(context, "please enter a valid amount", Toast.LENGTH_SHORT);
-//                            }
+
                         }
                     });
                     cancelBtn.setOnClickListener(new View.OnClickListener() {
-                        
+
                         @Override
                         public void onClick(View v) {
                             dialog.dismiss();
                         }
                     });
-                    
+
                     deleteBtn.setOnClickListener(new View.OnClickListener() {
-                        
+
                         @Override
                         public void onClick(View v) {
-                            // TODO Auto-generated method stub
                             dialog.dismiss();
                         }
                     });
-                     
+
                     dialog.show();
                 }
             });
-            
+
         }
+        // }
         return view;
+    }
+
+    // for persisting spinner selection
+    private Map<String, Integer> getCategoryMap(List<String> categories) {
+        Map<String, Integer> map = new HashMap<String, Integer>();
+        for (int i = 0; i < categories.size(); i++) {
+            map.put(categories.get(i), i);
+        }
+        return map;
     }
 }

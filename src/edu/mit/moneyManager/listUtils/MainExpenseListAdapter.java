@@ -144,9 +144,6 @@ public class MainExpenseListAdapter extends ArrayAdapter<Expense> {
 
                 @Override
                 public void onClick(View v) {
-                    // TODO Auto-generated method stub
-                    // ((Activity)
-                    // context).showDialog(ExpenseActivity.DATE_DIALOG_ID);
                     Calendar c = Calendar.getInstance();
                     DatePickerDialog dialog = new DatePickerDialog(context,
                             new DatePickerDialog.OnDateSetListener() {
@@ -155,7 +152,6 @@ public class MainExpenseListAdapter extends ArrayAdapter<Expense> {
                                 public void onDateSet(DatePicker view,
                                         int year, int monthOfYear,
                                         int dayOfMonth) {
-                                    // TODO Auto-generated method stub
                                     
                                     expense.setDate((new StringBuilder()
                                             .append(monthOfYear + 1)

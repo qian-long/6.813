@@ -32,12 +32,18 @@
             android:paddingLeft="20dp"
             android:text="for" />
         
-        <EditText
-            android:id="@+id/new_category_name"
-            android:layout_width="80dp"
+<!--         <EditText -->
+<!--             android:id="@+id/new_category_name" -->
+<!--             android:layout_width="80dp" -->
+<!--             android:layout_height="wrap_content" -->
+<!--             android:textSize="12sp" -->
+<!--             android:hint="category" /> -->
+        
+        <Spinner 
+            android:id="@+id/category_spinner"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:hint="category" />
+            android:prompt="@string/category_prompt" />
         
     </LinearLayout>
     
