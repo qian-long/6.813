@@ -61,32 +61,14 @@ public class HomeActivity extends ActivityGroup {
         settings = getSharedPreferences(ViewSummaryActivity.PREFS_NAME,
                 MODE_PRIVATE);
         mDBAdapter = new DatabaseAdapter(this);
-        mDBAdapter.open();
-        remainingAmt = mDBAdapter.getTotalRemaining()
-                + (double) settings.getFloat(ViewSummaryActivity.BUDGET_TOTAL,
-                        (float) 0.0) - mDBAdapter.getCategoriesTotal();
-        if (mDBAdapter.getCategoryNames().size() == 0) {
-            remainingAmt = (double) settings.getFloat(
-                    ViewSummaryActivity.BUDGET_TOTAL, (float) 0.0);
-        }
-        mDBAdapter.close();
 
         welcome = (TextView) findViewById(R.id.welcome);
         create = (Button) findViewById(R.id.create_budget);
         viewBtn = (Button) findViewById(R.id.view_budget);
         expenseBtn = (Button) findViewById(R.id.enter_expense);
         shareBtn = (Button) findViewById(R.id.share_budget);
-        // if (!NEW){
-        if (settings.contains(ViewSummaryActivity.BUDGET_TOTAL)) {
-            welcome.setText("You have $" + remainingAmt.toString()
-                    + " remaining this month");
-            create.setVisibility(View.GONE);
-            expenseBtn.setVisibility(View.VISIBLE);
-            viewBtn.setVisibility(View.VISIBLE);
-            shareBtn.setVisibility(View.VISIBLE);
-
-        }
-
+       
+        setLayout();
         viewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,6 +87,8 @@ public class HomeActivity extends ActivityGroup {
                 tabhost.setCurrentTab(2);
             }
         });
+        
+        //TODO: share button
         ExpandableListView budgetsView = (ExpandableListView) findViewById(R.id.sharedBudgets);
         final ExpandableListAdapter adapter = new BudgetExpandableListAdapter();
         budgetsView.setAdapter(adapter);
@@ -161,7 +145,24 @@ public class HomeActivity extends ActivityGroup {
     protected void onResume() {
         super.onResume();
         Log.i("HomeActivity", "Calling onResume()");
+        setLayout();
 
+    }
+    
+    /**
+     * Calculates and sets remaining total
+     * Determines if user has created a budget and enables the appropriate buttons.
+     */
+    private void setLayout() {
+        mDBAdapter.open();
+        remainingAmt = mDBAdapter.getTotalRemaining()
+                + (double) settings.getFloat(ViewSummaryActivity.BUDGET_TOTAL,
+                        (float) 0.0) - mDBAdapter.getCategoriesTotal();
+        if (mDBAdapter.getCategoryNames().size() == 0) {
+            remainingAmt = (double) settings.getFloat(
+                    ViewSummaryActivity.BUDGET_TOTAL, (float) 0.0);
+        }
+        mDBAdapter.close();
         if (settings.contains(ViewSummaryActivity.BUDGET_TOTAL)) {
             welcome.setText("You have $" + remainingAmt.toString()
                     + " remaining this month");
@@ -176,7 +177,6 @@ public class HomeActivity extends ActivityGroup {
             viewBtn.setVisibility(View.GONE);
             shareBtn.setVisibility(View.GONE);
         }
-
     }
 
     class BudgetExpandableListAdapter extends BaseExpandableListAdapter {

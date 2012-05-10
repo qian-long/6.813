@@ -389,4 +389,23 @@ public class DatabaseAdapter {
         return mDb.update(EXPENSES_TABLE, values, ROW_ID + "="
                 + expense.getId(), null) == 1;
     }
+    
+    /**
+     * removes expense row from database, adds expense amt back to category.remaining
+     * Precondition: category exists
+     * @param expense
+     * @return
+     */
+    public boolean removeExpense(Expense expense) {
+        //add expense amt to category remaining amt
+        Category category = this.getCategory(expense.getCategory());
+        ContentValues update = new ContentValues();
+        update.put(REMAINING_COLUMN, category.getRemaining() + expense.getAmount());
+        mDb.update(CATEGORIES_TABLE, update, NAME_COLUMN + "=\'"
+                + expense.getCategory() + "\'", null);
+        
+     
+        return mDb.delete(EXPENSES_TABLE, ROW_ID + "=" + expense.getId(),
+                null) > 0;
+    }
 }

@@ -37,7 +37,7 @@ public class CategoryExpenseListAdapter extends ArrayAdapter<Expense> {
     private DatabaseAdapter mDBAdapter;
     private List<String> categories;
     private Map<String, Integer> mCategoryMap;
-    //pointer to remainingView;
+    // pointer to remainingView;
     private TextView remainingView;
 
     private String categoryName;
@@ -164,20 +164,20 @@ public class CategoryExpenseListAdapter extends ArrayAdapter<Expense> {
                             expense.setDate(editDateBtn.getText().toString());
                             mDBAdapter.open();
                             mDBAdapter.updateExpense(expense);
-                            
-                            
-                            //remove item from list view if category changed
-                            //bad hack gah
+
+                            // remove item from list view if category changed
+                            // bad hack gah
                             if (!expense.getCategory().equals(categoryName)) {
                                 expenses.remove(position);
                             }
-                            //update remaining view
-                            remainingView.setText(mDBAdapter.getCategory(categoryName).getRemaining().toString());
+                            // update remaining view
+                            remainingView.setText(mDBAdapter
+                                    .getCategory(categoryName).getRemaining()
+                                    .toString());
                             mDBAdapter.close();
-                           
 
                             Log.i(TAG, "notifyDataSetChanged()");
-                            
+
                             notifyDataSetChanged();
                             Toast.makeText(context, "changes saved",
                                     Toast.LENGTH_SHORT).show();
@@ -197,6 +197,20 @@ public class CategoryExpenseListAdapter extends ArrayAdapter<Expense> {
 
                         @Override
                         public void onClick(View v) {
+                            mDBAdapter.open();
+                            if (mDBAdapter.removeExpense(expense)) {
+                                remainingView.setText(mDBAdapter
+                                        .getCategory(categoryName)
+                                        .getRemaining().toString());
+                            } else {
+                                Toast.makeText(context,
+                                        "Error Deleting Expense",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+
+                            mDBAdapter.close();
+                            expenses.remove(position);
+                            notifyDataSetChanged();
                             dialog.dismiss();
                         }
                     });
