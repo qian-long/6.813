@@ -134,50 +134,33 @@ public class DatabaseAdapter {
         return mDb.insert(CATEGORIES_TABLE, null, initialValues);
     }
 
+    /**
+     * updates category name, total and remaining
+     * @param name
+     * @param newname
+     * @param newamt
+     * @return
+     */
     public boolean updateCategory(String name, String newname, double newamt) {
+        Category category = this.getCategory(name);
         ContentValues updatedValues = new ContentValues();
         updatedValues.put(NAME_COLUMN, newname);
         updatedValues.put(TOTAL_COLUMN, newamt);
-        Cursor cursor = mDb.query(CATEGORIES_TABLE,
-                new String[] { CATEGORY_ROW_ID }, NAME_COLUMN + "=\'" + name
-                        + "\'", null, null, null, null);
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-
-            int row = cursor.getInt(0);
-            boolean success = mDb.update(CATEGORIES_TABLE, updatedValues,
-                    CATEGORY_ROW_ID + "=" + row, null) == 1;
-
-            StringBuilder test = new StringBuilder();
-            for (String existingCat : getCategoryNames()) {
-                test.append(existingCat + "\n");
-            }
-            Log.i(TAG, "updating database " + test.toString());
-            return success;
-        } else {
-            return false;
+        updatedValues.put(REMAINING_COLUMN, newamt - category.getTotal() + category.getRemaining());
+//        Cursor cursor = mDb.query(CATEGORIES_TABLE,
+//                new String[] { CATEGORY_ROW_ID }, NAME_COLUMN + "=\'" + name
+//                        + "\'", null, null, null, null);
+        boolean success = false;
+        if (mDb.update(CATEGORIES_TABLE, updatedValues, NAME_COLUMN + "=\'"
+                + name + "\'", null) == 1) {
+            success = true;
+            ContentValues newCat = new ContentValues();
+            newCat.put(CATEGORY_COLUMN, newname);
+            
+            int num = mDb.update(EXPENSES_TABLE, newCat, CATEGORY_COLUMN + "=\'" + name + "\'", null);
+            Log.i(TAG, "updated " + num + " expense rows");
         }
-        // Cursor cursor = mDb.query(EXPENSES_TABLE, new String[] { ROW_ID },
-        // CATEGORY_COLUMN + "=\'" + name + "\'", null, null, null, null);
-
-        // update column name of all expenses in that category
-        // if (cursor.getCount() > 0) {
-        // cursor.moveToFirst();
-        // ContentValues expenseUpdate = new ContentValues();
-        // updatedValues.put(CATEGORY_COLUMN, newname);
-        // while (!cursor.isAfterLast()) {
-        // mDb.update(EXPENSES_TABLE, expenseUpdate, whereClause, whereArgs)
-        // cursor.moveToNext();
-        // }
-        // }
-        // ContentValues expenseUpdate = new ContentValues();
-        // expenseUpdate.put(CATEGORY_COLUMN, newname);
-        // mDb.update(EXPENSES_TABLE, expenseUpdate, CATEGORY_COLUMN + "=\'"
-        // + name + "\'", null);
-
-        // String[] args = {name};
-        // return mDb.update(CATEGORIES_TABLE, updatedValues, NAME_COLUMN +
-        // "=?", args) == 1;
+        return success;
     }
 
     /**
@@ -351,9 +334,9 @@ public class DatabaseAdapter {
         return expenses;
     }
 
-    
     /**
      * Updates an expense
+     * 
      * @param expense
      * @return
      */
@@ -366,46 +349,47 @@ public class DatabaseAdapter {
         double oldAmt = Double.parseDouble(cursor.getString(2));
         String oldCategory = cursor.getString(3);
         cursor.close();
-        
-        //add oldamt from old category remaining
+
+        // add oldamt from old category remaining
         Category old = this.getCategory(oldCategory);
         ContentValues oldCategoryUpdate = new ContentValues();
         oldCategoryUpdate.put(REMAINING_COLUMN, old.getRemaining() + oldAmt);
         mDb.update(CATEGORIES_TABLE, oldCategoryUpdate, NAME_COLUMN + "=\'"
                 + oldCategory + "\'", null);
-        
-        //subtract newamt from new category remaining
+
+        // subtract newamt from new category remaining
         Category newCat = this.getCategory(expense.getCategory());
         ContentValues newCategoryUpdate = new ContentValues();
-        newCategoryUpdate.put(REMAINING_COLUMN, newCat.getRemaining() - expense.getAmount());
+        newCategoryUpdate.put(REMAINING_COLUMN,
+                newCat.getRemaining() - expense.getAmount());
         mDb.update(CATEGORIES_TABLE, newCategoryUpdate, NAME_COLUMN + "=\'"
                 + expense.getCategory() + "\'", null);
-        
-        //update expense row
+
+        // update expense row
         ContentValues values = new ContentValues();
         values.put(DATE_COLUMN, expense.getDate());
         values.put(AMOUNT_COLUMN, expense.getAmount());
         values.put(CATEGORY_COLUMN, expense.getCategory());
-        return mDb.update(EXPENSES_TABLE, values, ROW_ID + "="
-                + expense.getId(), null) == 1;
+        return mDb.update(EXPENSES_TABLE, values,
+                ROW_ID + "=" + expense.getId(), null) == 1;
     }
-    
+
     /**
-     * removes expense row from database, adds expense amt back to category.remaining
-     * Precondition: category exists
+     * removes expense row from database, adds expense amt back to
+     * category.remaining Precondition: category exists
+     * 
      * @param expense
      * @return
      */
     public boolean removeExpense(Expense expense) {
-        //add expense amt to category remaining amt
+        // add expense amt to category remaining amt
         Category category = this.getCategory(expense.getCategory());
         ContentValues update = new ContentValues();
-        update.put(REMAINING_COLUMN, category.getRemaining() + expense.getAmount());
-        mDb.update(CATEGORIES_TABLE, update, NAME_COLUMN + "=\'"
-                + expense.getCategory() + "\'", null);
-        
-     
-        return mDb.delete(EXPENSES_TABLE, ROW_ID + "=" + expense.getId(),
-                null) > 0;
+        update.put(REMAINING_COLUMN,
+                category.getRemaining() + expense.getAmount());
+        mDb.update(CATEGORIES_TABLE, update,
+                NAME_COLUMN + "=\'" + expense.getCategory() + "\'", null);
+
+        return mDb.delete(EXPENSES_TABLE, ROW_ID + "=" + expense.getId(), null) > 0;
     }
 }

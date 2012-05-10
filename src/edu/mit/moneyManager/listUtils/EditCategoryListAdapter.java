@@ -29,17 +29,22 @@ public class EditCategoryListAdapter extends ArrayAdapter<Category> {
     private Context parentContext;
     private ArrayList<Category> categories;
     private LayoutInflater inflator;
-
+    // pointer to unallocatedView
+    private TextView unallocatedView;
+    private double totalAmt;
     // pointer to database
     private DatabaseAdapter dba;
 
     public EditCategoryListAdapter(Context context,
-            ArrayList<Category> categories, Context parent, DatabaseAdapter dba) {
+            ArrayList<Category> categories, Context parent,
+            DatabaseAdapter dba, TextView view, float total) {
         super(context, 0, categories);
         this.categories = categories;
         this.context = context;
         this.parentContext = parent;
         this.dba = dba;
+        this.unallocatedView = view;
+        this.totalAmt = total;
         inflator = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -82,7 +87,6 @@ public class EditCategoryListAdapter extends ArrayAdapter<Category> {
                     Button cancelBtn = (Button) dialog
                             .findViewById(R.id.cancel_btn);
 
-                    // TODO: prepopulate and make user input save
                     final EditText newCategoryNameView = (EditText) dialog
                             .findViewById(R.id.new_category_name);
                     final EditText newAmountView = (EditText) dialog
@@ -91,34 +95,49 @@ public class EditCategoryListAdapter extends ArrayAdapter<Category> {
                     newAmountView.setText(category.getTotal().toString());
                     newAmountView.setInputType(InputType.TYPE_CLASS_NUMBER
                             | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+
                     saveBtn.setOnClickListener(new View.OnClickListener() {
 
                         @Override
                         public void onClick(View v) {
-                        
 
                             // TODO, actually change in database
                             String newCategory = newCategoryNameView.getText()
                                     .toString();
+                            double newamt = Double.parseDouble(newAmountView
+                                    .getText().toString());
+
                             dba.open();
-                            if (dba.categoryExist(newCategory)) {
+                            boolean exists = dba.categoryExist(newCategory);
+                            dba.close();
+                            if (!newCategory.equals(category.getName())
+                                    && exists) {
                                 Toast.makeText(
                                         v.getContext(),
                                         "Category name already exists, please enter another name",
-                                        Toast.LENGTH_SHORT);
-                                
-                            }
-                            else {
-                                double newamt = Double.parseDouble(newAmountView.getText().toString());
-                                Log.i(TAG, category.getName() + " " + newCategory + " " + newamt);
-                                dba.updateCategory(category.getName(), newCategory, newamt);
+                                        Toast.LENGTH_SHORT).show();
+
+                            } else {
+                                Log.i(TAG, category.getName() + " "
+                                        + newCategory + " " + newamt);
+                                dba.open();
+                                dba.updateCategory(category.getName(),
+                                        newCategory, newamt);
+                                // update amount unallocated
+                                // amount unallocated = total - sum of category
+                                // totals
+                                unallocatedView.setText(new Float(totalAmt
+                                        - dba.getCategoriesTotal()).toString());
+                                Log.i(TAG, "updateing unallocated view: " + new Float(totalAmt
+                                        - dba.getCategoriesTotal()).toString());
+                                dba.close();
                                 category.setName(newCategory);
                                 category.setTotal(newamt);
                                 notifyDataSetChanged();
+                                dialog.dismiss();
+
                             }
-                            dba.close();
-                            
-                            dialog.dismiss();
+
                         }
                     });
                     cancelBtn.setOnClickListener(new View.OnClickListener() {

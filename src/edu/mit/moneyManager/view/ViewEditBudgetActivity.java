@@ -45,7 +45,7 @@ public class ViewEditBudgetActivity extends ListActivity {
                 MODE_PRIVATE);
 
         final TextView totalAmt = (TextView) findViewById(R.id.budget_total);
-        float total = settings.getFloat(ViewSummaryActivity.BUDGET_TOTAL,
+        final float total = settings.getFloat(ViewSummaryActivity.BUDGET_TOTAL,
                 (float) 0.0);
         totalAmt.setText(new Float(total).toString());
         final TextView unallocated = (TextView) findViewById(R.id.amount_unallocated);
@@ -143,7 +143,7 @@ public class ViewEditBudgetActivity extends ListActivity {
         mDBAdapter.close();
         Log.i("ViewEditBudgetActivity", "before adapter");
         EditCategoryListAdapter adapter = new EditCategoryListAdapter(this,
-                (ArrayList<Category>) categories, getParent(), mDBAdapter);
+                (ArrayList<Category>) categories, getParent(), mDBAdapter, unallocated, total);
         setListAdapter(adapter);
 
         final Button addCategoryBtn = (Button) footer
@@ -189,7 +189,7 @@ public class ViewEditBudgetActivity extends ListActivity {
 
                             EditCategoryListAdapter adapter = new EditCategoryListAdapter(
                                     mContext, (ArrayList<Category>) mDBAdapter
-                                            .getCategories(), getParent(), mDBAdapter);
+                                            .getCategories(), getParent(), mDBAdapter, unallocated, total);
                             setListAdapter(adapter);
                             float newUnallocatedAmt = settings.getFloat(
                                     ViewSummaryActivity.BUDGET_TOTAL,
@@ -218,7 +218,6 @@ public class ViewEditBudgetActivity extends ListActivity {
 
                     @Override
                     public void onClick(View v) {
-                        // TODO Auto-generated method stub
                         dialog.dismiss();
                     }
                 });
