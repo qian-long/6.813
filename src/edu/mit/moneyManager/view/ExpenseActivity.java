@@ -3,7 +3,6 @@ package edu.mit.moneyManager.view;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -37,6 +36,7 @@ public class ExpenseActivity extends ListActivity {
     private DatabaseAdapter mDBAdapter;
     private ArrayList<Expense> expenses = new ArrayList<Expense>();
     private MainExpenseListAdapter adapter;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,8 +51,7 @@ public class ExpenseActivity extends ListActivity {
         lv.addFooterView(footer);
 
         // list adapter
-        adapter = new MainExpenseListAdapter(this,
-                expenses, mDBAdapter);
+        adapter = new MainExpenseListAdapter(this, expenses, mDBAdapter);
         setListAdapter(adapter);
 
         Button add = (Button) footer.findViewById(R.id.add_expense);
@@ -62,7 +61,11 @@ public class ExpenseActivity extends ListActivity {
 
             @Override
             public void onClick(View v) {
-                expenses.add(new Expense(0, "Select a Date", ""));
+                Calendar c = Calendar.getInstance();
+                int month = c.get(Calendar.MONTH) + 1;
+                String curDate = month + "/" + c.get(Calendar.DAY_OF_MONTH)
+                        + "/" + c.get(Calendar.YEAR);
+                expenses.add(new Expense(0, curDate, ""));
                 adapter.notifyDataSetChanged();
             }
         });
@@ -71,20 +74,43 @@ public class ExpenseActivity extends ListActivity {
 
             @Override
             public void onClick(View v) {
-                //saving expenses in dataase
+                // saving expenses in dataase
+                boolean valid = true;
                 mDBAdapter.open();
-                for (Expense exp: expenses) {
-                    mDBAdapter.addExpense(exp);
+                if (expenses.size() > 0) {
+                    for (Expense exp : expenses) {
+                        if (exp.getAmount() <= 0.0) {
+                            valid = false;
+                            break;
+                        }
+                       
+                    }
+
+                    if (valid) {
+                        for (Expense exp : expenses) {
+
+                            mDBAdapter.addExpense(exp);
+                        }
+                        Toast.makeText(v.getContext(), "expenses saved",
+                                Toast.LENGTH_SHORT).show();
+                    }
                 }
-                Toast.makeText(v.getContext(), "expenses saved",
-                        Toast.LENGTH_SHORT).show();
+
                 mDBAdapter.close();
-                
-                //clearing expenses list
-                ArrayList<Expense> copy = (ArrayList<Expense>)expenses.clone();
-                expenses.removeAll(copy);
-                adapter.notifyDataSetChanged();
-                tabhost.setCurrentTab(1);
+
+                // clearing expenses list
+                if (valid) {
+                    ArrayList<Expense> copy = (ArrayList<Expense>) expenses
+                            .clone();
+                    expenses.removeAll(copy);
+                    adapter.notifyDataSetChanged();
+                    tabhost.setCurrentTab(1);
+                }
+                else {
+                    Toast.makeText(v.getContext(),
+                            "Please enter a valid amount",
+                            Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
@@ -93,11 +119,11 @@ public class ExpenseActivity extends ListActivity {
 
             @Override
             public void onClick(View v) {
-                ArrayList<Expense> copy = (ArrayList<Expense>)expenses.clone();
+                ArrayList<Expense> copy = (ArrayList<Expense>) expenses.clone();
                 expenses.removeAll(copy);
-//                expenses = new ArrayList<Expense>();
+                // expenses = new ArrayList<Expense>();
                 adapter.notifyDataSetChanged();
-                //return to home
+                // return to home
                 tabhost.setCurrentTab(0);
 
             }
@@ -107,9 +133,9 @@ public class ExpenseActivity extends ListActivity {
     @Override
     public void onResume() {
         super.onResume();
-        ArrayList<Expense> copy = (ArrayList<Expense>)expenses.clone();
+        ArrayList<Expense> copy = (ArrayList<Expense>) expenses.clone();
         expenses.removeAll(copy);
-//        expenses = new ArrayList<Expense>();
+        // expenses = new ArrayList<Expense>();
         adapter.notifyDataSetChanged();
     }
 }
