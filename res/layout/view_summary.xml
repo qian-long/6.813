@@ -21,14 +21,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Total Monthly Budget: "
+                android:text="Total Monthly Budget: $"
                 android:textStyle="bold"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
             <TextView
                 android:id="@+id/total_monthly_budget_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="$500"
+                android:text="500"
                 android:textStyle="bold"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
             
@@ -42,7 +42,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Total Remaining: "
+                android:text="Total Remaining: $"
                 android:textStyle="bold"
                 android:textAppearance="?android:attr/textAppearanceSmall"  />
 
@@ -50,7 +50,7 @@
                 android:id="@+id/remaining_monthly_budget_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="$500"
+                android:text="500"
                 android:textStyle="bold"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
            
