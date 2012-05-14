@@ -4,71 +4,75 @@
     android:layout_height="fill_parent" 
     android:orientation="horizontal"
     android:layout_gravity="center_horizontal" > 
+    
     <LinearLayout 
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
     <LinearLayout
         android:id="@+id/fields"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10sp"
-        android:layout_gravity="center_horizontal" >
-        
-        <TextView
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="$ " />
-        
-        <EditText
-            android:id="@+id/new_amount"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10sp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$ "
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/new_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="amount" >
+
+                <requestFocus />
+            </EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5sp"
+                android:layout_marginRight="5sp"
+                android:text="for"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/category_spinner"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:prompt="@string/category_prompt" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="amount">
-            <requestFocus />
-        </EditText>
-        
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-			android:layout_marginLeft="5sp"
-			android:layout_marginRight="5sp"
-            android:text="for" />
-        
-        <Spinner 
-            android:id="@+id/category_spinner"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:prompt="@string/category_prompt" />
-        
-    </LinearLayout>
-    
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="10sp"
-        android:layout_marginTop="10sp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="Date: "/>
-        <Button 
-            android:id="@+id/edit_date_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="05/14/2012" />
-        
-    </LinearLayout>
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10sp"
+            android:layout_marginTop="10sp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date: "
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/edit_date_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="05/14/2012" />
+        </LinearLayout>
     </LinearLayout>
     <LinearLayout         
 	    android:layout_width="match_parent"
