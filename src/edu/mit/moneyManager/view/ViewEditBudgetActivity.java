@@ -99,6 +99,7 @@ public class ViewEditBudgetActivity extends ListActivity {
                                 editor.putFloat(
                                         ViewSummaryActivity.BUDGET_TOTAL, input);
                                 totalAmt.setText(total.getText().toString());
+                                editor.putBoolean(HomeActivity.CREATED_BUDGET, true);
                                 editor.commit();
                                 mDBAdapter.open();
                                 unallocated.setText(new Float(input

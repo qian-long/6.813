@@ -32,6 +32,7 @@ import edu.mit.moneyManager.model.DatabaseAdapter;
 public class HomeActivity extends ActivityGroup {
     // public static boolean NEW = true;
     public String VIEWINGOTHER = "";
+    public static final String CREATED_BUDGET = "created_budget";
     private TabHost tabhost;
     private TextView username;
     private TextView welcome;
@@ -62,6 +63,7 @@ public class HomeActivity extends ActivityGroup {
         shareBtn = (Button) findViewById(R.id.share_budget);
        
         setLayout();
+
         viewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,9 +135,16 @@ public class HomeActivity extends ActivityGroup {
             @Override
             public void onClick(View v) {
 
-                // TODO: make view edit budget open
                 TabHost tabhost = ((TabActivity) getParent()).getTabHost();
+
+              //disable and blackout expenses tab when first starting
+                tabhost.getTabWidget().getChildTabViewAt(2).setEnabled(false);
+                tabhost.getTabWidget().getChildTabViewAt(2).setVisibility(View.INVISIBLE);
+                //enable view expense tab
+                tabhost.getTabWidget().getChildTabViewAt(1).setEnabled(true);
+                tabhost.getTabWidget().getChildTabViewAt(1).setVisibility(View.VISIBLE);
                 tabhost.setCurrentTab(1);
+                
 
             }
 
@@ -156,16 +165,52 @@ public class HomeActivity extends ActivityGroup {
         Log.i("HomeActivity", "Calling onResume()");
         username.setText("Your Budget");
         
-        //enable expenses
-        tabhost.getTabWidget().getChildTabViewAt(2).setVisibility(View.VISIBLE);
-        tabhost.getTabWidget().getChildTabViewAt(2).setEnabled(true);
-        
+
         //enable edit and share
+        /*
         Editor editor = settings.edit();
+        editor.putBoolean(ViewContainer.VIEW_SUMMARY, true);
+        editor.putBoolean(ViewContainer.VIEW_CHART, true);
         editor.putBoolean(ViewContainer.VIEW_EDIT, true);
         editor.putBoolean(ViewContainer.VIEW_SHARE, true);
         editor.putInt(ViewContainer.CURRENT_TAB, 0);
         editor.commit();
+        */
+        
+        if (settings.getBoolean(CREATED_BUDGET, false)) {
+            //budget created, enable view and expense tabs
+            tabhost.getTabWidget().getChildTabViewAt(1).setEnabled(true);
+            tabhost.getTabWidget().getChildTabViewAt(1).setVisibility(View.VISIBLE);
+            
+            Editor editor = settings.edit();
+            editor.putInt(ViewContainer.CURRENT_TAB, 0);
+            editor.putBoolean(ViewContainer.VIEW_EDIT, true);
+            editor.putBoolean(ViewContainer.VIEW_CHART, true);
+            editor.putBoolean(ViewContainer.VIEW_SHARE, true);
+            editor.putBoolean(ViewContainer.VIEW_SUMMARY, true);
+            
+            editor.commit();
+            tabhost.getTabWidget().getChildTabViewAt(2).setEnabled(true);
+            tabhost.getTabWidget().getChildTabViewAt(2).setVisibility(View.VISIBLE);
+        }
+        else {
+            //budget not created, disable blackout view and expense tabs
+            tabhost.getTabWidget().getChildTabViewAt(1).setEnabled(false);
+            tabhost.getTabWidget().getChildTabViewAt(1).setVisibility(View.INVISIBLE);
+            
+            Editor editor = settings.edit();
+            editor.putInt(ViewContainer.CURRENT_TAB, 2);
+            editor.putBoolean(ViewContainer.VIEW_EDIT, true);
+            editor.putBoolean(ViewContainer.VIEW_CHART, false);
+            editor.putBoolean(ViewContainer.VIEW_SHARE, false);
+            editor.putBoolean(ViewContainer.VIEW_SUMMARY, false);
+            
+            editor.commit();
+            
+            tabhost.getTabWidget().getChildTabViewAt(2).setEnabled(false);
+            tabhost.getTabWidget().getChildTabViewAt(2).setVisibility(View.INVISIBLE);
+        }
+        
         Toast.makeText(this, "You are currently viewing your budget", Toast.LENGTH_SHORT).show();
         setLayout();
 
@@ -176,6 +221,13 @@ public class HomeActivity extends ActivityGroup {
      * Determines if user has created a budget and enables the appropriate buttons.
      */
     private void setLayout() {
+//        if (tabhost.getTabWidget() == null) {
+//            Toast.makeText(this, "tabhost.getTabWidget null", Toast.LENGTH_SHORT).show();
+//        }
+//        else {
+//            Toast.makeText(this, tabhost.getTabWidget().getChildCount(), Toast.LENGTH_SHORT).show();
+//
+//        }
         mDBAdapter.open();
         remainingAmt = mDBAdapter.getTotalRemaining()
                 + (double) settings.getFloat(ViewSummaryActivity.BUDGET_TOTAL,
@@ -199,6 +251,8 @@ public class HomeActivity extends ActivityGroup {
             viewBtn.setVisibility(View.GONE);
             shareBtn.setVisibility(View.GONE);
         }
+        
+
     }
 
     class BudgetExpandableListAdapter extends BaseExpandableListAdapter {

@@ -78,8 +78,12 @@ public class ViewContainer extends TabActivity {
         super.onResume();
 //        tabHost.setup();
         tabHost.setCurrentTab(settings.getInt(CURRENT_TAB, 0));
+        tabHost.getTabWidget().getChildAt(0).setEnabled(settings.getBoolean(VIEW_SUMMARY, true));
+        tabHost.getTabWidget().getChildAt(1).setEnabled(settings.getBoolean(VIEW_CHART, true));
         tabHost.getTabWidget().getChildAt(2).setEnabled(settings.getBoolean(VIEW_EDIT, true));
         tabHost.getTabWidget().getChildAt(3).setEnabled(settings.getBoolean(VIEW_SHARE, true));
+        TextView summaryIndicator = (TextView)tabHost.getTabWidget().getChildAt(0).findViewById(android.R.id.title);
+        TextView chartIndicator = (TextView)tabHost.getTabWidget().getChildAt(1).findViewById(android.R.id.title);
         TextView editIndicator = (TextView)tabHost.getTabWidget().getChildAt(2).findViewById(android.R.id.title);
         TextView shareIndicator = (TextView)tabHost.getTabWidget().getChildAt(3).findViewById(android.R.id.title);
 
@@ -98,5 +102,18 @@ public class ViewContainer extends TabActivity {
             shareIndicator.setText("Share");
         }
 
+        if (!settings.getBoolean(VIEW_SUMMARY, true)) {
+            summaryIndicator.setText("");
+        }
+        else {
+            summaryIndicator.setText("Summary");
+        }
+        
+        if (!settings.getBoolean(VIEW_CHART, true)) {
+            chartIndicator.setText("");
+        }
+        else {
+            chartIndicator.setText("Chart");
+        }
     }
 }
