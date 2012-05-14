@@ -88,6 +88,8 @@ public class ViewSummaryActivity extends ListActivity {
         }
         remaining.setText(remainingAmt.toString());
         
+        //refreshes categories
+        categories = mDBAdapter.getCategories();
         SummaryCategoryListAdapter adapter = new SummaryCategoryListAdapter(
                 this, (ArrayList<Category>) categories,
                 ((TabActivity) getParent()).getTabHost());

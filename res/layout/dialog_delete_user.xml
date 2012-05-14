@@ -29,7 +29,7 @@
             android:id="@+id/save_shared_user_btn"
             android:layout_width="78dp"
             android:layout_height="wrap_content"
-            android:text="Save" />
+            android:text="OK" />
         
         <Button
             android:id="@+id/delete_shared_user_btn"
