@@ -13,36 +13,29 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14dp"
+        	android:textAppearance="?android:attr/textAppearanceMedium"
             android:textStyle="bold"
             android:text="$ " />
         
         <EditText
             android:id="@+id/new_amount"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
             android:hint="amount" />
         
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14dp"
             android:textStyle="bold"
-            android:paddingLeft="20dp"
+        	android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_marginLeft="10sp"
+			android:layout_marginRight="10sp"
             android:text="for" />
-        
-<!--         <EditText -->
-<!--             android:id="@+id/new_category_name" -->
-<!--             android:layout_width="80dp" -->
-<!--             android:layout_height="wrap_content" -->
-<!--             android:textSize="12sp" -->
-<!--             android:hint="category" /> -->
         
         <Spinner 
             android:id="@+id/category_spinner"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:prompt="@string/category_prompt" />
         
     </LinearLayout>
@@ -50,25 +43,20 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="10sp"
+        android:layout_marginBottom="10sp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14dp"
             android:textStyle="bold"
-            android:text="Date: " />
-<!--         <EditText -->
-<!--             android:id="@+id/new_category_amount" -->
-<!--             android:layout_width="100dp" -->
-<!--             android:textSize="12sp" -->
-<!--             android:layout_height="wrap_content" -->
-<!--             android:hint="Select Date"  -->
-<!--             android:inputType="number"/> -->
+            android:text="Date: "
+        	android:textAppearance="?android:attr/textAppearanceMedium" />
         <Button 
             android:id="@+id/edit_date_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="04/15/2012" />
+            android:text="05/14/2012" />
         
     </LinearLayout>
     

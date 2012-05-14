@@ -23,8 +23,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Total monthly budget: $300"
-        android:layout_gravity="center_vertical|center_horizontal" 
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textStyle="bold"
+        android:layout_gravity="center_vertical|center_horizontal"/>
 
     <ImageView
         android:id="@+id/imageView"

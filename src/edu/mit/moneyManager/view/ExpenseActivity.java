@@ -55,7 +55,7 @@ public class ExpenseActivity extends ListActivity {
         adapter = new MainExpenseListAdapter(this, expenses, mDBAdapter);
         setListAdapter(adapter);
 
-        ImageButton add = (ImageButton) footer.findViewById(R.id.add_expense);
+        Button add = (Button) footer.findViewById(R.id.add_expense);
         Button save = (Button) footer.findViewById(R.id.save_expense_btn);
         Button cancel = (Button) footer.findViewById(R.id.cancel_btn);
         add.setOnClickListener(new View.OnClickListener() {
