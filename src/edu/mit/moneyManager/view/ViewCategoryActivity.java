@@ -53,7 +53,16 @@ public class ViewCategoryActivity extends ListActivity {
         categoryNameView = (TextView) findViewById(R.id.view_summary_category);
         categoryTotalView = (TextView) findViewById(R.id.category_total);
         categoryRemainingView = (TextView) findViewById(R.id.category_remaining);
-
+        
+        Button backBtn = (Button) findViewById(R.id.back_button);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        
         // list adapter header
         lv = getListView();
         LayoutInflater inflater = getLayoutInflater();
