@@ -26,7 +26,7 @@
              <TextView 
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
-                 android:text="Total: " />
+                 android:text="Total: $" />
              <TextView
                  android:id="@+id/category_total"
                  android:layout_width="wrap_content"
@@ -39,7 +39,7 @@
              <TextView 
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
-                 android:text="Remaining: " />
+                 android:text="Remaining: $" />
              <TextView
                  android:id="@+id/category_remaining"
                  android:layout_width="wrap_content"
