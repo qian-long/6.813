@@ -19,12 +19,6 @@
         android:text=""
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Enter desired username:"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
         android:id="@+id/register_username"
@@ -33,14 +27,8 @@
         android:cursorVisible="true"
         android:ems="10"
         android:hint="Username"
+        android:layout_margin="5sp"
         android:inputType="textNoSuggestions" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Enter email address:"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
         android:id="@+id/register_email_address"
@@ -48,15 +36,9 @@
         android:layout_height="wrap_content"
         android:cursorVisible="true"
         android:ems="10"
+        android:layout_margin="5sp"
         android:hint="email@example.com"
         android:inputType="textNoSuggestions" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Enter desired password:"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
         android:id="@+id/register_password1"
@@ -64,6 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:ems="10"
+        android:layout_margin="5sp"
         android:hint="Password"
         android:inputType="textPassword" />
 
@@ -71,7 +54,7 @@
         android:id="@+id/register_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="5sp"
         android:text="Register" />
 
     <TextView
