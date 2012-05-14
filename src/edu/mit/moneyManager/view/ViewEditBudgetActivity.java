@@ -39,12 +39,13 @@ public class ViewEditBudgetActivity extends ListActivity {
     private TextView totalAmt;
     private TextView unallocated;
     private ImageView editTotal;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_edit_budget);
         mContext = this;
-//        HomeActivity.NEW = false;
+        // HomeActivity.NEW = false;
         mDBAdapter = new DatabaseAdapter(this);
         settings = getSharedPreferences(ViewSummaryActivity.PREFS_NAME,
                 MODE_PRIVATE);
@@ -55,11 +56,11 @@ public class ViewEditBudgetActivity extends ListActivity {
         totalAmt.setText(new Float(total).toString());
         unallocated = (TextView) findViewById(R.id.amount_unallocated);
         mDBAdapter.open();
-        //amount unallocated = total - sum of category totals
+        // amount unallocated = total - sum of category totals
         unallocated.setText(new Float(total - mDBAdapter.getCategoriesTotal())
                 .toString());
         mDBAdapter.close();
-        
+
         if (!settings.getBoolean(HomeActivity.CREATED_BUDGET, false)) {
             showDialog(DIALOG_EDIT_TOTAL_ID);
         }
@@ -71,78 +72,52 @@ public class ViewEditBudgetActivity extends ListActivity {
                 showDialog(DIALOG_EDIT_TOTAL_ID);
             }
         });
-                // TODO Auto-generated method stub
-                /*
-                final Dialog dialog = new Dialog(getParent());
-                dialog.setContentView(R.layout.dialog_edit_total);
-                dialog.setTitle("Edit Total Budget Amount");
-                dialog.setCancelable(false);
-
-                Button saveBtn = (Button) dialog
-                        .findViewById(R.id.save_total_btn);
-                Button cancelBtn = (Button) dialog
-                        .findViewById(R.id.cancel_btn);
-                final EditText total = (EditText) dialog
-                        .findViewById(R.id.new_total);
-                total.setInputType(InputType.TYPE_CLASS_NUMBER
-                        | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-
-                saveBtn.setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-                        // TODO put in actual user input
-                        
-
-                        mDBAdapter.open();
-                        float allocated = (float) mDBAdapter
-                                .getCategoriesTotal();
-                        mDBAdapter.close();
-                        if (total.getText().toString().length() == 0
-                                | total.getText().toString().equals("")) {
-                            Toast.makeText(
-                                    mContext,
-                                    "Please enter a valid amount",
-                                    Toast.LENGTH_SHORT).show();
-                        } else {
-                            float input = Float.parseFloat(total.getText()
-                                    .toString());
-                            if (input > allocated) {
-                                Editor editor = settings.edit();
-                                editor.putFloat(
-                                        ViewSummaryActivity.BUDGET_TOTAL, input);
-                                totalAmt.setText(total.getText().toString());
-                                editor.putBoolean(HomeActivity.CREATED_BUDGET, true);
-                                editor.commit();
-                                mDBAdapter.open();
-                                unallocated.setText(new Float(input
-                                        - mDBAdapter.getCategoriesTotal())
-                                        .toString());
-                                mDBAdapter.close();
-                                dialog.dismiss();
-
-                            } else {
-                                Toast.makeText(
-                                        mContext,
-                                        "Total is less than sum of category totals, please enter a larger amount",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    }
-                });
-
-                cancelBtn.setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-
-                dialog.show();
-
-            }
-//        }*/
+        // TODO Auto-generated method stub
+        /*
+         * final Dialog dialog = new Dialog(getParent());
+         * dialog.setContentView(R.layout.dialog_edit_total);
+         * dialog.setTitle("Edit Total Budget Amount");
+         * dialog.setCancelable(false);
+         * 
+         * Button saveBtn = (Button) dialog .findViewById(R.id.save_total_btn);
+         * Button cancelBtn = (Button) dialog .findViewById(R.id.cancel_btn);
+         * final EditText total = (EditText) dialog
+         * .findViewById(R.id.new_total);
+         * total.setInputType(InputType.TYPE_CLASS_NUMBER |
+         * InputType.TYPE_NUMBER_FLAG_DECIMAL);
+         * 
+         * saveBtn.setOnClickListener(new View.OnClickListener() {
+         * 
+         * @Override public void onClick(View v) { // TODO put in actual user
+         * input
+         * 
+         * 
+         * mDBAdapter.open(); float allocated = (float) mDBAdapter
+         * .getCategoriesTotal(); mDBAdapter.close(); if
+         * (total.getText().toString().length() == 0 |
+         * total.getText().toString().equals("")) { Toast.makeText( mContext,
+         * "Please enter a valid amount", Toast.LENGTH_SHORT).show(); } else {
+         * float input = Float.parseFloat(total.getText() .toString()); if
+         * (input > allocated) { Editor editor = settings.edit();
+         * editor.putFloat( ViewSummaryActivity.BUDGET_TOTAL, input);
+         * totalAmt.setText(total.getText().toString());
+         * editor.putBoolean(HomeActivity.CREATED_BUDGET, true);
+         * editor.commit(); mDBAdapter.open(); unallocated.setText(new
+         * Float(input - mDBAdapter.getCategoriesTotal()) .toString());
+         * mDBAdapter.close(); dialog.dismiss();
+         * 
+         * } else { Toast.makeText( mContext,
+         * "Total is less than sum of category totals, please enter a larger amount"
+         * , Toast.LENGTH_SHORT).show(); } } } });
+         * 
+         * cancelBtn.setOnClickListener(new View.OnClickListener() {
+         * 
+         * @Override public void onClick(View v) { dialog.dismiss(); } });
+         * 
+         * dialog.show();
+         * 
+         * } // }
+         */
 
         // list adapter
         ListView lv = getListView();
@@ -157,13 +132,14 @@ public class ViewEditBudgetActivity extends ListActivity {
         mDBAdapter.close();
         Log.i("ViewEditBudgetActivity", "before adapter");
         EditCategoryListAdapter adapter = new EditCategoryListAdapter(this,
-                (ArrayList<Category>) categories, getParent(), mDBAdapter, unallocated, total);
+                (ArrayList<Category>) categories, getParent(), mDBAdapter,
+                unallocated, total);
         setListAdapter(adapter);
 
         final Button addCategoryBtn = (Button) footer
                 .findViewById(R.id.add_category_button);
         Button doneBtn = (Button) footer.findViewById(R.id.done_editing_button);
-        
+
         addCategoryBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -189,45 +165,64 @@ public class ViewEditBudgetActivity extends ListActivity {
 
                     @Override
                     public void onClick(View v) {
-                        // TODO Auto-generated method stub
                         mDBAdapter.open();
-                        float inpAmount = Float.parseFloat(newAmount.getText()
-                                .toString());
-                        float unallocatedAmt = settings.getFloat(
-                                ViewSummaryActivity.BUDGET_TOTAL,
-                                Float.MIN_VALUE)
-                                - (float) mDBAdapter.getCategoriesTotal();
-                        unallocated.setText(new Float(unallocatedAmt)
-                                .toString());
-                        if (inpAmount <= unallocatedAmt) {
-                            mDBAdapter.addCategory(new Category(name.getText()
-                                    .toString(), inpAmount, inpAmount));
-
-                            EditCategoryListAdapter adapter = new EditCategoryListAdapter(
-                                    mContext, (ArrayList<Category>) mDBAdapter
-                                            .getCategories(), getParent(), mDBAdapter, unallocated, total);
-                            setListAdapter(adapter);
-                            float newUnallocatedAmt = settings.getFloat(
+                        try {
+                            float inpAmount = Float.parseFloat(newAmount
+                                    .getText().toString());
+                            float unallocatedAmt = settings.getFloat(
                                     ViewSummaryActivity.BUDGET_TOTAL,
                                     Float.MIN_VALUE)
                                     - (float) mDBAdapter.getCategoriesTotal();
-                            unallocated.setText(new Float(newUnallocatedAmt)
+                            unallocated.setText(new Float(unallocatedAmt)
                                     .toString());
-                            mDBAdapter.close();
-                            if (newUnallocatedAmt - 0.0 < 0.000001) {
-                                addCategoryBtn.setEnabled(false);
+                            if (inpAmount <= unallocatedAmt) {
+                                if (name.getText().toString().length() >0 ) {
+                                mDBAdapter.addCategory(new Category(name
+                                        .getText().toString(), inpAmount,
+                                        inpAmount));
+
+                                EditCategoryListAdapter adapter = new EditCategoryListAdapter(
+                                        mContext,
+                                        (ArrayList<Category>) mDBAdapter
+                                                .getCategories(), getParent(),
+                                        mDBAdapter, unallocated, total);
+                                setListAdapter(adapter);
+                                float newUnallocatedAmt = settings.getFloat(
+                                        ViewSummaryActivity.BUDGET_TOTAL,
+                                        Float.MIN_VALUE)
+                                        - (float) mDBAdapter
+                                                .getCategoriesTotal();
+                                unallocated
+                                        .setText(new Float(newUnallocatedAmt)
+                                                .toString());
+                                mDBAdapter.close();
+                                if (newUnallocatedAmt - 0.0 < 0.000001) {
+                                    addCategoryBtn.setEnabled(false);
+                                } else {
+                                    addCategoryBtn.setEnabled(true);
+                                }
+                                dialog.dismiss();
+                                }
+                                else{
+                                    Toast.makeText(
+                                            mContext,
+                                            "Please enter a valid category name",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                Toast.makeText(
+                                        mContext,
+                                        "Not enough unallocated. Please enter a lower amount",
+                                        Toast.LENGTH_SHORT).show();
                             }
-                            else {
-                                addCategoryBtn.setEnabled(true);
-                            }
-                            dialog.dismiss();
-                        } else {
+                        } catch (NumberFormatException e) {
                             Toast.makeText(
                                     mContext,
-                                    "Not enough unallocated. Please enter a lower amount",
+                                    "Please enter a valid amount",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
+
                 });
 
                 cancelBtn.setOnClickListener(new View.OnClickListener() {
@@ -242,31 +237,30 @@ public class ViewEditBudgetActivity extends ListActivity {
 
             }
         });
-        
+
         doneBtn.setOnClickListener(new View.OnClickListener() {
-            
+
             @Override
             public void onClick(View v) {
-                TabHost parentHost = ((TabActivity) getParent().getParent()).getTabHost();
+                TabHost parentHost = ((TabActivity) getParent().getParent())
+                        .getTabHost();
                 parentHost.setCurrentTab(0);
 
             }
         });
 
     };
-    
+
     protected Dialog onCreateDialog(int id) {
-        switch(id) {
+        switch (id) {
         case DIALOG_EDIT_TOTAL_ID:
             final Dialog dialog = new Dialog(getParent());
             dialog.setContentView(R.layout.dialog_edit_total);
             dialog.setTitle("Edit Total Budget Amount");
             dialog.setCancelable(false);
 
-            Button saveBtn = (Button) dialog
-                    .findViewById(R.id.save_total_btn);
-            Button cancelBtn = (Button) dialog
-                    .findViewById(R.id.cancel_btn);
+            Button saveBtn = (Button) dialog.findViewById(R.id.save_total_btn);
+            Button cancelBtn = (Button) dialog.findViewById(R.id.cancel_btn);
             final EditText total = (EditText) dialog
                     .findViewById(R.id.new_total);
             total.setInputType(InputType.TYPE_CLASS_NUMBER
@@ -277,25 +271,21 @@ public class ViewEditBudgetActivity extends ListActivity {
                 @Override
                 public void onClick(View v) {
                     // TODO put in actual user input
-                    
 
                     mDBAdapter.open();
-                    float allocated = (float) mDBAdapter
-                            .getCategoriesTotal();
+                    float allocated = (float) mDBAdapter.getCategoriesTotal();
                     mDBAdapter.close();
                     if (total.getText().toString().length() == 0
                             | total.getText().toString().equals("")) {
-                        Toast.makeText(
-                                mContext,
-                                "Please enter a valid amount",
+                        Toast.makeText(mContext, "Please enter a valid amount",
                                 Toast.LENGTH_SHORT).show();
                     } else {
                         float input = Float.parseFloat(total.getText()
                                 .toString());
                         if (input > allocated) {
                             Editor editor = settings.edit();
-                            editor.putFloat(
-                                    ViewSummaryActivity.BUDGET_TOTAL, input);
+                            editor.putFloat(ViewSummaryActivity.BUDGET_TOTAL,
+                                    input);
                             totalAmt.setText(total.getText().toString());
                             editor.putBoolean(HomeActivity.CREATED_BUDGET, true);
                             editor.commit();
@@ -304,7 +294,6 @@ public class ViewEditBudgetActivity extends ListActivity {
                                     - mDBAdapter.getCategoriesTotal())
                                     .toString());
                             mDBAdapter.close();
-
 
                             dialog.dismiss();
 
@@ -332,7 +321,7 @@ public class ViewEditBudgetActivity extends ListActivity {
             return null;
         }
     }
-    
+
     @Override
     protected void onResume() {
         super.onResume();

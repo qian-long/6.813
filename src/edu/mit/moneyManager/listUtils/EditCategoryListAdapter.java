@@ -67,7 +67,7 @@ public class EditCategoryListAdapter extends ArrayAdapter<Category> {
                     .findViewById(R.id.category_amount);
 
             categoryName.setText(category.getName());
-            total.setText(new Double(category.getTotal()).toString());
+            total.setText("$" + new Double(category.getTotal()).toString());
 
             ImageView edit = (ImageView) view
                     .findViewById(R.id.edit_category_button);
@@ -128,7 +128,7 @@ public class EditCategoryListAdapter extends ArrayAdapter<Category> {
                                 // totals
                                 unallocatedView.setText(new Float(totalAmt
                                         - dba.getCategoriesTotal()).toString());
-                                Log.i(TAG, "updateing unallocated view: " + new Float(totalAmt
+                                Log.i(TAG, "updating unallocated view: " + new Float(totalAmt
                                         - dba.getCategoriesTotal()).toString());
                                 dba.close();
                                 category.setName(newCategory);
