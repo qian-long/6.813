@@ -128,7 +128,7 @@ public class ViewEditBudgetActivity extends ListActivity {
 
         // setting list adapter
         mDBAdapter.open();
-        List<Category> categories = mDBAdapter.getCategories();
+        final List<Category> categories = mDBAdapter.getCategories();
         mDBAdapter.close();
         Log.i("ViewEditBudgetActivity", "before adapter");
         EditCategoryListAdapter adapter = new EditCategoryListAdapter(this,
@@ -242,9 +242,17 @@ public class ViewEditBudgetActivity extends ListActivity {
 
             @Override
             public void onClick(View v) {
+                mDBAdapter.open();
+                List<Category> l = mDBAdapter.getCategories();
+                mDBAdapter.close();
+                if (l.size() > 0) {
                 TabHost parentHost = ((TabActivity) getParent().getParent())
                         .getTabHost();
                 parentHost.setCurrentTab(0);
+                }
+                else {
+                    Toast.makeText(v.getContext(), "Please enter a category", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
