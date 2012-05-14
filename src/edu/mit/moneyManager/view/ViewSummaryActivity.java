@@ -14,6 +14,7 @@ import android.app.TabActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -86,7 +87,13 @@ public class ViewSummaryActivity extends ListActivity {
                     .getFloat(BUDGET_TOTAL, (float) 0.0);
         }
         remaining.setText(String.format("%.02f", remainingAmt));
-        
+        if (remainingAmt < 0) {
+            remaining.setTextColor(Color.parseColor("#990000"));
+        }
+        else {
+            remaining.setTextColor(Color.parseColor("#bdbebd"));
+
+        }
         //refreshes categories
         categories = mDBAdapter.getCategories();
         SummaryCategoryListAdapter adapter = new SummaryCategoryListAdapter(

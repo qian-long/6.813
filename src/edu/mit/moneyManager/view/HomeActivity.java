@@ -5,6 +5,7 @@ import android.app.TabActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -243,6 +244,13 @@ public class HomeActivity extends ActivityGroup {
         if (settings.contains(ViewSummaryActivity.BUDGET_TOTAL)) {
             welcome.setText("You have $" + String.format("%.02f", remainingAmt)
                     + " remaining this month");
+            if (remainingAmt < 0) {
+                welcome.setTextColor(Color.parseColor("#990000"));
+            }
+            else {
+                welcome.setTextColor(Color.WHITE);
+
+            }
             create.setVisibility(View.GONE);
             expenseBtn.setVisibility(View.VISIBLE);
             viewBtn.setVisibility(View.VISIBLE);
