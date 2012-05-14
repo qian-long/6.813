@@ -162,6 +162,8 @@ public class ViewEditBudgetActivity extends ListActivity {
 
         final Button addCategoryBtn = (Button) footer
                 .findViewById(R.id.add_category_button);
+        Button doneBtn = (Button) footer.findViewById(R.id.done_editing_button);
+        
         addCategoryBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -240,6 +242,16 @@ public class ViewEditBudgetActivity extends ListActivity {
 
             }
         });
+        
+        doneBtn.setOnClickListener(new View.OnClickListener() {
+            
+            @Override
+            public void onClick(View v) {
+                TabHost parentHost = ((TabActivity) getParent().getParent()).getTabHost();
+                parentHost.setCurrentTab(0);
+
+            }
+        });
 
     };
     
@@ -292,24 +304,7 @@ public class ViewEditBudgetActivity extends ListActivity {
                                     - mDBAdapter.getCategoriesTotal())
                                     .toString());
                             mDBAdapter.close();
-                            editor.putInt(ViewContainer.CURRENT_TAB, 0);
-                            editor.putBoolean(ViewContainer.VIEW_EDIT, true);
-                            editor.putBoolean(ViewContainer.VIEW_CHART, true);
-                            editor.putBoolean(ViewContainer.VIEW_SHARE, true);
-                            editor.putBoolean(ViewContainer.VIEW_SUMMARY, true);
-                            
-                            editor.commit();
-                            
-                            //enabling summary, chart, and share view after saving total
-                            TabHost th = ((TabActivity) getParent()).getTabHost();
-                            th.getTabWidget().getChildAt(0).setEnabled(true);
-                            th.getTabWidget().getChildAt(0).setVisibility(View.VISIBLE);
 
-                            th.getTabWidget().getChildAt(1).setEnabled(true);
-                            th.getTabWidget().getChildAt(1).setVisibility(View.VISIBLE);
-
-                            th.getTabWidget().getChildAt(3).setEnabled(true);
-                            th.getTabWidget().getChildAt(3).setVisibility(View.VISIBLE);
 
                             dialog.dismiss();
 
