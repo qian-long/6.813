@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TabHost;
 import edu.mit.moneyManager.R;
 import android.widget.TextView;
@@ -82,38 +83,54 @@ public class ViewContainer extends TabActivity {
         tabHost.getTabWidget().getChildAt(1).setEnabled(settings.getBoolean(VIEW_CHART, true));
         tabHost.getTabWidget().getChildAt(2).setEnabled(settings.getBoolean(VIEW_EDIT, true));
         tabHost.getTabWidget().getChildAt(3).setEnabled(settings.getBoolean(VIEW_SHARE, true));
+        
         TextView summaryIndicator = (TextView)tabHost.getTabWidget().getChildAt(0).findViewById(android.R.id.title);
         TextView chartIndicator = (TextView)tabHost.getTabWidget().getChildAt(1).findViewById(android.R.id.title);
         TextView editIndicator = (TextView)tabHost.getTabWidget().getChildAt(2).findViewById(android.R.id.title);
         TextView shareIndicator = (TextView)tabHost.getTabWidget().getChildAt(3).findViewById(android.R.id.title);
 
         if (!settings.getBoolean(VIEW_EDIT, true)) {
-            editIndicator.setText("");
+//            editIndicator.setText("");
+            tabHost.getTabWidget().getChildAt(2).setVisibility(View.INVISIBLE);
         }
         else {
-            editIndicator.setText("Edit");
+//            editIndicator.setText("Edit");
+            tabHost.getTabWidget().getChildAt(2).setVisibility(View.VISIBLE);
         }
         
         
         if (!settings.getBoolean(VIEW_SHARE, true)) {
-            shareIndicator.setText("");
+//            shareIndicator.setText("");
+            tabHost.getTabWidget().getChildAt(3).setVisibility(View.INVISIBLE);
+
         }
         else {
-            shareIndicator.setText("Share");
+//            shareIndicator.setText("Share");
+            tabHost.getTabWidget().getChildAt(3).setVisibility(View.VISIBLE);
+
         }
 
         if (!settings.getBoolean(VIEW_SUMMARY, true)) {
-            summaryIndicator.setText("");
+//            summaryIndicator.setText("");
+            tabHost.getTabWidget().getChildAt(0).setVisibility(View.INVISIBLE);
+
         }
         else {
-            summaryIndicator.setText("Summary");
+//            summaryIndicator.setText("Summary");
+            tabHost.getTabWidget().getChildAt(0).setVisibility(View.VISIBLE);
+
         }
         
         if (!settings.getBoolean(VIEW_CHART, true)) {
-            chartIndicator.setText("");
+//            chartIndicator.setText("");
+            tabHost.getTabWidget().getChildAt(1).setVisibility(View.INVISIBLE);
+
         }
         else {
-            chartIndicator.setText("Chart");
+//            chartIndicator.setText("Chart");
+            tabHost.getTabWidget().getChildAt(1).setVisibility(View.VISIBLE);
+
         }
+        
     }
 }

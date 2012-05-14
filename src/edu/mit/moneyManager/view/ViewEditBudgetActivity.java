@@ -6,6 +6,7 @@ import java.util.List;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ListActivity;
+import android.app.TabActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 import edu.mit.moneyManager.R;
@@ -30,10 +32,13 @@ import edu.mit.moneyManager.model.DatabaseAdapter;
 
 public class ViewEditBudgetActivity extends ListActivity {
     public static final String BUDGET_UNALLOCATED = "unallocated";
+    public static final int DIALOG_EDIT_TOTAL_ID = 0;
     private Context mContext;
     private SharedPreferences settings;
     private DatabaseAdapter mDBAdapter;
-
+    private TextView totalAmt;
+    private TextView unallocated;
+    private ImageView editTotal;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,22 +49,30 @@ public class ViewEditBudgetActivity extends ListActivity {
         settings = getSharedPreferences(ViewSummaryActivity.PREFS_NAME,
                 MODE_PRIVATE);
 
-        final TextView totalAmt = (TextView) findViewById(R.id.budget_total);
+        totalAmt = (TextView) findViewById(R.id.budget_total);
         final float total = settings.getFloat(ViewSummaryActivity.BUDGET_TOTAL,
                 (float) 0.0);
         totalAmt.setText(new Float(total).toString());
-        final TextView unallocated = (TextView) findViewById(R.id.amount_unallocated);
+        unallocated = (TextView) findViewById(R.id.amount_unallocated);
         mDBAdapter.open();
         //amount unallocated = total - sum of category totals
         unallocated.setText(new Float(total - mDBAdapter.getCategoriesTotal())
                 .toString());
         mDBAdapter.close();
-        ImageView editTotal = (ImageView) findViewById(R.id.edit_total);
+        
+        if (!settings.getBoolean(HomeActivity.CREATED_BUDGET, false)) {
+            showDialog(DIALOG_EDIT_TOTAL_ID);
+        }
+        editTotal = (ImageView) findViewById(R.id.edit_total);
         editTotal.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
+                showDialog(DIALOG_EDIT_TOTAL_ID);
+            }
+        });
                 // TODO Auto-generated method stub
+                /*
                 final Dialog dialog = new Dialog(getParent());
                 dialog.setContentView(R.layout.dialog_edit_total);
                 dialog.setTitle("Edit Total Budget Amount");
@@ -129,7 +142,7 @@ public class ViewEditBudgetActivity extends ListActivity {
                 dialog.show();
 
             }
-        });
+//        }*/
 
         // list adapter
         ListView lv = getListView();
@@ -228,5 +241,108 @@ public class ViewEditBudgetActivity extends ListActivity {
             }
         });
 
+    };
+    
+    protected Dialog onCreateDialog(int id) {
+        switch(id) {
+        case DIALOG_EDIT_TOTAL_ID:
+            final Dialog dialog = new Dialog(getParent());
+            dialog.setContentView(R.layout.dialog_edit_total);
+            dialog.setTitle("Edit Total Budget Amount");
+            dialog.setCancelable(false);
+
+            Button saveBtn = (Button) dialog
+                    .findViewById(R.id.save_total_btn);
+            Button cancelBtn = (Button) dialog
+                    .findViewById(R.id.cancel_btn);
+            final EditText total = (EditText) dialog
+                    .findViewById(R.id.new_total);
+            total.setInputType(InputType.TYPE_CLASS_NUMBER
+                    | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+
+            saveBtn.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    // TODO put in actual user input
+                    
+
+                    mDBAdapter.open();
+                    float allocated = (float) mDBAdapter
+                            .getCategoriesTotal();
+                    mDBAdapter.close();
+                    if (total.getText().toString().length() == 0
+                            | total.getText().toString().equals("")) {
+                        Toast.makeText(
+                                mContext,
+                                "Please enter a valid amount",
+                                Toast.LENGTH_SHORT).show();
+                    } else {
+                        float input = Float.parseFloat(total.getText()
+                                .toString());
+                        if (input > allocated) {
+                            Editor editor = settings.edit();
+                            editor.putFloat(
+                                    ViewSummaryActivity.BUDGET_TOTAL, input);
+                            totalAmt.setText(total.getText().toString());
+                            editor.putBoolean(HomeActivity.CREATED_BUDGET, true);
+                            editor.commit();
+                            mDBAdapter.open();
+                            unallocated.setText(new Float(input
+                                    - mDBAdapter.getCategoriesTotal())
+                                    .toString());
+                            mDBAdapter.close();
+                            editor.putInt(ViewContainer.CURRENT_TAB, 0);
+                            editor.putBoolean(ViewContainer.VIEW_EDIT, true);
+                            editor.putBoolean(ViewContainer.VIEW_CHART, true);
+                            editor.putBoolean(ViewContainer.VIEW_SHARE, true);
+                            editor.putBoolean(ViewContainer.VIEW_SUMMARY, true);
+                            
+                            editor.commit();
+                            
+                            //enabling summary, chart, and share view after saving total
+                            TabHost th = ((TabActivity) getParent()).getTabHost();
+                            th.getTabWidget().getChildAt(0).setEnabled(true);
+                            th.getTabWidget().getChildAt(0).setVisibility(View.VISIBLE);
+
+                            th.getTabWidget().getChildAt(1).setEnabled(true);
+                            th.getTabWidget().getChildAt(1).setVisibility(View.VISIBLE);
+
+                            th.getTabWidget().getChildAt(3).setEnabled(true);
+                            th.getTabWidget().getChildAt(3).setVisibility(View.VISIBLE);
+
+                            dialog.dismiss();
+
+                        } else {
+                            Toast.makeText(
+                                    mContext,
+                                    "Total is less than sum of category totals, please enter a larger amount",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+            });
+
+            cancelBtn.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+
+            dialog.show();
+            return dialog;
+        default:
+            return null;
+        }
+    }
+    
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!settings.getBoolean(HomeActivity.CREATED_BUDGET, false)) {
+            showDialog(DIALOG_EDIT_TOTAL_ID);
+        }
     }
 }
