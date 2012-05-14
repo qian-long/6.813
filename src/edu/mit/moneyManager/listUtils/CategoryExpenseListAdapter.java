@@ -9,10 +9,12 @@ import java.util.Map;
 import edu.mit.moneyManager.R;
 import edu.mit.moneyManager.model.DatabaseAdapter;
 import edu.mit.moneyManager.model.Expense;
+import edu.mit.moneyManager.view.HomeActivity;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.text.InputType;
 import android.text.method.DigitsKeyListener;
 import android.util.Log;
@@ -39,18 +41,20 @@ public class CategoryExpenseListAdapter extends ArrayAdapter<Expense> {
     private Map<String, Integer> mCategoryMap;
     // pointer to remainingView;
     private TextView remainingView;
-
+    // pointer to settings
+    private SharedPreferences settings;
     private String categoryName;
 
     public CategoryExpenseListAdapter(Context context,
             ArrayList<Expense> expenses, Context parent, DatabaseAdapter dba,
-            String categoryName, TextView view) {
+            String categoryName, TextView view, SharedPreferences settings) {
         super(context, 0, expenses);
         this.expenses = expenses;
         this.context = context;
         this.parentContext = parent;
         this.categoryName = categoryName;
         this.remainingView = view;
+        this.settings = settings;
         mDBAdapter = dba;
         mDBAdapter.open();
         categories = mDBAdapter.getCategoryNames();
@@ -89,6 +93,15 @@ public class CategoryExpenseListAdapter extends ArrayAdapter<Expense> {
             ImageView edit = (ImageView) view
                     .findViewById(R.id.edit_expense_btn);
             // Log.i("CategoryExpenseList adapter", (String)edit.getText());
+            if (settings.getBoolean(HomeActivity.VIEWING_OTHER_BUDGET, false)) {
+                edit.setClickable(false);
+                edit.setVisibility(View.INVISIBLE);
+            }
+            else {
+                edit.setClickable(true);
+                edit.setVisibility(View.VISIBLE);
+            }
+            
             edit.setOnClickListener(new View.OnClickListener() {
 
                 @Override

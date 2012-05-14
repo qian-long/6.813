@@ -33,6 +33,7 @@ public class HomeActivity extends ActivityGroup {
     // public static boolean NEW = true;
     public String VIEWINGOTHER = "";
     public static final String CREATED_BUDGET = "created_budget";
+    public static final String VIEWING_OTHER_BUDGET = "other_budget";
     private TabHost tabhost;
     private TextView username;
     private TextView welcome;
@@ -122,6 +123,7 @@ public class HomeActivity extends ActivityGroup {
                 Editor editor = settings.edit();
                 editor.putBoolean(ViewContainer.VIEW_EDIT, false);
                 editor.putBoolean(ViewContainer.VIEW_SHARE, false);
+                editor.putBoolean(VIEWING_OTHER_BUDGET, true);
                 editor.commit();
                 tabhost.setCurrentTab(1);
                 Toast.makeText(v.getContext(), "You are currently viewing " + VIEWINGOTHER, Toast.LENGTH_SHORT).show();
@@ -188,7 +190,8 @@ public class HomeActivity extends ActivityGroup {
             editor.putBoolean(ViewContainer.VIEW_CHART, true);
             editor.putBoolean(ViewContainer.VIEW_SHARE, true);
             editor.putBoolean(ViewContainer.VIEW_SUMMARY, true);
-            
+            editor.putBoolean(VIEWING_OTHER_BUDGET, false);
+
             editor.commit();
             tabhost.getTabWidget().getChildTabViewAt(2).setEnabled(true);
             tabhost.getTabWidget().getChildTabViewAt(2).setVisibility(View.VISIBLE);

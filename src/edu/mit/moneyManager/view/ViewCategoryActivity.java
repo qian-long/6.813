@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +38,8 @@ public class ViewCategoryActivity extends ListActivity {
     private TextView categoryRemainingView;
     private Context context = this;
     private ListView lv;
+    private static SharedPreferences settings;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +47,7 @@ public class ViewCategoryActivity extends ListActivity {
         Bundle extras = getIntent().getExtras();
         categoryName = extras.getString(INTENT_KEY_CATEGORY);
         mDBAdapter = new DatabaseAdapter(this);
+        settings = getSharedPreferences(ViewSummaryActivity.PREFS_NAME, MODE_PRIVATE);
 
         
         categoryNameView = (TextView) findViewById(R.id.view_summary_category);
@@ -81,23 +85,8 @@ public class ViewCategoryActivity extends ListActivity {
         mDBAdapter.close();
 
         CategoryExpenseListAdapter adapter = new CategoryExpenseListAdapter(
-                this, (ArrayList<Expense>) expenses, this, mDBAdapter, categoryName, categoryRemainingView);
+                this, (ArrayList<Expense>) expenses, this, mDBAdapter, categoryName, categoryRemainingView, settings);
         setListAdapter(adapter);
-//        lv.setClickable(true);
-        /*
-        lv.setOnItemClickListener(new OnItemClickListener() {
-            
-            @Override
-            public void onItemClick(AdapterView parent, View v, final int position,
-                    long id) {
-                
-                Intent intent = new Intent(v.getContext(), ViewCategoryActivity.class);
-                intent.putExtra(ViewCategoryActivity.INTENT_KEY_CATEGORY, categoryName);
-                startActivity(intent);
-                
-            }
-        });
-        */
 
     }
 }
