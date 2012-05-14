@@ -13,15 +13,23 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:textSize="14dp"
             android:textStyle="bold"
             android:text="Add Another Expense: " />
 
-        <Button 
+<!--         <Button  -->
+<!--             android:id="@+id/add_expense" -->
+<!--             android:layout_width="wrap_content" -->
+<!--             android:layout_height="wrap_content" -->
+<!--             android:text="+" /> -->
+        
+        <ImageButton
             android:id="@+id/add_expense"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="+" />
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_plus"
+            android:scaleType="fitXY" />
         
     </LinearLayout>
     

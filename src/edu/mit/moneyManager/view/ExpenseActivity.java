@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.Toast;
@@ -54,7 +55,7 @@ public class ExpenseActivity extends ListActivity {
         adapter = new MainExpenseListAdapter(this, expenses, mDBAdapter);
         setListAdapter(adapter);
 
-        Button add = (Button) footer.findViewById(R.id.add_expense);
+        ImageButton add = (ImageButton) footer.findViewById(R.id.add_expense);
         Button save = (Button) footer.findViewById(R.id.save_expense_btn);
         Button cancel = (Button) footer.findViewById(R.id.cancel_btn);
         add.setOnClickListener(new View.OnClickListener() {

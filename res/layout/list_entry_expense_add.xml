@@ -24,8 +24,7 @@
             android:id="@+id/new_amount"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:hint="amount" >
+            android:textSize="12dp" >
             <requestFocus />
             
         </EditText>
@@ -72,11 +71,19 @@
     </LinearLayout>
     </LinearLayout>
 
-    <Button
+<!--     <Button -->
+<!--         android:id="@+id/delete_expense" -->
+<!--         android:layout_width="wrap_content" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:layout_alignParentRight="true" -->
+<!--         android:text="-" /> -->
+    <ImageButton
         android:id="@+id/delete_expense"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:text="-" />
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:scaleType="fitXY"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="30dp"
+        android:background="@drawable/ic_minus" />
     
 </LinearLayout>
