@@ -57,10 +57,12 @@ public class EditCategoryListAdapter extends ArrayAdapter<Category> {
         if (category != null) {
             view = inflator.inflate(R.layout.list_entry_category_edit, null);
 
-            view.setOnClickListener(null);
-            view.setOnLongClickListener(null);
-            view.setLongClickable(false);
-
+//            view.setOnClickListener(null);
+//            view.setOnLongClickListener(null);
+//            view.setLongClickable(false);
+            view.setClickable(true);
+            view.setFocusable(true);
+            view.setFocusableInTouchMode(true);
             final TextView categoryName = (TextView) view
                     .findViewById(R.id.category_name);
             final TextView total = (TextView) view
@@ -71,7 +73,7 @@ public class EditCategoryListAdapter extends ArrayAdapter<Category> {
 
             ImageView edit = (ImageView) view
                     .findViewById(R.id.edit_category_button);
-            edit.setOnClickListener(new View.OnClickListener() {
+            view.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {

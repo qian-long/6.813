@@ -22,113 +22,144 @@ import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ExpandableListView.OnChildClickListener;
 import edu.mit.moneyManager.R;
 import edu.mit.moneyManager.listUtils.CategoryItemEntry;
 import edu.mit.moneyManager.listUtils.SharedListAdapter;
 
 public class ViewShareActivity extends ListActivity {
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_share);
-        
+
         ListView lv = getListView();
         LayoutInflater inflater = getLayoutInflater();
         View footer = inflater.inflate(R.layout.view_share_footer, null, false);
         lv.addFooterView(footer);
-        
+
         final ArrayList<String> sharedUsers = new ArrayList<String>();
-        sharedUsers.add("darthvader@gmail.com");
-        final SharedListAdapter adapter = new SharedListAdapter(this, sharedUsers);
+//        sharedUsers.add("darthvader@gmail.com");
+        final SharedListAdapter adapter = new SharedListAdapter(this,
+                sharedUsers);
         setListAdapter(adapter);
         Log.i("ViewShareActivity", "after setListAdapter(adapter");
-        lv.setOnItemClickListener(new OnItemClickListener(){
+        lv.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
-            public void onItemClick(AdapterView parent, View v, int position, long id) {
+            public void onItemClick(AdapterView parent, View v, final int position,
+                    long id) {
                 final Dialog dialog = new Dialog(getParent());
                 dialog.setContentView(R.layout.dialog_delete_user);
                 dialog.setTitle("Review User Sharing");
                 dialog.setCancelable(false);
-                
-                Button saveBtn = (Button) dialog.findViewById(R.id.save_shared_user_btn);
-                Button deleteBtn = (Button) dialog.findViewById(R.id.delete_shared_user_btn);
-                
+
+                Button saveBtn = (Button) dialog
+                        .findViewById(R.id.save_shared_user_btn);
+                Button deleteBtn = (Button) dialog
+                        .findViewById(R.id.delete_shared_user_btn);
+
                 saveBtn.setOnClickListener(new View.OnClickListener() {
-                    
+
                     @Override
                     public void onClick(View v) {
                         // TODO Auto-generated method stub
                         dialog.dismiss();
                     }
                 });
-                
+
                 deleteBtn.setOnClickListener(new View.OnClickListener() {
-                    
+
                     @Override
                     public void onClick(View v) {
-                        sharedUsers.remove("darthvader@gmail.com");
-                        ArrayAdapter<String> adapter = new SharedListAdapter(ViewShareActivity.this, sharedUsers);
+//                        sharedUsers.remove("darthvader@gmail.com");
+                        sharedUsers.remove(position);
+                        ArrayAdapter<String> adapter = new SharedListAdapter(
+                                ViewShareActivity.this, sharedUsers);
                         setListAdapter(adapter);
                         dialog.dismiss();
                     }
                 });
-                
+
                 dialog.show();
             }
-            
+
         });
-        
+
         Log.i("ViewShareActivity", "before addSharedUserBtn");
-        Button addSharedUserBtn = (Button) footer.findViewById(R.id.add_shareduser_button);
+        Button addSharedUserBtn = (Button) footer
+                .findViewById(R.id.add_shareduser_button);
         addSharedUserBtn.setOnClickListener(new View.OnClickListener() {
-            
+
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                //dialog
+                // dialog
                 final Dialog dialog = new Dialog(getParent());
                 dialog.setContentView(R.layout.dialog_add_user);
                 dialog.setTitle("Share with another user");
                 dialog.setCancelable(false);
-                
-                Button addBtn = (Button) dialog.findViewById(R.id.add_share_user_btn);
-                Button cancelBtn = (Button) dialog.findViewById(R.id.cancel_share_btn);
-                
+
+                Button addBtn = (Button) dialog
+                        .findViewById(R.id.add_share_user_btn);
+                Button cancelBtn = (Button) dialog
+                        .findViewById(R.id.cancel_share_btn);
+                final EditText emailAddress = (EditText) dialog
+                        .findViewById(R.id.share_email_address);
                 addBtn.setOnClickListener(new View.OnClickListener() {
-                    
+
                     @Override
                     public void onClick(View v) {
                         // TODO Auto-generated method stub
-                        sharedUsers.add("darthvader@gmail.com");
-                        ArrayAdapter<String> adapter = new SharedListAdapter(ViewShareActivity.this, sharedUsers);
-                        setListAdapter(adapter);
-                        dialog.dismiss();
+                        if (validEmailAddress(emailAddress.getText().toString())) {
+                            sharedUsers.add(emailAddress.getText().toString());
+                            // ArrayAdapter<String> adapter = new
+                            // SharedListAdapter(ViewShareActivity.this,
+                            // sharedUsers);
+                            // setListAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+                            dialog.dismiss();
+                        }
+                        else {
+                            Toast.makeText(v.getContext(), "Please enter a valid email address", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    
+                    private boolean validEmailAddress(String email) {
+                        boolean valid = true;
+                        if (email.length() <= 0) {
+                            valid = false;
+                        }
+                        if (!email.contains("@")) {
+                            valid = false;
+                        }
+                        return valid;
                     }
                 });
-                
+
                 cancelBtn.setOnClickListener(new View.OnClickListener() {
-                    
+
                     @Override
                     public void onClick(View v) {
                         // TODO Auto-generated method stub
                         dialog.dismiss();
                     }
                 });
-                
+
                 dialog.show();
 
             }
         });
     }
-    
+
     public TextView getGenericView() {
         AbsListView.LayoutParams lp = new AbsListView.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, 64);
@@ -140,4 +171,6 @@ public class ViewShareActivity extends ListActivity {
         textView.setId(1);
         return textView;
     }
+    
+
 }

@@ -5,32 +5,20 @@
     android:gravity="center_horizontal"
     android:orientation="vertical" >
     
+   
     
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="5sp"
         android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="14dp"
-            android:textStyle="bold"
-            android:text="Add Another Expense: " />
-
+        
         <Button 
             android:id="@+id/add_expense"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="+" />
-        
-    </LinearLayout>
-    
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        
+            android:layout_height="wrap_content"
+            android:text="Add Another Expense" />
                 
         <Button 
             android:id="@+id/save_expense_btn"

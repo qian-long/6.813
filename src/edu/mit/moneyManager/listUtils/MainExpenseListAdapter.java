@@ -26,6 +26,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TabHost;
 import android.widget.Toast;
@@ -56,7 +57,7 @@ public class MainExpenseListAdapter extends ArrayAdapter<Expense> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         mDBAdapter.open();
         categories = mDBAdapter.getCategoryNames();
         mCategoryMap = getCategoryMap(categories);
@@ -167,6 +168,16 @@ public class MainExpenseListAdapter extends ArrayAdapter<Expense> {
                 }
             });
 
+            ImageButton deleteBtn = (ImageButton) view.findViewById(R.id.delete_expense);
+            deleteBtn.setOnClickListener(new View.OnClickListener() {
+                
+                @Override
+                public void onClick(View v) {
+                    expenses.remove(position);
+                    notifyDataSetChanged();
+                }
+            });
+            
             view.setOnClickListener(null);
             view.setOnLongClickListener(null);
             view.setLongClickable(false);
