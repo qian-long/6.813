@@ -6,19 +6,29 @@
      android:orientation="horizontal">
      
     <TextView 
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:paddingRight="20dp"
+        android:layout_weight="1"
+        android:textStyle="bold"
         android:text="Date" />
-    
-    <TextView 
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:paddingRight="20dp"
-        android:text="Amount" />
+        android:layout_weight="1" >
+        <TextView 
+            android:id="@+id/expense_amount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:layout_weight="2"
+            android:text="Amount"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+    
     
 </LinearLayout>

@@ -41,9 +41,9 @@ public class SummaryCategoryListAdapter extends ArrayAdapter<Category>{
         if (category != null) {
             view = inflator.inflate(R.layout.list_entry_category_summary, null);
             
-            view.setOnClickListener(null);
-            view.setOnLongClickListener(null);
-            view.setLongClickable(false);
+            //view.setOnClickListener(null);
+//            view.setOnLongClickListener(null);
+//            view.setLongClickable(false);
             
             TextView categoryName = (TextView) view.findViewById(R.id.view_summary_category);            
             TextView total = (TextView) view.findViewById(R.id.category_total);
@@ -54,7 +54,7 @@ public class SummaryCategoryListAdapter extends ArrayAdapter<Category>{
             remaining.setText(new Double(category.getRemaining()).toString());
             
             ImageView detailBtn = (ImageView) view.findViewById(R.id.category_detail_button);
-            detailBtn.setOnClickListener(new View.OnClickListener() {
+            view.setOnClickListener(new View.OnClickListener() {
                 
                 @Override
                 public void onClick(View v) {

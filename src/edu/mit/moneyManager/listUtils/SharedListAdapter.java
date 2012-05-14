@@ -36,9 +36,9 @@ public class SharedListAdapter extends ArrayAdapter<String>{
         if (username != null) {
             view = inflator.inflate(R.layout.list_entry_shared, null);
             
-            view.setOnClickListener(null);
-            view.setOnLongClickListener(null);
-            view.setLongClickable(false);
+//            view.setOnClickListener(null);
+//            view.setOnLongClickListener(null);
+//            view.setLongClickable(false);
             
             TextView userName = (TextView) view.findViewById(R.id.user_shared_name);            
 

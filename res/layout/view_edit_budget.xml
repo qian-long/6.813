@@ -20,22 +20,17 @@
             <TextView
                 android:layout_width="wrap_content" 
                 android:layout_height="wrap_content" 
-                android:textSize="12sp"
                 android:textStyle="bold"
-                android:text="Total: " />
+                android:text="Total: $" 
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
             
             <TextView
                 android:id="@+id/budget_total" 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:text="100"/>
-            
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="per month"/>
+                android:textStyle="bold"
+                android:text="100"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
             
             <ImageView
                 android:id="@+id/edit_total"
@@ -43,6 +38,12 @@
                 android:layout_height="20dp"
                 android:src="@drawable/ic_menu_edit" />
             
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="per month"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+
         </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"
@@ -52,24 +53,30 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:text="Amount Unallocated: " />
+                android:text="Amount Unallocated: $" 
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
             
             <TextView
                 android:id="@+id/amount_unallocated"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:text="100" />
+                android:text="100" 
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
             
         </LinearLayout>
         
     </LinearLayout>
+
     <ListView
         android:id="@android:id/list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="403dp"
         android:drawSelectorOnTop="false" />
-    
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:text="Done Editing Budget" />
 
 </LinearLayout>
