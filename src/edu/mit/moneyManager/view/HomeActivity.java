@@ -42,7 +42,7 @@ import edu.mit.moneyManager.model.DatabaseAdapter;
  */
 public class HomeActivity extends ActivityGroup {
     // public static boolean NEW = true;
-    public static String VIEWINGOTHER = "";
+    public String VIEWINGOTHER = "";
     private TabHost tabhost;
     private TextView username;
     private TextView welcome;
@@ -97,7 +97,7 @@ public class HomeActivity extends ActivityGroup {
             }
         });
         
-        //TODO: share button
+       
         shareBtn.setOnClickListener(new View.OnClickListener() {
             
             @Override
@@ -120,8 +120,6 @@ public class HomeActivity extends ActivityGroup {
                     int groupPosition, int childPosition, long id) {
                 VIEWINGOTHER = (String) adapter.getChild(groupPosition,
                         childPosition);
-//                TextView username = (TextView) getParent().findViewById(
-//                        R.id.username);
 
                 username.setText(VIEWINGOTHER + " [Press Home to go back to your budget]");
                 
@@ -134,6 +132,7 @@ public class HomeActivity extends ActivityGroup {
                 editor.putBoolean(ViewContainer.VIEW_SHARE, false);
                 editor.commit();
                 tabhost.setCurrentTab(1);
+                Toast.makeText(v.getContext(), "You are currently viewing " + VIEWINGOTHER, Toast.LENGTH_SHORT).show();
                 return true;
             }
 
