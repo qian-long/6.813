@@ -34,7 +34,7 @@ public class LoginActivity extends Activity {
         username.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         
         TextView switchToRegister = (TextView) findViewById(R.id.register_help);
-        SpannableString contentUnderline1 = new SpannableString("Already have an account? Login!");  
+        SpannableString contentUnderline1 = new SpannableString("New to MoneyManager? Register!");  
         contentUnderline1.setSpan(new UnderlineSpan(), 0, contentUnderline1.length(), 0);
         switchToRegister.setText(contentUnderline1);
         
