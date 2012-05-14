@@ -69,7 +69,7 @@ public class EditCategoryListAdapter extends ArrayAdapter<Category> {
                     .findViewById(R.id.category_amount);
 
             categoryName.setText(category.getName());
-            total.setText("$" + new Double(category.getTotal()).toString());
+            total.setText("$" + String.format("%.02f", new Double(category.getTotal())));
 
             ImageView edit = (ImageView) view
                     .findViewById(R.id.edit_category_button);
@@ -94,7 +94,7 @@ public class EditCategoryListAdapter extends ArrayAdapter<Category> {
                     final EditText newAmountView = (EditText) dialog
                             .findViewById(R.id.new_category_amount);
                     newCategoryNameView.setText(category.getName());
-                    newAmountView.setText(category.getTotal().toString());
+                    newAmountView.setText(String.format("%.02f", category.getTotal()));
                     newAmountView.setInputType(InputType.TYPE_CLASS_NUMBER
                             | InputType.TYPE_NUMBER_FLAG_DECIMAL);
 

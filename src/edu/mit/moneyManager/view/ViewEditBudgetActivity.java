@@ -53,12 +53,11 @@ public class ViewEditBudgetActivity extends ListActivity {
         totalAmt = (TextView) findViewById(R.id.budget_total);
         final float total = settings.getFloat(ViewSummaryActivity.BUDGET_TOTAL,
                 (float) 0.0);
-        totalAmt.setText(new Float(total).toString());
+        totalAmt.setText(String.format("%.02f", new Float(total)));
         unallocated = (TextView) findViewById(R.id.amount_unallocated);
         mDBAdapter.open();
         // amount unallocated = total - sum of category totals
-        unallocated.setText(new Float(total - mDBAdapter.getCategoriesTotal())
-                .toString());
+        unallocated.setText(String.format("%.02f", new Float(total - mDBAdapter.getCategoriesTotal())));
         mDBAdapter.close();
 
         if (!settings.getBoolean(HomeActivity.CREATED_BUDGET, false)) {
