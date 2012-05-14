@@ -37,9 +37,10 @@
         android:cursorVisible="true"
         android:ems="10"
         android:layout_margin="5sp"
+        
         android:hint="email@example.com"
-        android:inputType="textNoSuggestions" />
-
+        android:inputType="textEmailAddress"/>
+    
     <EditText
         android:id="@+id/register_password1"
         android:layout_width="wrap_content"
