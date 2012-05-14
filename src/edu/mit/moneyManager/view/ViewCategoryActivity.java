@@ -86,8 +86,8 @@ public class ViewCategoryActivity extends ListActivity {
         mDBAdapter.open();
         Category category = mDBAdapter.getCategory(categoryName);
         if (category != null) {
-            categoryTotalView.setText(category.getTotal().toString());
-            categoryRemainingView.setText(category.getRemaining().toString());
+            categoryTotalView.setText(String.format("%.02f", category.getTotal()));
+            categoryRemainingView.setText(String.format("%.02f", category.getRemaining()));
         }
 
         List<Expense> expenses = mDBAdapter.getExpenses(categoryName);
