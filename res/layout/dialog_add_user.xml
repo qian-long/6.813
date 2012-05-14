@@ -12,7 +12,7 @@
         android:cursorVisible="true"
         android:ems="10"
         android:hint="email@example.com"
-        android:inputType="textNoSuggestions" >
+        android:inputType="textEmailAddress" >
 
         <requestFocus />
     </EditText>

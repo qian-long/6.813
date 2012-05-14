@@ -25,7 +25,11 @@
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:textSize="12sp"
-            android:hint="amount" />
+            android:hint="amount" >
+            <requestFocus />
+            
+        </EditText>
+
         
         <TextView
             android:layout_width="wrap_content"
