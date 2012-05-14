@@ -88,7 +88,7 @@ public class CategoryExpenseListAdapter extends ArrayAdapter<Expense> {
                     .findViewById(R.id.expense_amount);
 
             date.setText(expense.getDate());
-            amount.setText(expense.getAmount().toString());
+            amount.setText("$" + expense.getAmount().toString());
 
             ImageView edit = (ImageView) view
                     .findViewById(R.id.edit_expense_btn);
