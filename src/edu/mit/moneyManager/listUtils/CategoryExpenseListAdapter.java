@@ -88,7 +88,7 @@ public class CategoryExpenseListAdapter extends ArrayAdapter<Expense> {
                     .findViewById(R.id.expense_amount);
 
             date.setText(expense.getDate());
-            amount.setText(expense.getAmount().toString());
+            amount.setText(String.format("%.02f", expense.getAmount()));
 
             ImageView edit = (ImageView) view
                     .findViewById(R.id.edit_expense_btn);
@@ -117,7 +117,7 @@ public class CategoryExpenseListAdapter extends ArrayAdapter<Expense> {
                     newAmount.setInputType(InputType.TYPE_CLASS_NUMBER
                             | InputType.TYPE_NUMBER_FLAG_DECIMAL);
                     newAmount.setFocusable(true);
-                    newAmount.setText(expense.getAmount().toString());
+                    newAmount.setText(String.format("%.02f", expense.getAmount()));
 
                     final Spinner spinner = (Spinner) dialog
                             .findViewById(R.id.category_spinner);
@@ -184,9 +184,8 @@ public class CategoryExpenseListAdapter extends ArrayAdapter<Expense> {
                                 expenses.remove(position);
                             }
                             // update remaining view
-                            remainingView.setText(mDBAdapter
-                                    .getCategory(categoryName).getRemaining()
-                                    .toString());
+                            remainingView.setText(String.format("%.02f", mDBAdapter
+                                    .getCategory(categoryName).getRemaining()));
                             mDBAdapter.close();
 
                             Log.i(TAG, "notifyDataSetChanged()");
@@ -212,9 +211,9 @@ public class CategoryExpenseListAdapter extends ArrayAdapter<Expense> {
                         public void onClick(View v) {
                             mDBAdapter.open();
                             if (mDBAdapter.removeExpense(expense)) {
-                                remainingView.setText(mDBAdapter
+                                remainingView.setText(String.format("%.02f", mDBAdapter
                                         .getCategory(categoryName)
-                                        .getRemaining().toString());
+                                        .getRemaining()));
                             } else {
                                 Toast.makeText(context,
                                         "Error Deleting Expense",

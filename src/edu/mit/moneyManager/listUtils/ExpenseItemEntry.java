@@ -26,7 +26,7 @@ public class ExpenseItemEntry {
     }
     
     public String getAmount() {
-        return new Double(amount).toString();
+        return String.format("%.02f", new Double(amount));
     }
     
     public String getCategory() {

@@ -99,8 +99,8 @@ public class MainExpenseListAdapter extends ArrayAdapter<Expense> {
 
             });
 
-            Log.i(TAG, "new amount: " + expense.getAmount().toString());
-            newAmount.setText(expense.getAmount().toString());
+            Log.i(TAG, "new amount: " + String.format("%.02f", expense.getAmount()));
+            newAmount.setText(String.format("%.02f", expense.getAmount()));
             final Spinner spinner = (Spinner) view
                     .findViewById(R.id.category_spinner);
 
