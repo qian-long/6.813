@@ -1,7 +1,9 @@
 package edu.mit.moneyManager.view;
 
+import android.app.Activity;
 import android.app.TabActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.widget.TabHost;
@@ -16,14 +18,25 @@ import edu.mit.moneyManager.R;
  */
 public class ViewContainer extends TabActivity {
     public static final boolean NEW = true;
+    public static final String VIEW_SUMMARY = "view_summary";
+    public static final String VIEW_CHART = "view_chart";
+    public static final String VIEW_EDIT = "view_edit";
+    public static final String VIEW_SHARE = "view_share";
+    public static final String CURRENT_TAB = "current_tab";
     
+    private static SharedPreferences settings;
+    private TabHost tabHost;
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.view_tabhost);
-
+        settings = getSharedPreferences(ViewSummaryActivity.PREFS_NAME,
+                MODE_PRIVATE);
         Resources res = getResources(); // Resource object to get Drawables
-        TabHost tabHost = getTabHost();  // The activity TabHost
+        tabHost = getTabHost();  // The activity TabHost
+//        tabHost = (TabHost) findViewById(R.id.view_tabhost);
+//        tabHost.setup();
+        
         TabHost.TabSpec spec;  // Reusable TabSpec for each tab
         Intent intent;  // Reusable Intent for each tab
 
@@ -59,4 +72,13 @@ public class ViewContainer extends TabActivity {
         
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        tabHost.setup();
+        tabHost.setCurrentTab(settings.getInt(CURRENT_TAB, 0));
+        tabHost.getTabWidget().getChildAt(2).setEnabled(settings.getBoolean(VIEW_EDIT, true));
+        tabHost.getTabWidget().getChildAt(3).setEnabled(settings.getBoolean(VIEW_SHARE, true));
+
+    }
 }

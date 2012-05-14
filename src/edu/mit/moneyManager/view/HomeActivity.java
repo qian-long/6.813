@@ -5,6 +5,7 @@ import android.app.ActivityGroup;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +20,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.LinearLayout;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import android.widget.TabWidget;
 
@@ -42,6 +44,7 @@ public class HomeActivity extends ActivityGroup {
     // public static boolean NEW = true;
     public static String VIEWINGOTHER = "";
     private TabHost tabhost;
+    private TextView username;
     private TextView welcome;
     private Button create;
     private Button viewBtn;
@@ -61,7 +64,8 @@ public class HomeActivity extends ActivityGroup {
         settings = getSharedPreferences(ViewSummaryActivity.PREFS_NAME,
                 MODE_PRIVATE);
         mDBAdapter = new DatabaseAdapter(this);
-
+        
+        username = (TextView) getParent().findViewById(R.id.username);
         welcome = (TextView) findViewById(R.id.welcome);
         create = (Button) findViewById(R.id.create_budget);
         viewBtn = (Button) findViewById(R.id.view_budget);
@@ -78,6 +82,11 @@ public class HomeActivity extends ActivityGroup {
                 TextView username = (TextView) getParent().findViewById(
                         R.id.username);
                 username.setText("Your budget");
+                
+                //set view tab to summary
+                Editor editor = settings.edit();
+                editor.putInt(ViewContainer.CURRENT_TAB, 0);
+                editor.commit();
 
             }
         });
@@ -89,6 +98,17 @@ public class HomeActivity extends ActivityGroup {
         });
         
         //TODO: share button
+        shareBtn.setOnClickListener(new View.OnClickListener() {
+            
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                Editor editor = settings.edit();
+                editor.putInt(ViewContainer.CURRENT_TAB, 3);
+                editor.commit();
+                tabhost.setCurrentTab(1);
+            }
+        });
         ExpandableListView budgetsView = (ExpandableListView) findViewById(R.id.sharedBudgets);
         final ExpandableListAdapter adapter = new BudgetExpandableListAdapter();
         budgetsView.setAdapter(adapter);
@@ -100,19 +120,19 @@ public class HomeActivity extends ActivityGroup {
                     int groupPosition, int childPosition, long id) {
                 VIEWINGOTHER = (String) adapter.getChild(groupPosition,
                         childPosition);
-                TextView username = (TextView) getParent().findViewById(
-                        R.id.username);
+//                TextView username = (TextView) getParent().findViewById(
+//                        R.id.username);
 
-                username.setText(VIEWINGOTHER);
+                username.setText(VIEWINGOTHER + " [Press Home to go back to your budget]");
+                
+                //disable expenses tab when viewing other
                 tabhost.getTabWidget().getChildTabViewAt(2).setEnabled(false);
-                // Log.i("ARGHHH",
-                // ((RelativeLayout)tabhost.getTabWidget().getChildTabViewAt(1)).getChildAt(0).getClass().toString());
-                // Log.i("ARGHHH",
-                // ((ViewGroup)((FrameLayout)((LinearLayout)tabhost.getChildAt(0)).getChildAt(2)).getChildAt(0)).getChildAt(1).getClass().toString());
-
-                // Log.i("HomeActivity",
-                // tabhost.getTabWidget().getChildTabViewAt(1).getTag().toString());
-                // viewhost.getTabWidget().getChildTabViewAt(2).setEnabled(false);
+                
+                //disable edit and share tabs in view tabhost
+                Editor editor = settings.edit();
+                editor.putBoolean(ViewContainer.VIEW_EDIT, false);
+                editor.putBoolean(ViewContainer.VIEW_SHARE, false);
+                editor.commit();
                 tabhost.setCurrentTab(1);
                 return true;
             }
@@ -145,6 +165,18 @@ public class HomeActivity extends ActivityGroup {
     protected void onResume() {
         super.onResume();
         Log.i("HomeActivity", "Calling onResume()");
+        username.setText("Your Budget");
+        
+        //enable expenses
+        tabhost.getTabWidget().getChildTabViewAt(2).setEnabled(true);
+        
+        //enable edit and share
+        Editor editor = settings.edit();
+        editor.putBoolean(ViewContainer.VIEW_EDIT, true);
+        editor.putBoolean(ViewContainer.VIEW_SHARE, true);
+        editor.putInt(ViewContainer.CURRENT_TAB, 0);
+        editor.commit();
+        Toast.makeText(this, "You are currently viewing your budget", Toast.LENGTH_SHORT).show();
         setLayout();
 
     }

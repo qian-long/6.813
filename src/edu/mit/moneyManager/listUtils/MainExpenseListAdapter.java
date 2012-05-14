@@ -176,6 +176,7 @@ public class MainExpenseListAdapter extends ArrayAdapter<Expense> {
         return view;
     }
 
+    /*
     private class SpinnerArrayAdapter extends ArrayAdapter<String> {
         private ArrayList<String> categories;
 
@@ -196,7 +197,7 @@ public class MainExpenseListAdapter extends ArrayAdapter<Expense> {
             return view;
         }
     }
-
+    */
     // for persisting spinner selection
     private Map<String, Integer> getCategoryMap(List<String> categories) {
         Map<String, Integer> map = new HashMap<String, Integer>();
