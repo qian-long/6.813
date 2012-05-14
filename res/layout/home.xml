@@ -57,7 +57,7 @@
         android:layout_gravity="center_vertical|center_horizontal"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        android:text="Share_Budget" />
+        android:text="Share Budget" />
     
     <ExpandableListView
         android:id="@+id/sharedBudgets"
