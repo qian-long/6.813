@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.app.TabActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -76,6 +77,8 @@ public class ExpenseActivity extends ListActivity {
             @Override
             public void onClick(View v) {
                 // saving expenses in dataase
+                ProgressDialog p = ProgressDialog.show(ExpenseActivity.this, "",
+                        "Saving", false);
                 boolean valid = true;
                 mDBAdapter.open();
                 if (expenses.size() > 0) {
@@ -106,8 +109,10 @@ public class ExpenseActivity extends ListActivity {
                     expenses.removeAll(copy);
                     adapter.notifyDataSetChanged();
                     tabhost.setCurrentTab(1);
+                    p.dismiss();
                 }
                 else {
+                    p.dismiss();
                     Toast.makeText(v.getContext(),
                             "Please enter a valid amount",
                             Toast.LENGTH_SHORT).show();
