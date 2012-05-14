@@ -241,7 +241,7 @@ public class HomeActivity extends ActivityGroup {
         }
         mDBAdapter.close();
         if (settings.contains(ViewSummaryActivity.BUDGET_TOTAL)) {
-            welcome.setText("You have $" + remainingAmt.toString()
+            welcome.setText("You have $" + String.format("%.02f", remainingAmt)
                     + " remaining this month");
             create.setVisibility(View.GONE);
             expenseBtn.setVisibility(View.VISIBLE);

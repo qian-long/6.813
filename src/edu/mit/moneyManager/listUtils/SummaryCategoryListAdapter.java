@@ -51,8 +51,8 @@ public class SummaryCategoryListAdapter extends ArrayAdapter<Category>{
             TextView remaining = (TextView) view.findViewById(R.id.category_remaining);
             
             categoryName.setText(category.getName());
-            total.setText(new Double(category.getTotal()).toString());
-            remaining.setText(new Double(category.getRemaining()).toString());
+            total.setText(String.format("%.02f", new Double(category.getTotal())));
+            remaining.setText(String.format("%.02f", new Double(category.getRemaining())));
             
             ImageView detailBtn = (ImageView) view.findViewById(R.id.category_detail_button);
             /*

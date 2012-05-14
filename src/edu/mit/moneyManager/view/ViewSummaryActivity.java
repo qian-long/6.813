@@ -76,8 +76,7 @@ public class ViewSummaryActivity extends ListActivity {
     }
 
     private void resetData() {
-        total.setText(new Float(settings.getFloat(BUDGET_TOTAL, (float) 0.0))
-                .toString());
+        total.setText(String.format("%.02f", new Float(settings.getFloat(BUDGET_TOTAL, (float) 0.0))));
         mDBAdapter.open();
 
         //total remaining = total - categorytotals + total category remainings
@@ -86,7 +85,7 @@ public class ViewSummaryActivity extends ListActivity {
             remainingAmt = (double) settings
                     .getFloat(BUDGET_TOTAL, (float) 0.0);
         }
-        remaining.setText(remainingAmt.toString());
+        remaining.setText(String.format("%.02f", remainingAmt));
         
         //refreshes categories
         categories = mDBAdapter.getCategories();
