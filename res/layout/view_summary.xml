@@ -9,41 +9,53 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical" >
         
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+			android:gravity="center"
+            android:layout_marginTop="5sp">
             
             <TextView
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Total Monthly Budget: " />
+                android:text="Total Monthly Budget: "
+                android:textStyle="bold"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
             <TextView
                 android:id="@+id/total_monthly_budget_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="$500" />
+                android:text="$500"
+                android:textStyle="bold"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
             
         </LinearLayout>
-        
-        <LinearLayout
-            android:layout_width="wrap_content"
+		<LinearLayout
+		    android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="10sp">
             <TextView
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Total Remaining: " />
-            
+                android:text="Total Remaining: "
+                android:textStyle="bold"
+                android:textAppearance="?android:attr/textAppearanceSmall"  />
+
             <TextView
                 android:id="@+id/remaining_monthly_budget_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="$500" />           
-        </LinearLayout>     
+                android:text="$500"
+                android:textStyle="bold"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+           
+        </LinearLayout>
+     
     </LinearLayout>
     <ListView
         android:id="@android:id/list"

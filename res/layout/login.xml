@@ -48,6 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New to MoneyManager? Register!"
+        android:clickable="true"
         android:textColor="#87cefa"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -57,6 +58,7 @@
         android:layout_height="wrap_content"
         android:text="Forgot your username or password?"
         android:textColor="#87cefa"
+        android:clickable="true"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </LinearLayout>

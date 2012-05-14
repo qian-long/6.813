@@ -81,6 +81,7 @@
         android:textColor="#87cefa"
         
         android:text="Already have an account? Login!"
+        android:clickable="true"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </LinearLayout>
