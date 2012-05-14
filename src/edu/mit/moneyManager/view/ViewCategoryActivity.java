@@ -6,10 +6,13 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -32,7 +35,8 @@ public class ViewCategoryActivity extends ListActivity {
     private TextView categoryNameView;
     private TextView categoryTotalView;
     private TextView categoryRemainingView;
-
+    private Context context = this;
+    private ListView lv;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,12 +45,13 @@ public class ViewCategoryActivity extends ListActivity {
         categoryName = extras.getString(INTENT_KEY_CATEGORY);
         mDBAdapter = new DatabaseAdapter(this);
 
+        
         categoryNameView = (TextView) findViewById(R.id.view_summary_category);
         categoryTotalView = (TextView) findViewById(R.id.category_total);
         categoryRemainingView = (TextView) findViewById(R.id.category_remaining);
 
         // list adapter header
-        ListView lv = getListView();
+        lv = getListView();
         LayoutInflater inflater = getLayoutInflater();
         View header = inflater.inflate(R.layout.view_category_list_header,
                 null, false);
@@ -78,6 +83,21 @@ public class ViewCategoryActivity extends ListActivity {
         CategoryExpenseListAdapter adapter = new CategoryExpenseListAdapter(
                 this, (ArrayList<Expense>) expenses, this, mDBAdapter, categoryName, categoryRemainingView);
         setListAdapter(adapter);
+//        lv.setClickable(true);
+        /*
+        lv.setOnItemClickListener(new OnItemClickListener() {
+            
+            @Override
+            public void onItemClick(AdapterView parent, View v, final int position,
+                    long id) {
+                
+                Intent intent = new Intent(v.getContext(), ViewCategoryActivity.class);
+                intent.putExtra(ViewCategoryActivity.INTENT_KEY_CATEGORY, categoryName);
+                startActivity(intent);
+                
+            }
+        });
+        */
 
     }
 }

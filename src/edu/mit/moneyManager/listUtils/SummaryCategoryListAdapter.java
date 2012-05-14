@@ -54,6 +54,7 @@ public class SummaryCategoryListAdapter extends ArrayAdapter<Category>{
             remaining.setText(new Double(category.getRemaining()).toString());
             
             ImageView detailBtn = (ImageView) view.findViewById(R.id.category_detail_button);
+            /*
             view.setOnClickListener(new View.OnClickListener() {
                 
                 @Override
@@ -65,6 +66,7 @@ public class SummaryCategoryListAdapter extends ArrayAdapter<Category>{
                     context.startActivity(intent);
                 }
             });
+            */
 
             
         }

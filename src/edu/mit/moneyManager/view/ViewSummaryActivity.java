@@ -16,7 +16,10 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class ViewSummaryActivity extends ListActivity {
@@ -28,15 +31,36 @@ public class ViewSummaryActivity extends ListActivity {
     private TextView total;
     private TextView remaining;
     private static SharedPreferences settings;
+    private List<Category> categories;
+    
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_summary);
         mDBAdapter = new DatabaseAdapter(this);
+        mDBAdapter.open();
+        categories = mDBAdapter.getCategories();
+        mDBAdapter.close();
         settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         total = (TextView) findViewById(R.id.total_monthly_budget_textview);
         remaining = (TextView) findViewById(R.id.remaining_monthly_budget_textview);
+        
+        SummaryCategoryListAdapter adapter = new SummaryCategoryListAdapter(
+                this, (ArrayList<Category>) categories,
+                ((TabActivity) getParent()).getTabHost());
+        mDBAdapter.close();
+        setListAdapter(adapter);
+        ListView lv = getListView();
+        lv.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView parent, View v, final int position,
+                    long id) {
+                Intent intent = new Intent(v.getContext(), ViewCategoryActivity.class);
+                intent.putExtra(ViewCategoryActivity.INTENT_KEY_CATEGORY, categories.get(position).getName());
+                startActivity(intent);
+            }
+        });
         resetData();
     }
 
@@ -63,10 +87,12 @@ public class ViewSummaryActivity extends ListActivity {
                     .getFloat(BUDGET_TOTAL, (float) 0.0);
         }
         remaining.setText(remainingAmt.toString());
+        /*
         SummaryCategoryListAdapter adapter = new SummaryCategoryListAdapter(
-                this, (ArrayList<Category>) mDBAdapter.getCategories(),
+                this, (ArrayList<Category>) categories,
                 ((TabActivity) getParent()).getTabHost());
         mDBAdapter.close();
         setListAdapter(adapter);
+        */
     }
 }
