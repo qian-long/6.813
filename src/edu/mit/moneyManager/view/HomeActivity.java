@@ -1,34 +1,23 @@
 package edu.mit.moneyManager.view;
 
-import android.app.Activity;
 import android.app.ActivityGroup;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
-import android.widget.RelativeLayout;
-import android.widget.LinearLayout;
-import android.widget.FrameLayout;
 import android.widget.Toast;
-
-import android.widget.TabWidget;
-
 import android.widget.TabHost;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
-import android.widget.ListView;
 import android.widget.TextView;
 import edu.mit.moneyManager.R;
 import edu.mit.moneyManager.model.DatabaseAdapter;
@@ -123,9 +112,10 @@ public class HomeActivity extends ActivityGroup {
 
                 username.setText(VIEWINGOTHER + " [Press Home to go back to your budget]");
                 
-                //disable expenses tab when viewing other
+                //disable and blackout expenses tab when viewing other
                 tabhost.getTabWidget().getChildTabViewAt(2).setEnabled(false);
-                
+                tabhost.getTabWidget().getChildTabViewAt(2).setVisibility(View.INVISIBLE);
+
                 //disable edit and share tabs in view tabhost
                 Editor editor = settings.edit();
                 editor.putBoolean(ViewContainer.VIEW_EDIT, false);
@@ -167,6 +157,7 @@ public class HomeActivity extends ActivityGroup {
         username.setText("Your Budget");
         
         //enable expenses
+        tabhost.getTabWidget().getChildTabViewAt(2).setVisibility(View.VISIBLE);
         tabhost.getTabWidget().getChildTabViewAt(2).setEnabled(true);
         
         //enable edit and share

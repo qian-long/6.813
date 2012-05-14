@@ -8,6 +8,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.widget.TabHost;
 import edu.mit.moneyManager.R;
+import android.widget.TextView;
 
 /**
  * This is the home activity.
@@ -79,6 +80,23 @@ public class ViewContainer extends TabActivity {
         tabHost.setCurrentTab(settings.getInt(CURRENT_TAB, 0));
         tabHost.getTabWidget().getChildAt(2).setEnabled(settings.getBoolean(VIEW_EDIT, true));
         tabHost.getTabWidget().getChildAt(3).setEnabled(settings.getBoolean(VIEW_SHARE, true));
+        TextView editIndicator = (TextView)tabHost.getTabWidget().getChildAt(2).findViewById(android.R.id.title);
+        TextView shareIndicator = (TextView)tabHost.getTabWidget().getChildAt(3).findViewById(android.R.id.title);
+
+        if (!settings.getBoolean(VIEW_EDIT, true)) {
+            editIndicator.setText("");
+        }
+        else {
+            editIndicator.setText("Edit");
+        }
+        
+        
+        if (!settings.getBoolean(VIEW_SHARE, true)) {
+            shareIndicator.setText("");
+        }
+        else {
+            shareIndicator.setText("Share");
+        }
 
     }
 }
