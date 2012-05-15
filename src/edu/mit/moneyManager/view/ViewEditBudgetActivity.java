@@ -24,7 +24,6 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 import edu.mit.moneyManager.R;
-import edu.mit.moneyManager.listUtils.CategoryItemEntry;
 import edu.mit.moneyManager.listUtils.EditCategoryListAdapter;
 import edu.mit.moneyManager.listUtils.SummaryCategoryListAdapter;
 import edu.mit.moneyManager.model.Category;

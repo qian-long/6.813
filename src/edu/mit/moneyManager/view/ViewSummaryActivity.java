@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.mit.moneyManager.R;
-import edu.mit.moneyManager.listUtils.CategoryItemEntry;
 import edu.mit.moneyManager.listUtils.SummaryCategoryListAdapter;
 import edu.mit.moneyManager.model.Category;
 import edu.mit.moneyManager.model.DatabaseAdapter;

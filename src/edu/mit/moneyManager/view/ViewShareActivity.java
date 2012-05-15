@@ -31,7 +31,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ExpandableListView.OnChildClickListener;
 import edu.mit.moneyManager.R;
-import edu.mit.moneyManager.listUtils.CategoryItemEntry;
 import edu.mit.moneyManager.listUtils.SharedListAdapter;
 
 public class ViewShareActivity extends ListActivity {

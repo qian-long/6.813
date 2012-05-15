@@ -41,13 +41,15 @@ public class MainExpenseListAdapter extends ArrayAdapter<Expense> {
     private Map<String, Integer> mCategoryMap;
     //pointer to list of categories
     private List<String> categories;
+    private ArrayAdapter<String> adapter;
 
     public MainExpenseListAdapter(Context context, ArrayList<Expense> expenses,
-            DatabaseAdapter dba) {
+            DatabaseAdapter dba, ArrayAdapter<String> adapter) {
         super(context, 0, expenses);
         this.expenses = expenses;
         this.context = context;
         this.mDBAdapter = dba;
+        this.adapter = adapter;
         mDBAdapter.open();
         categories = mDBAdapter.getCategoryNames();
         mCategoryMap = getCategoryMap(categories);
@@ -58,10 +60,10 @@ public class MainExpenseListAdapter extends ArrayAdapter<Expense> {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        mDBAdapter.open();
-        categories = mDBAdapter.getCategoryNames();
+//        mDBAdapter.open();
+//        categories = mDBAdapter.getCategoryNames();
         mCategoryMap = getCategoryMap(categories);
-        mDBAdapter.close();
+//        mDBAdapter.close();
         View view = convertView;
         Log.i(TAG, "getView() position: " + position);
         final Expense expense = expenses.get(position);
@@ -104,7 +106,7 @@ public class MainExpenseListAdapter extends ArrayAdapter<Expense> {
             final Spinner spinner = (Spinner) view
                     .findViewById(R.id.category_spinner);
 
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
+            adapter = new ArrayAdapter<String>(context,
                     android.R.layout.simple_spinner_item, categories);
             spinner.setAdapter(adapter);
             if (mCategoryMap.get(expense.getCategory()) != null) {
@@ -187,28 +189,6 @@ public class MainExpenseListAdapter extends ArrayAdapter<Expense> {
         return view;
     }
 
-    /*
-    private class SpinnerArrayAdapter extends ArrayAdapter<String> {
-        private ArrayList<String> categories;
-
-        public SpinnerArrayAdapter(ArrayList<String> categories) {
-            super(context, 0, categories);
-            this.categories = categories;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View view = convertView;
-            String categoryName = categories.get(position);
-            if (categoryName != null) {
-                view = inflator.inflate(android.R.layout.simple_spinner_item,
-                        null);
-
-            }
-            return view;
-        }
-    }
-    */
     // for persisting spinner selection
     private Map<String, Integer> getCategoryMap(List<String> categories) {
         Map<String, Integer> map = new HashMap<String, Integer>();

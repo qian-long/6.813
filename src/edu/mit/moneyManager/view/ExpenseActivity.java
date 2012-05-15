@@ -2,6 +2,7 @@ package edu.mit.moneyManager.view;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -15,6 +16,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
@@ -38,6 +40,8 @@ public class ExpenseActivity extends ListActivity {
     private DatabaseAdapter mDBAdapter;
     private ArrayList<Expense> expenses = new ArrayList<Expense>();
     private MainExpenseListAdapter adapter;
+    private ArrayList<String> categoryNames;
+    private ArrayAdapter<String> categoryAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,7 +57,12 @@ public class ExpenseActivity extends ListActivity {
         lv.addFooterView(footer);
 
         // list adapter
-        adapter = new MainExpenseListAdapter(this, expenses, mDBAdapter);
+        mDBAdapter.open();
+        categoryNames = (ArrayList<String>) mDBAdapter.getCategoryNames();
+        mDBAdapter.close();
+        categoryAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, categoryNames);
+        adapter = new MainExpenseListAdapter(this, expenses, mDBAdapter, categoryAdapter);
         setListAdapter(adapter);
 
         Button add = (Button) footer.findViewById(R.id.add_expense);
@@ -77,23 +86,27 @@ public class ExpenseActivity extends ListActivity {
             @Override
             public void onClick(View v) {
                 // saving expenses in dataase
-                ProgressDialog p = ProgressDialog.show(ExpenseActivity.this, "",
-                        "Saving", false);
+//                ProgressDialog p = ProgressDialog.show(ExpenseActivity.this, "",
+//                        "Saving", false);
+                Log.i(TAG, "save clicked");
                 boolean valid = true;
                 mDBAdapter.open();
                 if (expenses.size() > 0) {
+                    Log.i(TAG, "checking valid");
                     for (Expense exp : expenses) {
                         if (exp.getAmount() <= 0.0) {
+                            Log.i(TAG, "invalid amount");
                             valid = false;
                             break;
                         }
                        
                     }
-
+                    Log.i(TAG, "adding expense");
                     if (valid) {
                         for (Expense exp : expenses) {
 
                             mDBAdapter.addExpense(exp);
+                            Log.i(TAG, "expense successfully added");
                         }
                         Toast.makeText(v.getContext(), "expenses saved",
                                 Toast.LENGTH_SHORT).show();
@@ -109,10 +122,10 @@ public class ExpenseActivity extends ListActivity {
                     expenses.removeAll(copy);
                     adapter.notifyDataSetChanged();
                     tabhost.setCurrentTab(1);
-                    p.dismiss();
+//                    p.dismiss();
                 }
                 else {
-                    p.dismiss();
+//                    p.dismiss();
                     Toast.makeText(v.getContext(),
                             "Please enter a valid amount",
                             Toast.LENGTH_SHORT).show();
@@ -143,5 +156,11 @@ public class ExpenseActivity extends ListActivity {
         expenses.removeAll(copy);
         // expenses = new ArrayList<Expense>();
         adapter.notifyDataSetChanged();
+        
+        mDBAdapter.open();
+        categoryNames = (ArrayList<String>) mDBAdapter.getCategoryNames();
+        mDBAdapter.close();
+        categoryAdapter.notifyDataSetChanged();
+        
     }
 }

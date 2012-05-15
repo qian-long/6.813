@@ -19,7 +19,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import edu.mit.moneyManager.R;
 import edu.mit.moneyManager.listUtils.CategoryExpenseListAdapter;
-import edu.mit.moneyManager.listUtils.ExpenseItemEntry;
 import edu.mit.moneyManager.model.Category;
 import edu.mit.moneyManager.model.DatabaseAdapter;
 import edu.mit.moneyManager.model.Expense;
